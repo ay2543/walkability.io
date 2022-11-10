@@ -52,29 +52,29 @@ enjoy walking.
 -   Interactive of walkability index
 -   Descriptive statistics of demographics by walkability categories
     (might need to merge w Census data)
--   Employment
--   Income
--   Number of households
+    -   Employment
+    -   Income
+    -   Number of households
 -   Walkability, health outcomes, and other environmental features
--   Obesity
--   Mental health
--   Air quality / respiratory diseases
+    -   Obesity
+    -   Mental health
+    -   Air quality / respiratory diseases
 -   Updating the Walkability Index
--   Including additional variables
--   Changing the weighting
--   R^2, Interrater reliability
+    -   Including additional variables
+    -   Changing the weighting
+    -   R^2, Interrater reliability
 -   Challenges
--   Uploading everything to GitHub
--   Visualization to scale
--   Aggregating data across large datasets - need to check for correct
-    merging
+    -   Uploading everything to GitHub
+    -   Visualization to scale
+    -   Aggregating data across large datasets - need to check for
+        correct merging
 
 ## 
 
 #### The planned timeline:
 
 -   Nov 12: Submit written proposal
--   Nov 12-15: Solve git uploading issue (plz help us Jeff姐夫）
+-   Nov 12-15: Solve git uploading issue
 -   Nov 15-18: Project review meeting
 -   Nov 17-22: Tidy data, Exploratory Data Analysis
 -   Nov 22-Dec 8: Finalize model (update walkability index) + visuals
