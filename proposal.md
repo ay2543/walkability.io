@@ -7,7 +7,7 @@ Proposal
 
 ##### Walk the walk: the importance of walkability on health and wellbeing
 
-#### TTeam members (Walkaholics):
+#### Team members (Walkaholics):
 
 -   Winston Luhur (wel2110)
 -   Wenyan Ma (wm2460)
