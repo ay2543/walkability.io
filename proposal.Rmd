@@ -67,7 +67,7 @@ Urban planning of most US cities was designed around cars and not walking, and n
 #### The planned timeline:
 
 * Nov 12: Submit written proposal
-* Nov 12-15: Solve git uploading issue (plz help us Jeff姐夫）
+* Nov 12-15: Solve git uploading issue
 * Nov 15-18: Project review meeting
 * Nov 17-22: Tidy data, Exploratory Data Analysis
 * Nov 22-Dec 8: Finalize model (update walkability index) + visuals (interactive map and graphs, interactive dashboard), format website 
