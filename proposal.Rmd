@@ -4,11 +4,11 @@ output: github_document
 ---
 
 #### The group members: 
-##### Winston Luhur (wel2110),
-##### Wenyan Ma (wm2460),
-##### Amy Yeung (ay2543), 
-##### Sophie Zhang (sjz2120),
-##### Shirley Liang (zl3118)
+##### - Winston Luhur (wel2110)
+##### - Wenyan Ma (wm2460)
+##### - Amy Yeung (ay2543) 
+##### - Sophie Zhang (sjz2120)
+##### - Shirley Liang (zl3118)
 
 ##
 
@@ -23,7 +23,10 @@ output: github_document
 ##
 
 #### The intended final products:
-##### 
+##### - Report
+##### - Webpage (with interactive dashboard and maps)
+##### - Screencast
+
 
 ##
 

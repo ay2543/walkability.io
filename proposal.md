@@ -3,15 +3,15 @@ Proposal
 
 #### The group members:
 
-##### Winston Luhur (wel2110),
+##### - Winston Luhur (wel2110)
 
-##### Wenyan Ma (wm2460),
+##### - Wenyan Ma (wm2460)
 
-##### Amy Yeung (ay2543),
+##### - Amy Yeung (ay2543)
 
-##### Sophie Zhang (sjz2120),
+##### - Sophie Zhang (sjz2120)
 
-##### Shirley Liang (zl3118)
+##### - Shirley Liang (zl3118)
 
 ## 
 
@@ -29,7 +29,11 @@ Proposal
 
 #### The intended final products:
 
-##### 
+##### - Report
+
+##### - Webpage (with interactive dashboard and maps)
+
+##### - Screencast
 
 ## 
 
