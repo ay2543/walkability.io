@@ -1,0 +1,15 @@
+---
+title: "Testing"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+
+```
+
+```{r}
+walkability_df = read_csv("./data/EPA_SmartLocationDatabase_V3_Jan_2021_Final.csv")
+```
+
