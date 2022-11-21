@@ -5,39 +5,33 @@ navbar:
     - text: "Home"
       icon: fa-home
       href: index.html
-      
     - text: "About"
       icon: fa-file
       menu:
-      - text: "The Project"
+        - text: "The Project"
          href: desc.html   
-      - text: "Data Source"
-         href: data.html
-         
+        - text: "Data Source"
+          href: data.html
     - text: "EDA"
       icon: fa-file 
       menu:
-      - text: "Demographics"
-        href: demo.html
-      - text: "Health Outcomes"
-        href: health.html
-        
+        - text: "Demographics"
+          href: demo.html
+        - text: "Health Outcomes"
+          href: health.html
     - text: "Dashboard"
       href: "dashboard.html"
-      
     - text: "New Walkability Index"
       href: newscore.html
-      
     - text: "The Team"
       menu: 
-      - text: "Who We Are"
-        href: team.html
-      - text: "Other names"
-        href: memes.html
+        - text: "Who We Are"
+          href: team.html
+        - text: "Other names"
+          href: memes.html
 right:
     - icon: fa-github fa-lg
       href: https://github.com/ay2543/walkability.io
-
 output:
   html_document:
       theme: paper
