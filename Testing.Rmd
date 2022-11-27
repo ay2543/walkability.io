@@ -11,5 +11,35 @@ library(tidyverse)
 
 ```{r}
 walkability_df = read_csv("./data/EPA_SmartLocationDatabase_V3_Jan_2021_Final.csv")
+
+walkability_new = walkability_df %>% 
+  janitor::clean_names() %>% 
+  mutate(statefp = str_pad(statefp, width = 2, pad = "0"),
+         countyfp = str_pad(countyfp, width = 3, pad = "0"),
+         tractce = str_pad(tractce, width = 6, pad = "0"),
+         fips = str_c(statefp, countyfp, tractce, blkgrpce, sep = "")) %>% 
+  select(fips, everything(), -objectid)
+  
+walkability_clean = walkability_new %>% 
+  select(fips, statefp, countyfp, tractce, blkgrpce, nat_walk_ind, csa_name) %>% 
+  mutate(fips_noblk = str_c(statefp, countyfp, tractce, sep = ""))
+  
+```
+
+```{r}
+dep_df = read_csv("./data/PLACES__Local_Data_for_Better_Health__Census_Tract_Data_2021_release.csv")
+
+dep_new = dep_df %>% 
+  janitor::clean_names() %>% 
+  mutate(location_name = str_pad(location_name, width = 11, pad = "0")) %>%
+  select(location_name, state_desc, county_name, data_value_type, data_value)
+```
+
+```{r}
+try_merge = merge(x = walkability_clean, y = dep_new, by.x = "fips_noblk", by.y = "location_name")
+
+try_merge %>% 
+  lm(data_value ~ nat_walk_ind, data = .) %>% 
+  broom::tidy()
 ```
 
