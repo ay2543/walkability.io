@@ -36,10 +36,24 @@ dep_new = dep_df %>%
 ```
 
 ```{r}
-try_merge = merge(x = walkability_clean, y = dep_new, by.x = "fips_noblk", by.y = "location_name")
+try_merge_withdep = merge(x = walkability_clean, y = dep_new, by.x = "fips_noblk", by.y = "location_name")
 
-try_merge %>% 
+try_merge_withdep %>% 
   lm(data_value ~ nat_walk_ind, data = .) %>% 
   broom::tidy()
+```
+
+```{r}
+
+copd_df = read_csv("./data/County_COPD_prevalence.csv")
+
+longFIPS <- dep_df %>% select(CountyFIPS, LocationID)
+
+copd_new <- merge(x = longFIPS, y = copd_df, by.x = "CountyFIPS", by.y = "LocationID") %>% 
+  mutate(fips_noblk = LocationID) %>% 
+  select (-c(CountyFIPS, Public_Health_Jurisdiction, LocationID))
+
+try_merge_withcopd <- merge(x = walkability_clean, y = copd_new, by = "fips_noblk", all.x=TRUE, all.y=TRUE)
+
 ```
 
