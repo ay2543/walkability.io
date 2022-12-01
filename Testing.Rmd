@@ -27,6 +27,7 @@ walkability_clean = walkability_new %>%
 ```
 
 ```{r}
+# raw data with only depression stats
 dep_df = read_csv("./data/PLACES__Local_Data_for_Better_Health__Census_Tract_Data_2021_release.csv")
 
 dep_new = dep_df %>% 
@@ -34,6 +35,16 @@ dep_new = dep_df %>%
   mutate(location_name = str_pad(location_name, width = 11, pad = "0")) %>%
   select(location_name, state_desc, county_name, data_value_type, data_value)
 ```
+
+```{r}
+# raw data with all health outcomes
+health_df = read_csv("./data/PLACES__Local_Data_for_Better_Health__Census_Tract_Data_2022_release.csv")
+
+health_new = health_df %>% 
+  janitor::clean_names() %>%
+  mutate(location_name = str_pad(location_name, width = 11, pad = "0"))
+```
+
 
 ```{r}
 try_merge_withdep = merge(x = walkability_clean, y = dep_new, by.x = "fips_noblk", by.y = "location_name")
