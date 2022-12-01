@@ -1,0 +1,32 @@
+---
+title: "Data Source"
+output: html_document
+---
+
+This is a description of our data sources and cleaning steps.
+
+We wish to identify associations between walkability and 
+
+* demograhic indicators (age, sex, income, race/ethnicity, employment)
+* health outcomes & environmental factors (?) (Heart health, mental health, respiratory health [air quality?])
+
+We also wish to create our own updated walkability index and see how well it can estimate health outcomes compared to the original walkability index.
+
+To do so, we used several datasets with information on walkability, demographic information and health outcomes, and grouped them by census tract for a comprehensive analysis by location.
+
+## Walkability
+
+* Data: [Environmental Protection Agency's information on Walkability Index, 2021](http://edg.epa.gov/metadata/catalog/search/resource/details.page?uuid=%7B251AFDD9-23A7-4068-9B27-A3048A7E6012%7D)
+* [Methodology & User Guide](https://www.epa.gov/sites/default/files/2021-06/documents/national_walkability_index_methodology_and_user_guide_june2021.pdf), [Codebook](https://www.epa.gov/sites/default/files/2021-06/documents/epa_sld_3.0_technicaldocumentationuserguide_may2021.pdf)
+* Cleaning steps:
+  * 
+  
+## Demographics
+* Data: [US Census American Community Survey, 2020](https://data.census.gov/table?tid=ACSDP1Y2021.DP05)
+* Cleaning steps:
+  * removed second row with detailed column names
+  * removed columns for annotations and margins of error
+  * created a census tract column derived from the geo_id column (removed the "1400000US" at the beginning of each entry) to match with other data sets
+  
+  
+  
