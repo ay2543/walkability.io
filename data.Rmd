@@ -28,5 +28,7 @@ To do so, we used several datasets with information on walkability, demographic 
   * removed columns for annotations and margins of error
   * created a census tract column derived from the geo_id column (removed the "1400000US" at the beginning of each entry) to match with other data sets
   
+## Health outcomes
+  
   
   
