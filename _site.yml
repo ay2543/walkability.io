@@ -9,7 +9,7 @@ navbar:
       icon: fa-file
       menu:
         - text: "The Project"
-         href: desc.html   
+          href: desc.html   
         - text: "Data Source"
           href: data.html
     - text: "EDA"
@@ -34,4 +34,4 @@ right:
       href: https://github.com/ay2543/walkability.io
 output:
   html_document:
-      theme: paper
+      theme: simplex
