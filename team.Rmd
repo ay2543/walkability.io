@@ -1,0 +1,20 @@
+---
+title: "Who We Are"
+output: html_document
+---
+
+This wonderful walkability project was brought to you by 5 NYC walkaholics!
+
+
+### [Amy Yeung (she/her)](https://ay2543.github.io/amyyeung.github.io) <a href="mailto:ay2543@cumc.columbia.edu" class="fa fa-envelope"></a> <a href="https://linkedin.com/in/amy715" class="fa fa-linkedin"></a> <a href="https://github.com/ay2543" class="fa fa-github"></a>
+
+* Favorite place to walk in NYC: From Ktown to Chinatown
+* Favorite part about walking: Watching the change in architecture, scoping out restaurants for future meals, and people-watching!
+
+### Winston Luhur (they/them)
+
+### Sophie Zhang (they/them)
+
+### Shirley Liang (she/her)
+
+### Wenyan Ma (she/her)
