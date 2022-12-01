@@ -9,6 +9,7 @@ library(tidyverse)
 
 ```
 
+## Walkability Data
 ```{r}
 walkability_df = read_csv("./data/EPA_SmartLocationDatabase_V3_Jan_2021_Final.csv")
 
@@ -26,6 +27,7 @@ walkability_clean = walkability_new %>%
   
 ```
 
+## Health Outcome Data - BRFSS
 ```{r}
 # raw data with only depression stats
 dep_df = read_csv("./data/PLACES__Local_Data_for_Better_Health__Census_Tract_Data_2021_release.csv")
@@ -45,7 +47,23 @@ health_new = health_df %>%
   mutate(location_name = str_pad(location_name, width = 11, pad = "0"))
 ```
 
+## Demographic Data - ACS 2020
+### Age and Race
+```{r}
+demo_raw = read_csv("./data/ACSDP5Y2020.DP05-Data.csv")
 
+demo_clean = demo_raw %>% 
+  slice(-1) %>% 
+  janitor::clean_names() %>%
+  select(-ends_with(c("ea", "m", "ma"))) %>% 
+  mutate(geo_clean = geo_id, 
+         geo_clean = str_replace(geo_clean, "^1400000US", "")) %>% 
+  select(geo_clean, everything())
+```
+
+
+
+## Merge
 ```{r}
 try_merge_withdep = merge(x = walkability_clean, y = dep_new, by.x = "fips_noblk", by.y = "location_name")
 
