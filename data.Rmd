@@ -35,6 +35,7 @@ To do so, we used several datasets with information on walkability, demographic 
 * Cleaning steps:
   * 
 * Variables of interest:
+  * High cholesterol
   * Physical health
   * Blood pressure
   * Physical inactivity
