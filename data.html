@@ -358,7 +358,15 @@ href="https://www.epa.gov/sites/default/files/2021-06/documents/national_walkabi
 href="https://www.epa.gov/sites/default/files/2021-06/documents/epa_sld_3.0_technicaldocumentationuserguide_may2021.pdf">Codebook</a></li>
 <li>Cleaning steps:
 <ul>
-<li></li>
+<li>Added leading zeros for all Federal Information Processing Standard
+(FIPS) codes (numbers which uniquely identify geographic areas)</li>
+<li>Combined state, county and tract FIPS into an 11-digit code</li>
+<li>Selected relevant variables</li>
+</ul></li>
+<li>Variables of interest:
+<ul>
+<li>FIPS code</li>
+<li>National Walkability Index</li>
 </ul></li>
 </ul>
 </div>
@@ -393,7 +401,8 @@ href="https://chronicdata.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better
 Risk Factor Surveillance System (BRFSS), 2020</a></li>
 <li>Cleaning steps:
 <ul>
-<li></li>
+<li>Removed footnote variables</li>
+<li>Filtered for relevant health outcomes</li>
 </ul></li>
 <li>Variables of interest:
 <ul>
@@ -420,7 +429,7 @@ contained spatial (geographic) information</li>
 level
 <ul>
 <li>Since walkability data was provided at a census block level (which
-is narrower than the census block level), we took the average
+is narrower than the census tract level), we took the average
 walkability indices of census blocks within a census tract for analysis
 for consistency with geographic data for other variables.</li>
 </ul></li>
