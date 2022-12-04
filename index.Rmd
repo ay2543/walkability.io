@@ -8,7 +8,7 @@ output: html_document
 ## **Walk the walk: The effect of neighborhood walkability on health**
 
 <br>
-<table style="table-layout: fixed; width: 100%">
+<center><table style="table-layout: fixed; width: 70%"></center>
   <tr>
     <td><img src="images/index_park.jpeg" style="width:100%"></td>
     <td><img src="images/index_city.jpeg" style="width:100%"></td>
