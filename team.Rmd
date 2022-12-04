@@ -16,10 +16,12 @@ This wonderful walkability project was brought to you by 5 NYC walkaholics!
 * Favorite place to walk in NYC: 
 * Favorite part about walking: 
 
-### Sophie Zhang (they/them)
 
-* Favorite place to walk in NYC: 
-* Favorite part about walking: 
+### [Sophie Zhang (they/them)](https://sophyee.github.io/)  <a href="mailto:sjz2120@cumc.columbia.edu" class="fa fa-envelope"></a> <a href="https://www.linkedin.com/in/sophiejhzhang/" class="fa fa-linkedin"></a> <a href="https://github.com/sophyee" class="fa fa-github"></a>
+
+* Favorite place to walk in NYC: Walking across the Manhattan Bridge 🌇
+* Favorite part about walking: Listen to good music and enjoy the crowds & scenery!
+
 
 ### [Shirley Liang (she/her)](https://Shirley-zl3118.github.io/Shirley-zl3118.github.io) <a href="mailto:zl3118@cumc.columbia.edu" class="fa fa-envelope"></a> <a href="https://www.linkedin.com/in/zipei-“shirley”-liang-pharmd-rph-819616a7/" class="fa fa-linkedin"></a> <a href="https://github.com/Shirley-zl3118" class="fa fa-github"></a>
 

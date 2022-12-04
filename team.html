@@ -13,7 +13,7 @@
 
 <title>Who We Are</title>
 
-<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
@@ -180,8 +180,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "\e259";
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -189,9 +189,16 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "\e258";
-  font-family: 'Glyphicons Halflings';
+  content: "&#xe258;";
   border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -350,10 +357,15 @@ scoping out restaurants for future meals, and people-watching!</li>
 </ul>
 </div>
 <div id="sophie-zhang-theythem" class="section level3">
-<h3>Sophie Zhang (they/them)</h3>
+<h3><a href="https://sophyee.github.io/">Sophie Zhang (they/them)</a>
+<a href="mailto:sjz2120@cumc.columbia.edu" class="fa fa-envelope"></a>
+<a href="https://www.linkedin.com/in/sophiejhzhang/" class="fa fa-linkedin"></a>
+<a href="https://github.com/sophyee" class="fa fa-github"></a></h3>
 <ul>
-<li>Favorite place to walk in NYC:</li>
-<li>Favorite part about walking:</li>
+<li>Favorite place to walk in NYC: Walking across the Manhattan Bridge
+🌇</li>
+<li>Favorite part about walking: Listen to good music and enjoy the
+crowds &amp; scenery!</li>
 </ul>
 </div>
 <div id="shirley-liang-sheher" class="section level3">

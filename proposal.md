@@ -9,11 +9,11 @@ Proposal
 
 #### Team members (Walkaholics):
 
--   Winston Luhur (wel2110)
--   Wenyan Ma (wm2460)
--   Amy Yeung (ay2543)
--   Sophie Zhang (sjz2120)
--   Shirley Liang (zl3118)
+- Winston Luhur (wel2110)
+- Wenyan Ma (wm2460)
+- Amy Yeung (ay2543)
+- Sophie Zhang (sjz2120)
+- Shirley Liang (zl3118)
 
 ## 
 
@@ -34,51 +34,51 @@ enjoy walking.
 
 #### The intended final products:
 
--   Report
--   Webpage (with interactive dashboard and maps)
--   Screencast
+- Report
+- Webpage (with interactive dashboard and maps)
+- Screencast
 
 ## 
 
 #### The anticipated data sources:
 
--   Environmental Protection Agency’s information on Walkability Index
--   We will use BRFSS and US Census for health outcomes
+- Environmental Protection Agency’s information on Walkability Index
+- We will use BRFSS and US Census for health outcomes
 
 ## 
 
 #### The planned analyses / visualizations / coding challenges:
 
--   Interactive of walkability index
--   Descriptive statistics of demographics by walkability categories
-    (might need to merge w Census data)
-    -   Employment
-    -   Income
-    -   Number of households
--   Walkability, health outcomes, and other environmental features
-    -   Obesity
-    -   Mental health
-    -   Air quality / respiratory diseases
--   Updating the Walkability Index
-    -   Including additional variables
-    -   Changing the weighting
-    -   R^2, Interrater reliability
--   Challenges
-    -   Uploading everything to GitHub
-    -   Visualization to scale
-    -   Aggregating data across large datasets - need to check for
-        correct merging
+- Interactive of walkability index
+- Descriptive statistics of demographics by walkability categories
+  (might need to merge w Census data)
+  - Employment
+  - Income
+  - Number of households
+- Walkability, health outcomes, and other environmental features
+  - Obesity
+  - Mental health
+  - Air quality / respiratory diseases
+- Updating the Walkability Index
+  - Including additional variables
+  - Changing the weighting
+  - R^2, Interrater reliability
+- Challenges
+  - Uploading everything to GitHub
+  - Visualization to scale
+  - Aggregating data across large datasets - need to check for correct
+    merging
 
 ## 
 
 #### The planned timeline:
 
--   Nov 12: Submit written proposal
--   Nov 12-15: Solve git uploading issue
--   Nov 15-18: Project review meeting
--   Nov 17-22: Tidy data, Exploratory Data Analysis
--   Nov 22-Dec 8: Finalize model (update walkability index) + visuals
-    (interactive map and graphs, interactive dashboard), format website
--   Dec 8: Finalize webpage
--   Dec 9: Write report, record screencast
--   Dec 10: Submit everything
+- Nov 12: Submit written proposal
+- Nov 12-15: Solve git uploading issue
+- Nov 15-18: Project review meeting
+- Nov 17-22: Tidy data, Exploratory Data Analysis
+- Nov 22-Dec 8: Finalize model (update walkability index) + visuals
+  (interactive map and graphs, interactive dashboard), format website
+- Dec 8: Finalize webpage
+- Dec 9: Write report, record screencast
+- Dec 10: Submit everything
