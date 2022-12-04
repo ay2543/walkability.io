@@ -349,8 +349,8 @@ walkability index.</p>
 <p>To do so, we used several datasets with information on walkability,
 demographic information and health outcomes, and grouped them by census
 tract for a comprehensive analysis by location.</p>
-<div id="walkability" class="section level2">
-<h2>Walkability</h2>
+<div id="exposure-walkability" class="section level2">
+<h2>Exposure: Walkability</h2>
 <ul>
 <li>Data: <a
 href="http://edg.epa.gov/metadata/catalog/search/resource/details.page?uuid=%7B251AFDD9-23A7-4068-9B27-A3048A7E6012%7D">Environmental
@@ -365,8 +365,8 @@ href="https://www.epa.gov/sites/default/files/2021-06/documents/epa_sld_3.0_tech
 </ul></li>
 </ul>
 </div>
-<div id="demographics" class="section level2">
-<h2>Demographics</h2>
+<div id="confounders-demographics" class="section level2">
+<h2>Confounders: Demographics</h2>
 <ul>
 <li>Data: <a
 href="https://data.census.gov/table?tid=ACSDP1Y2021.DP05">US Census
@@ -379,10 +379,49 @@ American Community Survey, 2020</a></li>
 (removed the “1400000US” at the beginning of each entry) to match with
 other data sets</li>
 </ul></li>
+<li>Variables of interest:</li>
 </ul>
 </div>
-<div id="health-outcomes" class="section level2">
-<h2>Health outcomes</h2>
+<div id="outcome-health-outcomes" class="section level2">
+<h2>Outcome: Health outcomes</h2>
+<ul>
+<li>Data: <a
+href="https://chronicdata.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh/data">Behavioral
+Risk Factor Surveillance System (BRFSS), 2020</a></li>
+<li>Cleaning steps:
+<ul>
+<li></li>
+</ul></li>
+<li>Variables of interest</li>
+</ul>
+</div>
+<div id="considerations" class="section level2">
+<h2>Considerations</h2>
+<div id="spatial-units" class="section level3">
+<h3>Spatial units</h3>
+<ul>
+<li>For all of our variables of interest, we selected datasets that
+contained spatial (geographic) information</li>
+<li>All variables were analyzed at the <strong>census tract</strong>
+level
+<ul>
+<li>Since walkability data was provided at a census block level (which
+is narrower than the census block level), we took the average
+walkability indices of census blocks within a census tract for analysis
+for consistency with geographic data for other variables.</li>
+</ul></li>
+</ul>
+</div>
+<div id="timing" class="section level3">
+<h3>Timing</h3>
+<ul>
+<li>Walkability dataset is from 2021, Demographic and health outcome
+datasets are from 2020</li>
+<li>We recognize that there is a discrepancy in timing across datasets,
+so we are choosing to interpret with caution and avoid discussing
+causality</li>
+</ul>
+</div>
 </div>
 
 
