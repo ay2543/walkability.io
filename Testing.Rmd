@@ -6,6 +6,7 @@ output: github_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(plotly)
 
 ```
 
@@ -23,7 +24,7 @@ walkability_new = walkability_raw %>%
   
 walkability_clean = walkability_new %>% 
   select(fips, statefp, countyfp, tractce, blkgrpce, nat_walk_ind, csa_name) %>% 
-  mutate(fips_noblk = str_c(statefp, countyfp, tractce, sep = ""))
+  mutate(location_name = str_c(statefp, countyfp, tractce, sep = ""))
   
 ```
 
@@ -70,8 +71,8 @@ income_clean = income_raw %>%
   select(geo_clean, everything())
 ```
 
-<<<<<<< HEAD
-## Further clearning
+
+## Further cleaning
 ```{r}
 # for health outcome, we are focusing on 5 outcomes that are likely to be related to walkability 
 
@@ -84,14 +85,24 @@ health_clean = health_new %>%
 ##Merge
 ```{r}
 # merging walkability and health outcomes
-merge1 = merge(x = walkability_clean, y = health_clean, by.x = "fips_noblk", by.y = "location_name")
+merge1 = full_join(x = walkability_clean, y = health_clean, by = "location_name")
 
 #mergeing demographic into one df - age&race + median household income
-merge2 = merge(demo_clean, income_clean, by = "geo_clean")
+merge2 = full_join(demo_clean, income_clean, by = "geo_clean")
   
+merge2 = merge2 %>% 
+  mutate(location_name = geo_clean) 
+
 # merge merge1 and merge2
-merge_final = merge(x = merge1, y = merge2, by.x = "fips_noblk", by.y = "geo_clean")
+merge_final = full_join(x = merge1, y = merge2, by = "location_name")
 
 ```
 
+## Plot try
+```{r}
+merge_final %>%
+  plot_ly(
+    x = ~lat, y = ~long, type = "scatter", mode = "markers",
+    color = ~nat_walk_ind, alpha = 0.5)
+```
 
