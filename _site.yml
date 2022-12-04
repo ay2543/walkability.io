@@ -24,6 +24,7 @@ navbar:
     - text: "New Walkability Index"
       href: newscore.html
     - text: "The Team"
+      icon: fa-people-group
       menu: 
         - text: "Who We Are"
           href: team.html

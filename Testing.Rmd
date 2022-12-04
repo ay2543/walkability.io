@@ -54,7 +54,7 @@ demo_clean = demo_raw %>%
   select(-ends_with(c("ea", "m", "ma"))) %>% 
   mutate(geo_clean = geo_id, 
          geo_clean = str_replace(geo_clean, "^1400000US", "")) %>% 
-  select(geo_clean, name, dp05_0037pe, dp05_0038pe, dp05_0039pe, dp05_0044pe, dp05_0058pe, dp05_0071pe)
+  select(geo_clean, everything())
 ```
 
 ### Median household income 
@@ -70,6 +70,7 @@ income_clean = income_raw %>%
   select(geo_clean, everything())
 ```
 
+<<<<<<< HEAD
 ## Further clearning
 ```{r}
 # for health outcome, we are focusing on 5 outcomes that are likely to be related to walkability 
@@ -90,7 +91,16 @@ merge2 = merge(demo_clean, income_clean, by = "geo_clean")
   
 # merge merge1 and merge2
 merge_final = merge(x = merge1, y = merge2, by.x = "fips_noblk", by.y = "geo_clean")
+=======
+>>>>>>> 51d96fba278240d1d9642d4360a18869e69cc2c4
 
+## Merge
+```{r}
+#try_merge_withdep = merge(x = walkability_clean, y = dep_new, by.x = "fips_noblk", by.y = "location_name")
+
+#try_merge_withdep %>% 
+#  lm(data_value ~ nat_walk_ind, data = .) %>% 
+#  broom::tidy()
 ```
 
 

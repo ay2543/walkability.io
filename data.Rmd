@@ -7,8 +7,8 @@ This is a description of our data sources and cleaning steps.
 
 We wish to identify associations between walkability and 
 
-* demograhic indicators (age, sex, income, race/ethnicity, employment)
-* health outcomes & environmental factors (?) (Heart health, mental health, respiratory health [air quality?])
+* demographic indicators 
+* health outcomes 
 
 We also wish to create our own updated walkability index and see how well it can estimate health outcomes compared to the original walkability index.
 
@@ -34,7 +34,14 @@ To do so, we used several datasets with information on walkability, demographic 
 * Data: [Behavioral Risk Factor Surveillance System (BRFSS), 2020](https://chronicdata.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh/data)
 * Cleaning steps:
   * 
-* Variables of interest
+* Variables of interest:
+  * High cholesterol
+  * Physical health
+  * Blood pressure
+  * Physical inactivity
+  * Mental health
+  *Note: blood pressure status is based on physician diagnosis, physical health, physical inactivity and mental health are based on self-report*
+
 
 ## Considerations
 
