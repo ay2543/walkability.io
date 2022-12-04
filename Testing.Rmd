@@ -11,9 +11,9 @@ library(tidyverse)
 
 ## Walkability Data
 ```{r}
-walkability_df = read_csv("./data/EPA_SmartLocationDatabase_V3_Jan_2021_Final.csv")
+walkability_raw = read_csv("./data/EPA_SmartLocationDatabase_V3_Jan_2021_Final.csv")
 
-walkability_new = walkability_df %>% 
+walkability_new = walkability_raw %>% 
   janitor::clean_names() %>% 
   mutate(statefp = str_pad(statefp, width = 2, pad = "0"),
          countyfp = str_pad(countyfp, width = 3, pad = "0"),
@@ -28,15 +28,6 @@ walkability_clean = walkability_new %>%
 ```
 
 ## Health Outcome Data - BRFSS
-```{r}
-# raw data with only depression stats
-dep_df = read_csv("./data/PLACES__Local_Data_for_Better_Health__Census_Tract_Data_2021_release.csv")
-
-dep_new = dep_df %>% 
-  janitor::clean_names() %>% 
-  mutate(location_name = str_pad(location_name, width = 11, pad = "0")) %>%
-  select(location_name, state_desc, county_name, data_value_type, data_value)
-```
 
 ```{r}
 # raw data with all health outcomes
@@ -61,28 +52,27 @@ demo_clean = demo_raw %>%
   select(geo_clean, everything())
 ```
 
+### Median household income 
+```{r}
+income_raw = read_csv("./data/ACSST5Y2020.S1903-Data.csv")
+
+income_clean = income_raw %>% 
+  janitor::clean_names() %>%
+  select(geo_id, name, s1903_c03_001e) %>% 
+  slice(-1) %>% 
+  mutate(geo_clean = geo_id, 
+         geo_clean = str_replace(geo_clean, "^1400000US", "")) %>% 
+  select(geo_clean, everything())
+```
 
 
 ## Merge
 ```{r}
-try_merge_withdep = merge(x = walkability_clean, y = dep_new, by.x = "fips_noblk", by.y = "location_name")
+#try_merge_withdep = merge(x = walkability_clean, y = dep_new, by.x = "fips_noblk", by.y = "location_name")
 
-try_merge_withdep %>% 
-  lm(data_value ~ nat_walk_ind, data = .) %>% 
-  broom::tidy()
+#try_merge_withdep %>% 
+#  lm(data_value ~ nat_walk_ind, data = .) %>% 
+#  broom::tidy()
 ```
 
-```{r}
-
-copd_df = read_csv("./data/County_COPD_prevalence.csv")
-
-longFIPS <- dep_df %>% select(CountyFIPS, LocationID)
-
-copd_new <- merge(x = longFIPS, y = copd_df, by.x = "CountyFIPS", by.y = "LocationID") %>% 
-  mutate(fips_noblk = LocationID) %>% 
-  select (-c(CountyFIPS, Public_Health_Jurisdiction, LocationID))
-
-try_merge_withcopd <- merge(x = walkability_clean, y = copd_new, by = "fips_noblk", all.x=TRUE, all.y=TRUE)
-
-```
 

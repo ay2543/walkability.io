@@ -13,7 +13,7 @@
 
 <title>Testing</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
@@ -32,6 +32,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -178,8 +180,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -187,16 +189,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -328,22 +323,23 @@ $(document).ready(function () {
 
 
 
+<h1 class="title toc-ignore">Testing</h1>
 
 </div>
 
 
-<div id="testing" class="section level1">
-<h1>Testing</h1>
-<pre class="r"><code>walkability_df = read_csv(&quot;./data/EPA_SmartLocationDatabase_V3_Jan_2021_Final.csv&quot;)</code></pre>
+<div id="walkability-data" class="section level2">
+<h2>Walkability Data</h2>
+<pre class="r"><code>walkability_raw = read_csv(&quot;./data/EPA_SmartLocationDatabase_V3_Jan_2021_Final.csv&quot;)</code></pre>
 <pre><code>## Rows: 220740 Columns: 117
-## ── Column specification ─────────────────────────────────────────
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr   (2): CSA_Name, CBSA_Name
 ## dbl (115): OBJECTID, GEOID10, GEOID20, STATEFP, COUNTYFP, TRACTCE, BLKGRPCE,...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>walkability_new = walkability_df %&gt;% 
+<pre class="r"><code>walkability_new = walkability_raw %&gt;% 
   janitor::clean_names() %&gt;% 
   mutate(statefp = str_pad(statefp, width = 2, pad = &quot;0&quot;),
          countyfp = str_pad(countyfp, width = 3, pad = &quot;0&quot;),
@@ -354,46 +350,75 @@ $(document).ready(function () {
 walkability_clean = walkability_new %&gt;% 
   select(fips, statefp, countyfp, tractce, blkgrpce, nat_walk_ind, csa_name) %&gt;% 
   mutate(fips_noblk = str_c(statefp, countyfp, tractce, sep = &quot;&quot;))</code></pre>
-<pre class="r"><code>dep_df = read_csv(&quot;./data/PLACES__Local_Data_for_Better_Health__Census_Tract_Data_2021_release.csv&quot;)</code></pre>
-<pre><code>## Rows: 2161543 Columns: 23
-## ── Column specification ─────────────────────────────────────────
+</div>
+<div id="health-outcome-data---brfss" class="section level2">
+<h2>Health Outcome Data - BRFSS</h2>
+<pre class="r"><code># raw data with all health outcomes
+health_df = read_csv(&quot;./data/PLACES__Local_Data_for_Better_Health__Census_Tract_Data_2022_release.csv&quot;)</code></pre>
+<pre><code>## Rows: 1048575 Columns: 23
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
-## chr (16): StateAbbr, StateDesc, CountyName, CountyFIPS, LocationName, DataSo...
-## dbl  (4): Year, Data_Value, Low_Confidence_Limit, High_Confidence_Limit
+## chr (13): StateAbbr, StateDesc, CountyName, DataSource, Category, Measure, D...
+## dbl  (7): Year, CountyFIPS, LocationName, Data_Value, Low_Confidence_Limit, ...
+## num  (1): TotalPopulation
 ## lgl  (2): Data_Value_Footnote_Symbol, Data_Value_Footnote
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>dep_new = dep_df %&gt;% 
-  janitor::clean_names() %&gt;% 
-  mutate(location_name = str_pad(location_name, width = 11, pad = &quot;0&quot;)) %&gt;%
-  select(location_name, state_desc, county_name, data_value_type, data_value)</code></pre>
-<pre class="r"><code>try_merge_withdep = merge(x = walkability_clean, y = dep_new, by.x = &quot;fips_noblk&quot;, by.y = &quot;location_name&quot;)
+<pre class="r"><code>health_new = health_df %&gt;% 
+  janitor::clean_names() %&gt;%
+  mutate(location_name = str_pad(location_name, width = 11, pad = &quot;0&quot;))</code></pre>
+</div>
+<div id="demographic-data---acs-2020" class="section level2">
+<h2>Demographic Data - ACS 2020</h2>
+<div id="age-and-race" class="section level3">
+<h3>Age and Race</h3>
+<pre class="r"><code>demo_raw = read_csv(&quot;./data/ACSDP5Y2020.DP05-Data.csv&quot;)</code></pre>
+<pre><code>## New names:
+## Rows: 85396 Columns: 715
+## ── Column specification
+## ──────────────────────────────────────────────────────── Delimiter: &quot;,&quot; chr
+## (714): GEO_ID, NAME, DP05_0001E, DP05_0001M, DP05_0001MA, DP05_0001EA, D... lgl
+## (1): ...715
+## ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
+## Specify the column types or set `show_col_types = FALSE` to quiet this message.
+## • `` -&gt; `...715`</code></pre>
+<pre class="r"><code>demo_clean = demo_raw %&gt;% 
+  slice(-1) %&gt;% 
+  janitor::clean_names() %&gt;%
+  select(-ends_with(c(&quot;ea&quot;, &quot;m&quot;, &quot;ma&quot;))) %&gt;% 
+  mutate(geo_clean = geo_id, 
+         geo_clean = str_replace(geo_clean, &quot;^1400000US&quot;, &quot;&quot;)) %&gt;% 
+  select(geo_clean, everything())</code></pre>
+</div>
+<div id="median-household-income" class="section level3">
+<h3>Median household income</h3>
+<pre class="r"><code>income_raw = read_csv(&quot;./data/ACSST5Y2020.S1903-Data.csv&quot;)</code></pre>
+<pre><code>## New names:
+## Rows: 85396 Columns: 483
+## ── Column specification
+## ──────────────────────────────────────────────────────── Delimiter: &quot;,&quot; chr
+## (482): GEO_ID, NAME, S1903_C01_001E, S1903_C01_001EA, S1903_C01_001M, S1... lgl
+## (1): ...483
+## ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
+## Specify the column types or set `show_col_types = FALSE` to quiet this message.
+## • `` -&gt; `...483`</code></pre>
+<pre class="r"><code>income_clean = income_raw %&gt;% 
+  janitor::clean_names() %&gt;%
+  select(geo_id, name, s1903_c03_001e) %&gt;% 
+  slice(-1) %&gt;% 
+  mutate(geo_clean = geo_id, 
+         geo_clean = str_replace(geo_clean, &quot;^1400000US&quot;, &quot;&quot;)) %&gt;% 
+  select(geo_clean, everything())</code></pre>
+</div>
+</div>
+<div id="merge" class="section level2">
+<h2>Merge</h2>
+<pre class="r"><code>#try_merge_withdep = merge(x = walkability_clean, y = dep_new, by.x = &quot;fips_noblk&quot;, by.y = &quot;location_name&quot;)
 
-try_merge_withdep %&gt;% 
-  lm(data_value ~ nat_walk_ind, data = .) %&gt;% 
-  broom::tidy()</code></pre>
-<pre><code>## # A tibble: 2 × 5
-##   term         estimate std.error statistic p.value
-##   &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
-## 1 (Intercept)    33.1     0.0251     1319.        0
-## 2 nat_walk_ind   -0.166   0.00237     -69.9       0</code></pre>
-<pre class="r"><code>copd_df = read_csv(&quot;./data/County_COPD_prevalence.csv&quot;)</code></pre>
-<pre><code>## Rows: 3144 Columns: 7
-## ── Column specification ─────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## chr (6): LocationID, Public_Health_Jurisdiction, StateDesc, County, 95% Conf...
-## dbl (1): Percent_COPD
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>longFIPS &lt;- dep_df %&gt;% select(CountyFIPS, LocationID)
-
-copd_new &lt;- merge(x = longFIPS, y = copd_df, by.x = &quot;CountyFIPS&quot;, by.y = &quot;LocationID&quot;) %&gt;% 
-  mutate(fips_noblk = LocationID) %&gt;% 
-  select (-c(CountyFIPS, Public_Health_Jurisdiction, LocationID))
-
-try_merge_withcopd &lt;- merge(x = walkability_clean, y = copd_new, by = &quot;fips_noblk&quot;, all.x=TRUE, all.y=TRUE)</code></pre>
+#try_merge_withdep %&gt;% 
+#  lm(data_value ~ nat_walk_ind, data = .) %&gt;% 
+#  broom::tidy()</code></pre>
 </div>
 
 
