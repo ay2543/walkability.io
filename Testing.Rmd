@@ -35,7 +35,12 @@ health_df = read_csv("./data/PLACES__Local_Data_for_Better_Health__Census_Tract_
 
 health_new = health_df %>% 
   janitor::clean_names() %>%
-  mutate(location_name = str_pad(location_name, width = 11, pad = "0"))
+  mutate(location_name = str_pad(location_name, width = 11, pad = "0"),
+         geolocation = str_replace(geolocation, "^POINT ", ""),
+         geolocation = str_replace(geolocation, "^\\(", ""),
+         geolocation = str_replace(geolocation, "\\)$", "")) %>% 
+  separate(geolocation, into = c("lat", "long"), sep = " ")
+  
 ```
 
 ## Demographic Data - ACS 2020
@@ -65,6 +70,29 @@ income_clean = income_raw %>%
   select(geo_clean, everything())
 ```
 
+<<<<<<< HEAD
+## Further clearning
+```{r}
+# for health outcome, we are focusing on 5 outcomes that are likely to be related to walkability 
+
+health_clean = health_new %>% 
+  filter(measure_id == c("BPHIGH", "PHLTH", "LPA", "MHLTH", "HIGHCHOL")) %>% 
+  select(location_name, lat, long, measure, data_value, data_value_type, data_value_unit, measure_id)
+```
+
+
+##Merge
+```{r}
+# merging walkability and health outcomes
+merge1 = merge(x = walkability_clean, y = health_clean, by.x = "fips_noblk", by.y = "location_name")
+
+#mergeing demographic into one df - age&race + median household income
+merge2 = merge(demo_clean, income_clean, by = "geo_clean")
+  
+# merge merge1 and merge2
+merge_final = merge(x = merge1, y = merge2, by.x = "fips_noblk", by.y = "geo_clean")
+=======
+>>>>>>> 51d96fba278240d1d9642d4360a18869e69cc2c4
 
 ## Merge
 ```{r}
