@@ -346,9 +346,6 @@ $(document).ready(function () {
 <p>We also wish to create our own updated walkability index and see how
 well it can estimate health outcomes compared to the original
 walkability index.</p>
-<p>To do so, we used several datasets with information on walkability,
-demographic information and health outcomes, and grouped them by census
-tract for a comprehensive analysis by location.</p>
 <div id="exposure-walkability" class="section level2">
 <h2>Exposure: Walkability</h2>
 <ul>
@@ -379,7 +376,13 @@ American Community Survey, 2020</a></li>
 (removed the “1400000US” at the beginning of each entry) to match with
 other data sets</li>
 </ul></li>
-<li>Variables of interest:</li>
+<li>Variables of interest:
+<ul>
+<li>Age</li>
+<li>Sex</li>
+<li>Race/ethnicity</li>
+<li>Median household income</li>
+</ul></li>
 </ul>
 </div>
 <div id="outcome-health-outcomes" class="section level2">
@@ -398,11 +401,13 @@ Risk Factor Surveillance System (BRFSS), 2020</a></li>
 <li>Physical health</li>
 <li>Blood pressure</li>
 <li>Physical inactivity</li>
-<li>Mental health <em>Note: blood pressure status is based on physician
+<li>Mental health</li>
+</ul>
+<em>Note: Cholesterol and blood pressure status is based on physician
 diagnosis, physical health, physical inactivity and mental health are
 based on self-report</em></li>
-</ul></li>
 </ul>
+<p><br></p>
 </div>
 <div id="considerations" class="section level2">
 <h2>Considerations</h2>
@@ -430,6 +435,7 @@ datasets are from 2020</li>
 so we are choosing to interpret with caution and avoid discussing
 causality</li>
 </ul>
+<p></br></p>
 </div>
 </div>
 

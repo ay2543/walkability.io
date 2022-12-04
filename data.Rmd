@@ -12,8 +12,6 @@ We wish to identify associations between walkability and
 
 We also wish to create our own updated walkability index and see how well it can estimate health outcomes compared to the original walkability index.
 
-To do so, we used several datasets with information on walkability, demographic information and health outcomes, and grouped them by census tract for a comprehensive analysis by location.
-
 
 ## Exposure: Walkability
 
@@ -29,6 +27,10 @@ To do so, we used several datasets with information on walkability, demographic 
   * removed columns for annotations and margins of error
   * created a census tract column derived from the geo_id column (removed the "1400000US" at the beginning of each entry) to match with other data sets
 * Variables of interest:
+  * Age
+  * Sex
+  * Race/ethnicity
+  * Median household income
   
 ## Outcome: Health outcomes
 * Data: [Behavioral Risk Factor Surveillance System (BRFSS), 2020](https://chronicdata.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh/data)
@@ -40,8 +42,10 @@ To do so, we used several datasets with information on walkability, demographic 
   * Blood pressure
   * Physical inactivity
   * Mental health
-  *Note: blood pressure status is based on physician diagnosis, physical health, physical inactivity and mental health are based on self-report*
+  
+  *Note: Cholesterol and blood pressure status is based on physician diagnosis, physical health, physical inactivity and mental health are based on self-report*
 
+<br>
 
 ## Considerations
 
@@ -54,7 +58,7 @@ To do so, we used several datasets with information on walkability, demographic 
 * Walkability dataset is from 2021, Demographic and health outcome datasets are from 2020
 * We recognize that there is a discrepancy in timing across datasets, so we are choosing to interpret with caution and avoid discussing causality
 
-
+</br>
 
 
 

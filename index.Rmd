@@ -1,16 +1,27 @@
 ---
-title: "Home"
+title: ""
 output: html_document
 ---
 
-Welcome to our website!!!
-
-## Walk the walk: The importance of walkability on health and wellbeing
-
-<p style="text-align:center;"><img src="images/index_park.jpeg" style="width:100%"></p>
 
 
-### Motivation
+## **Walk the walk: The effect of neighborhood walkability on health**
 
-Urban planning of most US cities was designed around cars and not walking, and not everywhere in the US is walkable for its residents. The recent pandemic has further emphasized the important role that accessible green space and walkable neighborhoods play in our individual and collective physical activity and mental wellbeing. We want to learn about the National Walkability Index published by the EPA, and how the index relates to health outcomes. We also would like to explore ways to improve the index to make it more comprehensive. As five passionate walkaholics🚶🏻‍♂️, we want to promote walking and hope more people will enjoy walking. 
+<br>
+<table style="table-layout: fixed; width: 100%">
+  <tr>
+    <td><img src="images/index_park.jpeg" style="width:100%"></td>
+    <td><img src="images/index_city.jpeg" style="width:100%"></td>
+  </tr>
+  <tr>
+    <td><img src="images/index_highway.jpeg" style="width:100%"></td> 
+    <td><img src="images/index_road.jpeg" style="width:100%"></td>
+  </tr>
+</table>
+</br>
+
+
+## Motivation
+
+Urban planning of most US cities was designed around cars and not walking, and not everywhere in the US is walkable for its residents. The recent pandemic has further emphasized the important role that accessible green space and walkable neighborhoods play in our individual and collective physical activity and mental wellbeing. We want to learn about the National Walkability Index published by the EPA, and how the index relates to health outcomes. We also would like to explore ways to improve the index to make it more comprehensive. As five passionate walkaholics🚶🏻‍️, we want to promote walking and hope more people will enjoy walking.
 
