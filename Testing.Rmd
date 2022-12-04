@@ -35,7 +35,12 @@ health_df = read_csv("./data/PLACES__Local_Data_for_Better_Health__Census_Tract_
 
 health_new = health_df %>% 
   janitor::clean_names() %>%
-  mutate(location_name = str_pad(location_name, width = 11, pad = "0"))
+  mutate(location_name = str_pad(location_name, width = 11, pad = "0"),
+         geolocation = str_replace(geolocation, "^POINT ", ""),
+         geolocation = str_replace(geolocation, "^\\(", ""),
+         geolocation = str_replace(geolocation, "\\)$", "")) %>% 
+  separate(geolocation, into = c("lat", "long"), sep = " ")
+  
 ```
 
 ## Demographic Data - ACS 2020
@@ -71,7 +76,7 @@ income_clean = income_raw %>%
 
 health_clean = health_new %>% 
   filter(measure_id == c("BPHIGH", "PHLTH", "LPA", "MHLTH", "HIGHCHOL")) %>% 
-  select(location_name, measure, data_value, data_value_type, data_value_unit, measure_id)
+  select(location_name, lat, long, measure, data_value, data_value_type, data_value_unit, measure_id)
 ```
 
 
