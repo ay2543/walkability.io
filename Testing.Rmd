@@ -106,3 +106,77 @@ merge_final %>%
     color = ~nat_walk_ind, alpha = 0.5)
 ```
 
+
+## Plot more and failed
+```{r}
+library(maptools)
+library(spatstat)
+library(sf)
+
+map_try = st_read("./data/cb_2020_us_tract_500k/cb_2020_us_tract_500k.shp")
+
+plot(map_try["geometry"])
+
+map_window = as.owin(map_try)
+
+
+map_try <- st_union(map_try)
+
+map_try <- st_transform(map_try, crs = 6345)
+
+window <- as.owin(map_try)
+
+plot(window)
+
+map_try = as_Spatial(map_try)
+```
+
+## Plot more and successed
+```{r}
+library(rjson)
+
+walkability_plot = walkability_clean %>% 
+  mutate(fips_county = str_c(statefp, countyfp)) %>% 
+  group_by(fips_county) %>% 
+  summarise(ind_mean = mean(nat_walk_ind))
+
+url = 'https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json'
+
+counties = rjson::fromJSON(file = url)
+
+g <- list(
+  scope = 'usa',
+  projection = list(type = 'albers usa'),
+  showlakes = TRUE,
+  lakecolor = toRGB('white')
+)
+
+fig <- plot_ly()
+
+fig <- fig %>% add_trace(
+    type="choropleth",
+    geojson=counties,
+    locations=walkability_plot$fips_county,
+    z=walkability_plot$ind_mean,
+    colorscale="Viridis",
+    zmin=0,
+    zmax=12,
+    marker=list(line=list(
+      width=0)
+    )
+  )
+
+fig <- fig %>% colorbar(title = "National Walkability Index")
+fig <- fig %>% layout(
+    title = "National Walkability Index in the US"
+)
+
+fig <- fig %>% layout(
+    geo = g
+  )
+
+fig
+```
+
+
+
