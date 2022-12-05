@@ -2,35 +2,54 @@
 title: "dashboard"
 output: 
   flexdashboard::flex_dashboard:
-    orientation: columns
     vertical_layout: fill
+runtime: shiny
+
 ---
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
+library(tidyverse)
+library(plotly)
+library(shiny)
+
 ```
 
-Column {data-width=650}
+Column {.sidebar}
 -----------------------------------------------------------------------
 
-### Chart A
-
 ```{r}
+selectInput(
+  inputId = "demo_choice",
+  label = h3("Demographic indicator"), 
+  choices = c("Age", "Sex", "Race/ethnicity", "Median Household Income")
+) 
+
+radioButtons(
+  inputId = "outcome_choice",
+  label = h3("Health outcome"),
+  choices = c("Physical health", "Physical activity", "Cholesterol", "Blood pressure", "Mental health"),
+  selected = "Entire home/apt"
+)
 
 ```
 
-Column {data-width=350}
+Column {data-width=500}
 -----------------------------------------------------------------------
 
-### Chart B
+### Demography
 
 ```{r}
 
 ```
 
-### Chart C
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### Health outcome
 
 ```{r}
 
 ```
+
 
