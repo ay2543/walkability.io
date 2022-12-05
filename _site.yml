@@ -8,31 +8,32 @@ navbar:
     - text: "About"
       icon: fa-file
       menu:
-        - text: "The Project"
-          href: desc.html   
         - text: "Data Source"
           href: data.html
-    - text: "EDA"
-      icon: fa-file 
-      menu:
-        - text: "Demographics"
-          href: demo.html
-        - text: "Health Outcomes"
-          href: health.html
-    - text: "Dashboard"
-      href: "dashboard.html"
+        - text: "Project Description"
+          href: desc.html  
+    - text: "Walkability Map"
+      icon: fa-map
+      href: map.html
+    - text: "Bivariate plots"
+      icon: fa-chart-simple
+      href: dashboard.html
     - text: "New Walkability Index"
+      icon: fa-magnifying-glass    
       href: newscore.html
-    - text: "The Team"
+    - text: "Findings"
+      icon: fa-pen
+      href: results.html
+    - text: "Limitations"
+      icon: fa-thought-bubble
+      href: limtations.html
+    - text: "Who We Are"
       icon: fa-people-group
-      menu: 
-        - text: "Who We Are"
-          href: team.html
-        - text: "Other names"
-          href: memes.html
+      href: team.html
+       
   right:
     - icon: fa-github fa-lg
       href: https://github.com/ay2543/walkability.io
 output:
   html_document:
-      theme: simplex
+      theme: paper
