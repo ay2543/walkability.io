@@ -8,7 +8,7 @@ navbar:
     - text: "About"
       icon: fa-file
       menu:
-        - text: "Data Source"
+        - text: "Data Sources"
           href: data.html
         - text: "Project Description"
           href: desc.html  

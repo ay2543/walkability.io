@@ -13,10 +13,10 @@
 
 <title>Data Source</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -180,8 +180,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -189,16 +189,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -268,52 +261,54 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="desc.html">The Project</a>
-    </li>
-    <li>
       <a href="data.html">Data Source</a>
     </li>
+    <li>
+      <a href="desc.html">Project Description</a>
+    </li>
   </ul>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    <span class="fa fa-file"></span>
+<li>
+  <a href="map.html">
+    <span class="fa fa-map"></span>
      
-    EDA
-     
-    <span class="caret"></span>
+    Walkability Map
   </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="demo.html">Demographics</a>
-    </li>
-    <li>
-      <a href="health.html">Health Outcomes</a>
-    </li>
-  </ul>
 </li>
 <li>
-  <a href="dashboard.html">Dashboard</a>
+  <a href="dashboard.html">
+    <span class="fa fa-chart-simple"></span>
+     
+    Bivariate plots
+  </a>
 </li>
 <li>
-  <a href="newscore.html">New Walkability Index</a>
+  <a href="newscore.html">
+    <span class="fa fa-magnifying-glass"></span>
+     
+    New Walkability Index
+  </a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+<li>
+  <a href="results.html">
+    <span class="fa fa-pen"></span>
+     
+    Findings
+  </a>
+</li>
+<li>
+  <a href="limtations.html">
+    <span class="fa fa-thought-bubble"></span>
+     
+    Limitations
+  </a>
+</li>
+<li>
+  <a href="team.html">
     <span class="fa fa-people-group"></span>
      
-    The Team
-     
-    <span class="caret"></span>
+    Who We Are
   </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="team.html">Who We Are</a>
-    </li>
-    <li>
-      <a href="memes.html">Other names</a>
-    </li>
-  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -351,7 +346,18 @@ walkability index.</p>
 <ul>
 <li>Data: <a
 href="http://edg.epa.gov/metadata/catalog/search/resource/details.page?uuid=%7B251AFDD9-23A7-4068-9B27-A3048A7E6012%7D">Environmental
-Protection Agency’s information on Walkability Index, 2021</a></li>
+Protection Agency’s information on Walkability Index, 2021</a>
+<ul>
+<li>The National Walkability Index from the EPA provides walkability
+scores based on a simple formula that ranks selected indicators from the
+Smart Location Database (which summarizes 90 indicators associated with
+the built environment) that have been demonstrated to affect the
+propensity of walk trips. Currently, the National Walkability Index
+dataset ranks each block group relative to all other block groups in the
+United States on a scale from 0-20; and data can be aggregated to larger
+spatial units using Federal Information Processing Standards (FIPS)
+codes.</li>
+</ul></li>
 <li><a
 href="https://www.epa.gov/sites/default/files/2021-06/documents/national_walkability_index_methodology_and_user_guide_june2021.pdf">Methodology
 &amp; User Guide</a>, <a
@@ -375,7 +381,14 @@ href="https://www.epa.gov/sites/default/files/2021-06/documents/epa_sld_3.0_tech
 <ul>
 <li>Data: <a
 href="https://data.census.gov/table?tid=ACSDP1Y2021.DP05">US Census
-American Community Survey, 2020</a></li>
+American Community Survey, 2020</a>
+<ul>
+<li>The American Community Survey (ACS) is an annual, nationwide survey
+conducted by the U.S. Census Bureau and produces information on social,
+economic, housing, and demographic characteristics about our nation’s
+population every year. This information is a vital tool that communities
+can use to see how they are changing across the years.</li>
+</ul></li>
 <li>Cleaning steps:
 <ul>
 <li>removed second row with detailed column names</li>
@@ -398,7 +411,19 @@ other data sets</li>
 <ul>
 <li>Data: <a
 href="https://chronicdata.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh/data">Behavioral
-Risk Factor Surveillance System (BRFSS), 2020</a></li>
+Risk Factor Surveillance System (BRFSS), 2020</a>
+<ul>
+<li>The Behavioral Risk Factor Surveillance System (BRFSS) is an annual,
+nationwide system of health-related telephone surveys conducted by the
+Centers for Disease Control and Prevention (CDC) which collects
+information about U.S. residents regarding their health-related risk
+behaviors, chronic health conditions, and use of preventive services.
+Established in 1984 with 15 states, BRFSS now collects data in all 50
+states as well as the District of Columbia and three U.S. territories.
+BRFSS completes more than 400,000 adult interviews each year, making it
+the largest continuously conducted health survey system in the
+world.</li>
+</ul></li>
 <li>Cleaning steps:
 <ul>
 <li>Removed footnote variables</li>
