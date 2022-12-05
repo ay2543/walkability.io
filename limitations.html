@@ -11,9 +11,9 @@
 
 
 
-<title>Data Source</title>
+<title>limitations</title>
 
-<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
@@ -180,8 +180,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "\e259";
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -189,9 +189,16 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "\e258";
-  font-family: 'Glyphicons Halflings';
+  content: "&#xe258;";
   border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -261,7 +268,7 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="data.html">Data Source</a>
+      <a href="data.html">Data Sources</a>
     </li>
     <li>
       <a href="desc.html">Project Description</a>
@@ -297,7 +304,7 @@ $(document).ready(function () {
   </a>
 </li>
 <li>
-  <a href="limtations.html">
+  <a href="limitations.html">
     <span class="fa fa-thought-bubble"></span>
      
     Limitations
@@ -327,151 +334,12 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Data Source</h1>
+<h1 class="title toc-ignore">limitations</h1>
 
 </div>
 
 
-<p>This is a description of our data sources and cleaning steps.</p>
-<p>We wish to identify associations between walkability and</p>
-<ul>
-<li>demographic indicators</li>
-<li>health outcomes</li>
-</ul>
-<p>We also wish to create our own updated walkability index and see how
-well it can estimate health outcomes compared to the original
-walkability index.</p>
-<div id="exposure-walkability" class="section level2">
-<h2>Exposure: Walkability</h2>
-<ul>
-<li>Data: <a
-href="http://edg.epa.gov/metadata/catalog/search/resource/details.page?uuid=%7B251AFDD9-23A7-4068-9B27-A3048A7E6012%7D">Environmental
-Protection Agency’s information on Walkability Index, 2021</a>
-<ul>
-<li>The National Walkability Index from the EPA provides walkability
-scores based on a simple formula that ranks selected indicators from the
-Smart Location Database (which summarizes 90 indicators associated with
-the built environment) that have been demonstrated to affect the
-propensity of walk trips. Currently, the National Walkability Index
-dataset ranks each block group relative to all other block groups in the
-United States on a scale from 0-20; and data can be aggregated to larger
-spatial units using Federal Information Processing Standards (FIPS)
-codes.</li>
-</ul></li>
-<li><a
-href="https://www.epa.gov/sites/default/files/2021-06/documents/national_walkability_index_methodology_and_user_guide_june2021.pdf">Methodology
-&amp; User Guide</a>, <a
-href="https://www.epa.gov/sites/default/files/2021-06/documents/epa_sld_3.0_technicaldocumentationuserguide_may2021.pdf">Codebook</a></li>
-<li>Cleaning steps:
-<ul>
-<li>Added leading zeros for all Federal Information Processing Standard
-(FIPS) codes (numbers which uniquely identify geographic areas)</li>
-<li>Combined state, county and tract FIPS into an 11-digit code</li>
-<li>Selected relevant variables</li>
-</ul></li>
-<li>Variables of interest:
-<ul>
-<li>FIPS code</li>
-<li>National Walkability Index</li>
-</ul></li>
-</ul>
-</div>
-<div id="confounders-demographics" class="section level2">
-<h2>Confounders: Demographics</h2>
-<ul>
-<li>Data: <a
-href="https://data.census.gov/table?tid=ACSDP1Y2021.DP05">US Census
-American Community Survey, 2020</a>
-<ul>
-<li>The American Community Survey (ACS) is an annual, nationwide survey
-conducted by the U.S. Census Bureau and produces information on social,
-economic, housing, and demographic characteristics about our nation’s
-population every year. This information is a vital tool that communities
-can use to see how they are changing across the years.</li>
-</ul></li>
-<li>Cleaning steps:
-<ul>
-<li>removed second row with detailed column names</li>
-<li>removed columns for annotations and margins of error</li>
-<li>created a census tract column derived from the geo_id column
-(removed the “1400000US” at the beginning of each entry) to match with
-other data sets</li>
-</ul></li>
-<li>Variables of interest:
-<ul>
-<li>Age</li>
-<li>Sex</li>
-<li>Race/ethnicity</li>
-<li>Median household income</li>
-</ul></li>
-</ul>
-</div>
-<div id="outcome-health-outcomes" class="section level2">
-<h2>Outcome: Health outcomes</h2>
-<ul>
-<li>Data: <a
-href="https://chronicdata.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh/data">Behavioral
-Risk Factor Surveillance System (BRFSS), 2020</a>
-<ul>
-<li>The Behavioral Risk Factor Surveillance System (BRFSS) is an annual,
-nationwide system of health-related telephone surveys conducted by the
-Centers for Disease Control and Prevention (CDC) which collects
-information about U.S. residents regarding their health-related risk
-behaviors, chronic health conditions, and use of preventive services.
-Established in 1984 with 15 states, BRFSS now collects data in all 50
-states as well as the District of Columbia and three U.S. territories.
-BRFSS completes more than 400,000 adult interviews each year, making it
-the largest continuously conducted health survey system in the
-world.</li>
-</ul></li>
-<li>Cleaning steps:
-<ul>
-<li>Removed footnote variables</li>
-<li>Filtered for relevant health outcomes</li>
-</ul></li>
-<li>Variables of interest:
-<ul>
-<li>High cholesterol</li>
-<li>Physical health</li>
-<li>Blood pressure</li>
-<li>Physical inactivity</li>
-<li>Mental health</li>
-</ul>
-<em>Note: Cholesterol and blood pressure status is based on physician
-diagnosis, physical health, physical inactivity and mental health are
-based on self-report</em></li>
-</ul>
-<p><br></p>
-</div>
-<div id="considerations" class="section level2">
-<h2>Considerations</h2>
-<div id="spatial-units" class="section level3">
-<h3>Spatial units</h3>
-<ul>
-<li>For all of our variables of interest, we selected datasets that
-contained spatial (geographic) information</li>
-<li>All variables were analyzed at the <strong>census tract</strong>
-level
-<ul>
-<li>Since walkability data was provided at a census block level (which
-is narrower than the census tract level), we took the average
-walkability indices of census blocks within a census tract for analysis
-for consistency with geographic data for other variables.</li>
-</ul></li>
-</ul>
-</div>
-<div id="timing" class="section level3">
-<h3>Timing</h3>
-<ul>
-<li>Walkability dataset is from 2021, Demographic and health outcome
-datasets are from 2020</li>
-<li>We recognize that there is a discrepancy in timing across datasets,
-so we are choosing to interpret with caution and avoid discussing
-causality</li>
-</ul>
-<p></br></p>
-</div>
-</div>
+<p>Limitations</p>
 
 
 
