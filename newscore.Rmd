@@ -1,0 +1,6 @@
+---
+title: "newscore"
+output: html_document
+---
+
+New walkability score!
