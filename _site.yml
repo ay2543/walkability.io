@@ -26,7 +26,7 @@ navbar:
       href: results.html
     - text: "Limitations"
       icon: fa-thought-bubble
-      href: limtations.html
+      href: limitations.html
     - text: "Who We Are"
       icon: fa-people-group
       href: team.html
