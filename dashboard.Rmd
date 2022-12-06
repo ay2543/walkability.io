@@ -15,6 +15,12 @@ library(tidyverse)
 library(plotly)
 library(shiny)
 
+# Read data
+
+walkability = read_csv("./data/merge_final.csv")
+
+#rmarkdown::render("dashboard.Rmd", output_format = "flexdashboard::flex_dashboard")
+
 ```
 
 Column {.sidebar}
@@ -30,8 +36,7 @@ selectInput(
 radioButtons(
   inputId = "outcome_choice",
   label = h3("Health outcome"),
-  choices = c("Physical health", "Physical activity", "Cholesterol", "Blood pressure", "Mental health"),
-  selected = "Entire home/apt"
+  choices = c("Physical health", "Physical activity", "Cholesterol", "Blood pressure", "Mental health")
 )
 
 ```
