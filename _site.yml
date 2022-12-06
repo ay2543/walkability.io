@@ -11,16 +11,16 @@ navbar:
         - text: "Data Sources"
           href: data.html
         - text: "Project Description"
-          href: desc.html  
-    - text: "Walkability Map"
-      icon: fa-map
-      href: map.html
-    - text: "Exploratory Analysis"
-      icon: fa-map
-      href: explore.html    
-    - text: "Bivariate plots"
-      icon: fa-chart-simple
-      href: dashboard.html
+          href: desc.html
+    - text: "Visualizations"
+      icon: fa-file
+      menu:
+        - text: "Walkability Map"
+          href: map.html
+        - text: "Exploratory Analysis"
+          href: explore.html    
+        - text: "Bivariate plots"
+          href: dashboard.html
     - text: "New Walkability Index"
       icon: fa-magnifying-glass    
       href: newscore.html

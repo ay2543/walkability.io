@@ -2,9 +2,19 @@
 title: "Interactive Map"
 output: html_document
 ---
-## Interactive map of walkability in the US!
 
-Enjoy the interactive map
+Enjoy our interactive map!
+
+When your mouse hover onto a county, the textbox displays the county name, National Walkability Index, and health outcomes percentage. These health outcomes are:
+
+* High Cholesterol: High cholesterol among adults aged >=18 years who have been screened in the past 5 years
+* Physical Inactivity: No leisure-time physical activity among adults aged >=18 years
+* Mental Health: Mental health not good for >=14 days among adults aged >=18 years
+* Physical Health: Physical health not good for >=14 days among adults aged >=18 years
+* High Blood Pressure: High blood pressure among adults aged >=18 years
+
+You can also check out the interactive map showing the National Walkability Index published by the EPA [here](https://www.arcgis.com/home/webmap/viewer.html?url=https%3A%2F%2Fgeodata.epa.gov%2Farcgis%2Frest%2Fservices%2FOA%2FWalkabilityIndex%2FMapServer&source=sd).
+
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 library(rjson)
@@ -46,12 +56,12 @@ walkability_plot = full_join(x = index_by_county, y = hover_test_df, by = "fips_
 walkability_plot$hover <- with(walkability_plot, 
                             paste('<br>',
                                   "National Walkability Index (by County):", ind_mean, '<br>', 
-                                  "% Health Outcomes (by County):", '<br>',
+                                  "% Health Outcomes (by County)", '<br>',
                                   "High Cholesterol:", highchol, '<br>',
                                   "Physical Inactivity:", lpa, '<br>',
                                   "Mental Health:", mhlth, '<br>',
                                   "Physical Health:", phlth, '<br>',
-                                  "High BP:", bphigh))
+                                  "High Blood Pressure:", bphigh))
 
 #Choropleth with hovertext of health outcomes by county by plotly
 fig_hover_test = plot_ly()
