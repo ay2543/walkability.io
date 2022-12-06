@@ -5,7 +5,6 @@ output: html_document
 
 This wonderful walkability project was brought to you by 5 NYC walkaholics!
 
-
 ### [Amy Yeung (she/her)](https://ay2543.github.io/amyyeung.github.io) <a href="mailto:ay2543@cumc.columbia.edu" class="fa fa-envelope"></a> <a href="https://linkedin.com/in/amy715" class="fa fa-linkedin"></a> <a href="https://github.com/ay2543" class="fa fa-github"></a>
 
 * Favorite place to walk in NYC: From Ktown to Chinatown
@@ -34,3 +33,21 @@ This wonderful walkability project was brought to you by 5 NYC walkaholics!
 
 * Favorite place to walk in NYC: Riverside park 
 * Favorite part about walking: Enjoy the nature and stay active!
+
+
+<br />
+
+<center>
+<img src="images/group_pic_power.jpg" style="width:30%">
+<img src="images/group_pic_walking.jpg" style="width:30%">
+<img src="images/group_pic_stop.jpg" style="width:30%">
+
+<img src="images/power_ranger_pose1.jpg" style="width:30%">
+<img src="images/power_ranger_logo.jpg" style="width:30%">
+<img src="images/power_ranger_pose2.jpg" style="width:30%">
+
+**Thank you for exploring our project!**
+
+</center>
+
+<br />
