@@ -110,7 +110,10 @@ merge_final = merge_final %>%
   pivot_longer(names_to = "race",
                values_to = "percent_race",
                cols = starts_with("race"),
-               names_prefix = "race_")
+               names_prefix = "race_") %>% 
+  pivot_wider(names_from = "measure_id",
+               values_from = "data_value") %>% 
+  select(-data_value_type, -data_value_unit)
 
 write_csv(merge_final, "./data/merge_final.csv")
 
