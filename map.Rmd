@@ -1,5 +1,79 @@
 ---
-title: "map"
+title: "Interactive Map"
 output: html_document
 ---
-Interactive map of walkability in the US!
+## Interactive map of walkability in the US!
+
+Enjoy the interactive map
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(rjson)
+library(leaflet)
+library(tidyverse)
+library(plotly)
+
+#Read in cleaned datafile
+
+walkability = read_csv("./data/merge_final.csv")
+
+#Get the county-level .json file from the web
+url = 'https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json'
+
+counties = rjson::fromJSON(file = url)
+
+#Set up the geographic projection for the map 
+g = list(scope = 'usa',
+         projection = list(type = 'albers usa'))
+
+#Get the df for mean of walkability index by county
+index_by_county = walkability %>% 
+  mutate(fips_county = str_c(statefp, countyfp)) %>% 
+  group_by(fips_county) %>% 
+  summarise(ind_mean = round(mean(nat_walk_ind), 1))
+
+#Get the df for mean of health outcome prevalence by county
+hover_test_df = walkability %>%
+  mutate(fips_county = str_c(statefp, countyfp)) %>% 
+  group_by(fips_county, measure_id) %>%
+  summarise(county_hlth = round(mean(data_value, na.rm = TRUE), 1)) %>%
+  pivot_wider(names_from = "measure_id", values_from = "county_hlth") %>% 
+  janitor::clean_names()
+
+#Merge the two df by county-level FIPS
+walkability_plot = full_join(x = index_by_county, y = hover_test_df, by = "fips_county")
+
+#Adding variable for hovertext
+walkability_plot$hover <- with(walkability_plot, 
+                            paste('<br>',
+                                  "National Walkability Index (by County):", ind_mean, '<br>', 
+                                  "% Health Outcomes (by County):", '<br>',
+                                  "High Cholesterol:", highchol, '<br>',
+                                  "Physical Inactivity:", lpa, '<br>',
+                                  "Mental Health:", mhlth, '<br>',
+                                  "Physical Health:", phlth, '<br>',
+                                  "High BP:", bphigh))
+
+#Choropleth with hovertext of health outcomes by county by plotly
+fig_hover_test = plot_ly()
+
+fig_hover_test = fig_hover_test %>% 
+  add_trace(type = "choropleth",
+            geojson = counties,
+            locations = walkability_plot$fips_county,
+            z = walkability_plot$ind_mean,
+            text = walkability_plot$hover,
+            colorscale = "Viridis",
+            reversescale = T, #to get reverse color scheme
+            zmin = 1,
+            zmax = 16,
+            marker = list(line = list(width = 0)))
+
+fig_hover_test = fig_hover_test %>%
+  layout(title = "National Walkability Index in the US")
+
+fig_hover_test = fig_hover_test %>% 
+  layout(geo = g)
+
+fig_hover_test
+```
+
