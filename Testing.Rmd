@@ -96,6 +96,8 @@ merge2 = merge2 %>%
 # merge merge1 and merge2
 merge_final = full_join(x = merge1, y = merge2, by = "location_name")
 
+write_csv(merge_final, "./data/merge_final.csv")
+
 ```
 
 ## Plot try
@@ -180,16 +182,18 @@ hover_test_df = merge_final %>%
   mutate(fips_county = str_c(statefp, countyfp)) %>% 
   group_by(fips_county, measure_id) %>%
   summarise(county_hlth = round(mean(data_value, na.rm = TRUE), 3)) %>%
-  pivot_wider(names_from = "measure_id", values_from = "county_hlth")
+  pivot_wider(names_from = "measure_id", values_from = "county_hlth") %>% 
+  janitor::clean_names()
 
 # adding variable for hovertext
-hover_test_df$hover <- with(hover_test_df, paste('<br>',
-                                                 "Health Outcomes by County:", '<br>',
-                                                 "High Cholesterol", HIGHCHOL, '<br>',
-                                                 "LPA", LPA, '<br>',
-                                                 "Mental Health", MHLTH, '<br>',
-                                                 "Physical Health", PHLTH, '<br>',
-                                                 "High BP", BPHIGH))
+hover_test_df$hover <- with(hover_test_df, 
+                            paste('<br>',
+                                                 "% Health Outcomes (by County):", '<br>',
+                                                 "High Cholesterol:", highchol, '<br>',
+                                                 "Physical Inactivity:", lpa, '<br>',
+                                                 "Mental Health:", mhlth, '<br>',
+                                                 "Physical Health:", phlth, '<br>',
+                                                 "High BP:", bphigh))
 
 # Testing choropleth with hovertext of health outcomes by county
 fig_hover_test = plot_ly()
