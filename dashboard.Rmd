@@ -3,6 +3,8 @@ title: "dashboard"
 output: 
   flexdashboard::flex_dashboard:
     vertical_layout: fill
+    navbar:
+      - { title: "Home", href: "index.html", align: right }
 runtime: shiny
 
 ---
