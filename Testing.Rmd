@@ -96,6 +96,22 @@ merge2 = merge2 %>%
 # merge merge1 and merge2
 merge_final = full_join(x = merge1, y = merge2, by = "location_name")
 
+merge_final = merge_final %>% 
+  rename(sex_male = dp05_0002pe,
+         sex_female = dp05_0003pe,
+         age_18plus = dp05_0021pe,
+         race_white = dp05_0037pe,
+         race_black = dp05_0038pe,
+         race_aian = dp05_0039pe,
+         race_asian = dp05_0044pe,
+         race_2_plus = dp05_0058pe,
+         race_hispanic = dp05_0071pe,
+         median_income = s1903_c03_001e) %>% 
+  pivot_longer(names_to = "race",
+               values_to = "percent_race",
+               cols = starts_with("race"),
+               names_prefix = "race_")
+
 write_csv(merge_final, "./data/merge_final.csv")
 
 ```
@@ -181,7 +197,7 @@ fig_hover_test = plot_ly()
 hover_test_df = merge_final %>%
   mutate(fips_county = str_c(statefp, countyfp)) %>% 
   group_by(fips_county, measure_id) %>%
-  summarise(county_hlth = round(mean(data_value, na.rm = TRUE), 3)) %>%
+  summarise(county_hlth = round(mean(data_value, na.rm = TRUE), 1)) %>%
   pivot_wider(names_from = "measure_id", values_from = "county_hlth") %>% 
   janitor::clean_names()
 
