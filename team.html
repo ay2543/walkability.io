@@ -13,7 +13,7 @@
 
 <title>Who We Are</title>
 
-<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
@@ -180,8 +180,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "\e259";
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -189,9 +189,16 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "\e258";
-  font-family: 'Glyphicons Halflings';
+  content: "&#xe258;";
   border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -408,6 +415,17 @@ Ma (she/her)</a>
 <li>Favorite place to walk in NYC: Riverside park</li>
 <li>Favorite part about walking: Enjoy the nature and stay active!</li>
 </ul>
+<p><br /></p>
+<center>
+<p><img src="images/group_pic_power.JPG" style="width:30%">
+<img src="images/group_pic_walking.JPG" style="width:30%">
+<img src="images/group_pic_stop.JPG" style="width:30%"></p>
+<p><img src="images/power_ranger_pose1.jpg" style="width:30%">
+<img src="images/power_ranger_logo.jpg" style="width:30%">
+<img src="images/power_ranger_pose2.jpg" style="width:30%"></p>
+<p><strong>Thank you for exploring our project!</strong></p>
+</center>
+<p><br /></p>
 </div>
 
 
