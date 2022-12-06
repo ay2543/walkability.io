@@ -356,6 +356,8 @@ $(document).ready(function () {
 
 <p>On this page, we will explore the overall demographics, walkability
 and health outcome across geographical regions in the United States.</p>
+<div id="demographics" class="section level3">
+<h3>Demographics</h3>
 <details>
 <summary>
 Click to show code
@@ -371,7 +373,7 @@ Click to show code
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>library(DT)
 
-#Explore using cleaned data
+#Explore using final cleaned data
 explore_df = read_csv(&quot;./data/merge_final.csv&quot;)</code></pre>
 <pre><code>## Rows: 1877910 Columns: 24
 ## ── Column specification ────────────────────────────────────────────────────────
@@ -384,11 +386,10 @@ explore_df = read_csv(&quot;./data/merge_final.csv&quot;)</code></pre>
 <pre class="r"><code>explore_df = explore_df %&gt;% mutate(sex_female = as.numeric(sex_female), sex_male = as.numeric(sex_male), age_18plus = as.numeric(age_18plus), median_income = as.numeric(median_income), percent_race = as.numeric(percent_race)) %&gt;% separate(name, c(&quot;census_track&quot;,&quot;county&quot;, &quot;state&quot;), &quot;,&quot;)
 
 #Filter out varibales needed for demographics
-demographics_df = explore_df %&gt;% select(sex_female, sex_male, age_18plus, median_income, race, percent_race, county, state)
-
-#Get overall demographics statistics
+demographics_df = explore_df %&gt;% select(sex_female, sex_male, age_18plus, median_income, race, percent_race, county, state)</code></pre>
+<pre class="r"><code>#Get overall demographics statistics
 overall_demographics = data.frame(
-  Variables = c(&quot;Percentage of Female&quot;, &quot;Percentage of Male&quot;, &quot;Percentage of Adults&quot;, &quot;Median Income&quot;, &quot;Percentage of White&quot;, &quot;Percentage of Black&quot;, &quot;Percentage of Asian&quot;, &quot;Percentage of Hispanic&quot;, &quot;Percentage of more than 2 Races&quot;), 
+  Variables = c(&quot;Percentage of Female&quot;, &quot;Percentage of Male&quot;, &quot;Percentage of Adults&quot;, &quot;Average of Median Income ($)&quot;, &quot;Percentage of White&quot;, &quot;Percentage of Black&quot;, &quot;Percentage of Asian&quot;, &quot;Percentage of Hispanic&quot;, &quot;Percentage of more than 2 Races&quot;), 
   Results = c((mean(demographics_df$sex_female, na.rm = TRUE)), 
               (mean(demographics_df$sex_male, na.rm = TRUE)), 
               (mean(demographics_df$age_18plus, na.rm = TRUE)), 
@@ -399,15 +400,19 @@ overall_demographics = data.frame(
               (mean((demographics_df %&gt;% filter(race == &quot;hispanic&quot;))$percent_race, na.rm = TRUE)), 
               (mean((demographics_df %&gt;% filter(race == &quot;2_plus&quot;))$percent_race, na.rm = TRUE)))
 )
-overall_demographics = overall_demographics %&gt;% mutate(across(where(is.numeric), ~ round(., 3)))</code></pre>
+overall_demographics = overall_demographics %&gt;% mutate(across(where(is.numeric), ~ round(., 2)))
+
+#datatable(overall_demographics, rownames = FALSE)</code></pre>
 </details>
-<div id="htmlwidget-47928c2d6a0cb88746df" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-47928c2d6a0cb88746df">{"x":{"filter":"none","vertical":false,"data":[["Percentage of Female","Percentage of Male","Percentage of Adults","Median Income","Percentage of White","Percentage of Black","Percentage of Asian","Percentage of Hispanic","Percentage of more than 2 Races"],[50.875,49.126,78.229,68387.442,70.49,13.577,4.911,17.365,4.947]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Variables<\/th>\n      <th>Results<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-0afe2f5cffd2b9d449b3" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0afe2f5cffd2b9d449b3">{"x":{"filter":"none","vertical":false,"caption":"<caption style=\"caption-side: top; text-align: left;\">\n  Table 1: \n  <em>Overall demographics statistics of the dataset.<\/em>\n<\/caption>","data":[["Percentage of Female","Percentage of Male","Percentage of Adults","Average of Median Income ($)","Percentage of White","Percentage of Black","Percentage of Asian","Percentage of Hispanic","Percentage of more than 2 Races"],[50.87,49.13,78.23,68387.44,70.49,13.58,4.91,17.37,4.95]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Variables<\/th>\n      <th>Results<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","columnDefs":[{"className":"dt-center","targets":"_all"}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <details>
 <summary>
 Click to show code
 </summary>
+<pre class="r"><code>state_demographics = demographics_df %&gt;% group_by(state)</code></pre>
 </details>
+</div>
 
 
 
