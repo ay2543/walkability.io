@@ -168,3 +168,49 @@ fig
 
 ```
 
+```{r testing-hovertext}
+library(rjson)
+library(leaflet)
+
+fig_hover_test = plot_ly()
+
+# creating new dataset with health measures by county 
+# NEED TO GET RID OF NAs WHEN PIVOTING
+hover_test_df = merge_final %>%
+  mutate(fips_county = str_c(statefp, countyfp)) %>% 
+  group_by(fips_county, measure_id) %>%
+  summarise(county_hlth = round(mean(data_value, na.rm = TRUE), 3)) %>%
+  pivot_wider(names_from = "measure_id", values_from = "county_hlth")
+
+# adding variable for hovertext
+hover_test_df$hover <- with(hover_test_df, paste('<br>',
+                                                 "Health Outcomes by County:", '<br>',
+                                                 "High Cholesterol", HIGHCHOL, '<br>',
+                                                 "LPA", LPA, '<br>',
+                                                 "Mental Health", MHLTH, '<br>',
+                                                 "Physical Health", PHLTH, '<br>',
+                                                 "High BP", BPHIGH))
+
+# Testing choropleth with hovertext of health outcomes by county
+fig_hover_test = plot_ly()
+
+fig_hover_test = fig_hover_test %>% 
+  add_trace(type = "choropleth",
+            geojson = counties,
+            locations = merge_plot$fips_county,
+            z = merge_plot$ind_mean,
+            text = hover_test_df$hover,
+            colorscale = "Viridis",
+            zmin = 1,
+            zmax = 16,
+            marker = list(line = list(width = 0)))
+
+fig_hover_test = fig_hover_test %>%
+  layout(title = "National Walkability Index in the US")
+
+fig_hover_test = fig_hover_test %>% 
+  layout(geo = g)
+
+fig_hover_test
+
+```
