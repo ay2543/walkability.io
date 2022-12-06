@@ -17,7 +17,13 @@ library(shiny)
 
 # Read data
 
-walkability = read_csv("./data/merge_final.csv")
+walkability = read_csv("./data/merge_final.csv") 
+
+walkability_clean = walkability %>% 
+  separate(name, c("census_tract", "county", "state"), sep = ", ") %>% 
+  mutate(county_state = str_c(county, state, sep = ", ")) %>% 
+  select(-census_tract)
+  
 
 #rmarkdown::render("dashboard.Rmd", output_format = "flexdashboard::flex_dashboard")
 
@@ -27,10 +33,38 @@ Column {.sidebar}
 -----------------------------------------------------------------------
 
 ```{r}
+
+location = walkability_clean %>% distinct(county_state)
+
+# selectInput(
+#   inputId = "location_choice",
+#   label = h3("Location"), 
+#   choices = location
+# ) 
+
+fluidPage(
+  title = "Search Bar",
+  fluidRow(
+    selectizeInput(
+      inputId = "location_choice", 
+      label = "Location Search Bar",
+      multiple = FALSE,
+      choices = c("Search Bar" = "", location),
+      options = list(
+        create = FALSE,
+        placeholder = "Search Me",
+        maxItems = '1',
+        onDropdownOpen = I("function($dropdown) {if (!this.lastQuery.length) {this.close(); this.settings.openOnFocus = false;}}"),
+        onType = I("function (str) {if (str === \"\") {this.close();}}")
+      )
+    ))
+)
+
+
 selectInput(
   inputId = "demo_choice",
   label = h3("Demographic indicator"), 
-  choices = c("Age", "Sex", "Race/ethnicity", "Median Household Income")
+  choices = c("age", "sex", "race/ethnicity", "median Household Income")
 ) 
 
 radioButtons(
@@ -47,7 +81,11 @@ Column {data-width=500}
 ### Demography
 
 ```{r}
-
+renderPlotly(
+walkability %>%
+  plot_ly(x = ~input[["demo_choice"]], y = ~nat_walk_ind,
+          type = "scatter", mode = "markers", alpha = 0.5)
+)
 ```
 
 Column {data-width=500}
