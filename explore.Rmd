@@ -3,4 +3,61 @@ title: "Exploratory Analysis"
 output: html_document
 ---
 
-Exploratory Analysis
+On this page, we will explore the overall demographics, walkability and health outcome across geographical regions in the United States. 
+
+<details>
+  <summary>Click to show code</summary>
+```{r, warning=FALSE}
+
+library(tidyverse)
+library(DT)
+
+#Explore using cleaned data
+explore_df = read_csv("./data/merge_final.csv")
+
+explore_df = explore_df %>% mutate(sex_female = as.numeric(sex_female), sex_male = as.numeric(sex_male), age_18plus = as.numeric(age_18plus), median_income = as.numeric(median_income), percent_race = as.numeric(percent_race)) %>% separate(name, c("census_track","county", "state"), ",")
+
+#Filter out varibales needed for demographics
+demographics_df = explore_df %>% select(sex_female, sex_male, age_18plus, median_income, race, percent_race, county, state)
+
+#Get overall demographics statistics
+overall_demographics = data.frame(
+  Variables = c("Percentage of Female", "Percentage of Male", "Percentage of Adults", "Median Income", "Percentage of White", "Percentage of Black", "Percentage of Asian", "Percentage of Hispanic", "Percentage of more than 2 Races"), 
+  Results = c((mean(demographics_df$sex_female, na.rm = TRUE)), 
+              (mean(demographics_df$sex_male, na.rm = TRUE)), 
+              (mean(demographics_df$age_18plus, na.rm = TRUE)), 
+              (mean(demographics_df$median_income, na.rm = TRUE)), 
+              (mean((demographics_df %>% filter(race == "white"))$percent_race, na.rm = TRUE)), 
+              (mean((demographics_df %>% filter(race == "black"))$percent_race, na.rm = TRUE)), 
+              (mean((demographics_df %>% filter(race == "asian"))$percent_race, na.rm = TRUE)), 
+              (mean((demographics_df %>% filter(race == "hispanic"))$percent_race, na.rm = TRUE)), 
+              (mean((demographics_df %>% filter(race == "2_plus"))$percent_race, na.rm = TRUE)))
+)
+overall_demographics = overall_demographics %>% mutate(across(where(is.numeric), ~ round(., 3)))
+
+#datatable(overall_demographics, rownames = FALSE)
+```
+</details>
+
+```{r, warning=FALSE, echo=FALSE}
+
+datatable(overall_demographics, rownames = FALSE)
+
+```
+
+<details>
+  <summary>Click to show code</summary>
+```{r, warning=FALSE}
+
+
+
+```
+</details>
+ 
+```{r, warning=FALSE}
+
+
+
+```
+ 
+ 
