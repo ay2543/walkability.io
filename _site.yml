@@ -15,6 +15,9 @@ navbar:
     - text: "Walkability Map"
       icon: fa-map
       href: map.html
+    - text: "Exploratory Analysis"
+      icon: fa-map
+      href: explore.html    
     - text: "Bivariate plots"
       icon: fa-chart-simple
       href: dashboard.html
@@ -24,6 +27,9 @@ navbar:
     - text: "Findings"
       icon: fa-pen
       href: results.html
+    - text: "Report"
+      icon: fa-map
+      href: report.html
     - text: "Limitations"
       icon: fa-thought-bubble
       href: limitations.html
