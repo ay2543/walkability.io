@@ -276,26 +276,25 @@ $(document).ready(function () {
     </li>
   </ul>
 </li>
-<li>
-  <a href="map.html">
-    <span class="fa fa-map"></span>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-file"></span>
      
-    Walkability Map
-  </a>
-</li>
-<li>
-  <a href="explore.html">
-    <span class="fa fa-map"></span>
+    Visualizations
      
-    Exploratory Analysis
+    <span class="caret"></span>
   </a>
-</li>
-<li>
-  <a href="dashboard.html">
-    <span class="fa fa-chart-simple"></span>
-     
-    Bivariate plots
-  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="map.html">Walkability Map</a>
+    </li>
+    <li>
+      <a href="explore.html">Exploratory Analysis</a>
+    </li>
+    <li>
+      <a href="dashboard.html">Bivariate plots</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="newscore.html">
@@ -404,8 +403,8 @@ overall_demographics = overall_demographics %&gt;% mutate(across(where(is.numeri
 
 #datatable(overall_demographics, rownames = FALSE)</code></pre>
 </details>
-<div id="htmlwidget-0afe2f5cffd2b9d449b3" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-0afe2f5cffd2b9d449b3">{"x":{"filter":"none","vertical":false,"caption":"<caption style=\"caption-side: top; text-align: left;\">\n  Table 1: \n  <em>Overall demographics statistics of the dataset.<\/em>\n<\/caption>","data":[["Percentage of Female","Percentage of Male","Percentage of Adults","Average of Median Income ($)","Percentage of White","Percentage of Black","Percentage of Asian","Percentage of Hispanic","Percentage of more than 2 Races"],[50.87,49.13,78.23,68387.44,70.49,13.58,4.91,17.37,4.95]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Variables<\/th>\n      <th>Results<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","columnDefs":[{"className":"dt-center","targets":"_all"}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-fe4544cefe6a05be198e" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fe4544cefe6a05be198e">{"x":{"filter":"none","vertical":false,"caption":"<caption style=\"caption-side: top; text-align: left;\">\n  Table 1: \n  <em>Overall demographics statistics of the dataset.<\/em>\n<\/caption>","data":[["Percentage of Female","Percentage of Male","Percentage of Adults","Average of Median Income ($)","Percentage of White","Percentage of Black","Percentage of Asian","Percentage of Hispanic","Percentage of more than 2 Races"],[50.87,49.13,78.23,68387.44,70.49,13.58,4.91,17.37,4.95]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Variables<\/th>\n      <th>Results<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","columnDefs":[{"className":"dt-center","targets":"_all"}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <details>
 <summary>
 Click to show code

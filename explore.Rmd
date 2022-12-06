@@ -60,7 +60,7 @@ datatable(overall_demographics,
   <summary>Click to show code</summary>
 ```{r, warning=FALSE}
 
-state_demographics = demographics_df %>% group_by(state)
+state_demographics = demographics_df %>% group_by(state) 
 
 ```
 </details>
