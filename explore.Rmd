@@ -317,14 +317,22 @@ datatable(health_df_merge2,
 
 ### Exploratory Plots {.tabset}
 
-#### XXXX
+#### Gender vs. Walkability
 
 <details>
   <summary>Click to show code</summary>
 
 ```{r, warning=FALSE}
 
-
+gender_walk_plot = county_demographics_merge %>% ggplot(mapping = aes(x = sex_female, y = nat_walk_ind))+
+  geom_point(shape = "diamond", color = "steelblue", size = 2, alpha = 0.5) + labs(         
+    x = "Percentage of Femlae",
+    y = "Walkability Score",
+    title = "Figure 1. Percentage of Female vs. Walkability Score by County") + 
+  geom_smooth(                  
+    formula = y ~ x,              
+    method = "lm",        
+    size = 1, color = "beige", alpha = 0.5) 
 
 ```
 
@@ -332,18 +340,26 @@ datatable(health_df_merge2,
 
 ```{r, warning=FALSE, echo=FALSE}
 
-
+gender_walk_plot
 
 ```
 
-#### XXXX
+#### Age vs. Walkability
 
 <details>
   <summary>Click to show code</summary>
 
 ```{r, warning=FALSE}
 
-
+age_walk_plot = county_demographics_merge %>% ggplot(mapping = aes(x = age_18plus, y = nat_walk_ind))+
+  geom_point(shape = "diamond", color = "steelblue", size = 2, alpha = 0.5) + labs(         
+    x = "Percentage of Adults",
+    y = "Walkability Score",
+    title = "Figure 2. Percentage of Adults vs. Walkability Acore by County") + 
+  geom_smooth(                
+    formula = y ~ x,
+    method = "lm",        
+    size = 1, color = "beige", alpha = 0.5) 
 
 ```
 
@@ -351,6 +367,84 @@ datatable(health_df_merge2,
 
 ```{r, warning=FALSE, echo=FALSE}
 
-
+age_walk_plot
 
 ```
+
+#### Income vs. Walkability
+
+<details>
+  <summary>Click to show code</summary>
+
+```{r, warning=FALSE}
+
+income_walk_plot = county_demographics_merge %>% ggplot(mapping = aes(x = median_income, y = nat_walk_ind))+
+  geom_point(shape = "diamond", color = "steelblue", size = 2, alpha = 0.5) + labs(         
+    x = "Average of Median Income ($)",
+    y = "Walkability Score",
+    title = "Figure 3. Average of Median Income vs. Walkability Acore by County") + 
+  geom_smooth(                  
+    formula = y ~ x,              
+    method = "lm",        
+    size = 1, color = "beige", alpha = 0.5) 
+
+```
+
+</details>
+
+```{r, warning=FALSE, echo=FALSE}
+
+income_walk_plot
+
+```
+
+#### Race vs. Walkability
+
+<details>
+  <summary>Click to show code</summary>
+
+```{r, warning=FALSE}
+
+race_walk_plot = county_demographics_merge %>% ggplot(mapping = aes(x = white, y = nat_walk_ind))+
+  geom_point(shape = "diamond", color = "steelblue", size = 2, alpha = 0.5) + labs(         
+    x = "Percentage of White",
+    y = "Walkability Score",
+    title = "Figure 4. Percentage of White vs. Walkability Acore by County") + 
+  geom_smooth(                      
+    formula = y ~ x,          
+    method = "lm",        
+    size = 1, color = "beige", alpha = 0.5) 
+
+```
+
+</details>
+
+```{r, warning=FALSE, echo=FALSE}
+
+race_walk_plot
+
+```
+
+#### Health Outcome vs. Walkability
+
+<details>
+  <summary>Click to show code</summary>
+
+```{r, warning=FALSE}
+
+health_walk_plot = health_df_county %>% ggplot(mapping = aes(x = data_value, y = nat_walk_ind, color = measure)) + geom_point(shape = "diamond", size = 2, alpha = 0.5, show.legend = FALSE) + labs(         
+    x = "Prevalence of Health Outcome (%)",
+    y = "Walkability Score",
+    title = "Figure 5. Prevalence of Health Outcome vs. Walkability Acore") + scale_color_brewer(palette = "Spectral")
+
+```
+
+</details>
+
+```{r, warning=FALSE, echo=FALSE}
+
+health_walk_plot
+
+```
+![Health Outcome Measurments](images/Measurements.png){#id .class width=65% height=65%}
+
