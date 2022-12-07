@@ -3,9 +3,20 @@ title: "Exploratory Analysis"
 output: html_document
 ---
 
-On this page, we will explore the overall demographics, walkability and health outcome across geographical regions in the United States. 
+<style>
+div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
+</style>
+<div class = "blue">
 
-### Demographics
+##### On this page, we will explore the overall demographics, walkability and health outcome across geographical regions in the United States. XXXXXXX
+
+</div>
+
+<br>
+
+### Demographics and Walkability {.tabset}
+
+#### Overall Demographics and Walkability
 
 <details>
   <summary>Click to show code</summary>
@@ -14,14 +25,15 @@ On this page, we will explore the overall demographics, walkability and health o
 
 library(tidyverse)
 library(DT)
+library(dplyr)
 
 #Explore using final cleaned data
 explore_df = read_csv("./data/merge_final.csv")
 
 explore_df = explore_df %>% mutate(sex_female = as.numeric(sex_female), sex_male = as.numeric(sex_male), age_18plus = as.numeric(age_18plus), median_income = as.numeric(median_income), percent_race = as.numeric(percent_race)) %>% separate(name, c("census_track","county", "state"), ",")
 
-#Filter out varibales needed for demographics
-demographics_df = explore_df %>% select(sex_female, sex_male, age_18plus, median_income, race, percent_race, county, state)
+#Filter out variables needed for demographics
+demographics_df = explore_df %>% select(sex_female, sex_male, age_18plus, median_income, race, percent_race, county, state, nat_walk_ind)
 
 ```
 
@@ -29,15 +41,17 @@ demographics_df = explore_df %>% select(sex_female, sex_male, age_18plus, median
 
 #Get overall demographics statistics
 overall_demographics = data.frame(
-  Variables = c("Percentage of Female", "Percentage of Male", "Percentage of Adults", "Average of Median Income ($)", "Percentage of White", "Percentage of Black", "Percentage of Asian", "Percentage of Hispanic", "Percentage of more than 2 Races"), 
-  Results = c((mean(demographics_df$sex_female, na.rm = TRUE)), 
+  Variables = c("Average Walkability Score", "Percentage of Female", "Percentage of Male", "Percentage of Adults", "Average of Median Income ($)", "Percentage of White", "Percentage of Hispanic", "Percentage of Black", "Percentage of Asian", "Percentage of American Indian and Alaska Native", "Percentage of 2+ Races"),
+  Results = c((mean(demographics_df$nat_walk_ind, na.rm = TRUE)),
+              (mean(demographics_df$sex_female, na.rm = TRUE)),
               (mean(demographics_df$sex_male, na.rm = TRUE)), 
               (mean(demographics_df$age_18plus, na.rm = TRUE)), 
               (mean(demographics_df$median_income, na.rm = TRUE)), 
               (mean((demographics_df %>% filter(race == "white"))$percent_race, na.rm = TRUE)), 
-              (mean((demographics_df %>% filter(race == "black"))$percent_race, na.rm = TRUE)), 
+              (mean((demographics_df %>% filter(race == "hispanic"))$percent_race, na.rm = TRUE)),
+              (mean((demographics_df %>% filter(race == "black"))$percent_race, na.rm = TRUE)),
               (mean((demographics_df %>% filter(race == "asian"))$percent_race, na.rm = TRUE)), 
-              (mean((demographics_df %>% filter(race == "hispanic"))$percent_race, na.rm = TRUE)), 
+              (mean((demographics_df %>% filter(race == "aian"))$percent_race, na.rm = TRUE)),
               (mean((demographics_df %>% filter(race == "2_plus"))$percent_race, na.rm = TRUE)))
 )
 overall_demographics = overall_demographics %>% mutate(across(where(is.numeric), ~ round(., 2)))
@@ -51,24 +65,292 @@ overall_demographics = overall_demographics %>% mutate(across(where(is.numeric),
 datatable(overall_demographics, 
           rownames = FALSE, 
           caption = htmltools::tags$caption(style = 'caption-side: top; text-align: left;', 
-                    'Table 1: ', htmltools::em('Overall demographics statistics of the dataset.')), 
-          options = list(dom = 't', columnDefs = list(list(className = 'dt-center', targets = "_all"))))
+                    'Table 1: ', htmltools::em('Overall demographics and walkability statistics of the dataset.')), 
+          options = list(dom = 't', pageLength = 11, columnDefs = list(list(className = 'dt-center', targets = "_all"))))
           
 ```
 
+<br>
+<br>
+
+#### Demographics and Walkability by State
+
 <details>
   <summary>Click to show code</summary>
+  
 ```{r, warning=FALSE}
+#Avg of demographics by state
+state_demographics = demographics_df %>% 
+  group_by(state) %>% 
+  summarise_each(funs(mean(., na.rm = TRUE))) %>% 
+  select(-c(race, percent_race,county))
 
-state_demographics = demographics_df %>% group_by(state) 
+#Avg of race by state
+state_demographics_race = demographics_df %>% 
+  group_by(state, race) %>% 
+  summarise_each(funs(mean(., na.rm = TRUE))) %>% 
+  select(c(state, race, percent_race)) %>% 
+  pivot_wider(names_from = "race",
+               values_from = "percent_race")
+
+state_demographics_merge = inner_join(state_demographics, state_demographics_race, by = "state") %>% 
+  mutate(across(where(is.numeric), ~ round(., 2))) %>% 
+  relocate(state, nat_walk_ind, sex_female, sex_male, age_18plus, median_income, white, hispanic, black, asian, aian)
+
+state_demographics_merge = state_demographics_merge[-53,]
 
 ```
 </details>
  
+```{r, warning=FALSE, echo=FALSE}
+
+datatable(state_demographics_merge, 
+          rownames = FALSE, 
+          colnames = c('State', 'Average Walkability Score', 'Percentage of Female', 'Percentage of Male', 'Percentage of Adults', 'Average of Median Income ($)', 'Percentage of White', 'Percentage of Hispanic', 'Percentage of Black', 'Percentage of Asian', 'Percentage of American Indian and Alaska Native', 'Percentage of more than 2 Races'),
+          caption = htmltools::tags$caption(style = 'caption-side: top; text-align: left;', 
+                    'Table 2: ', htmltools::em('Demographics and walkability statistics of the dataset by state.')), 
+          options = list(order = list(list(2, 'desc')), columnDefs = list(list(className = 'dt-center', targets = "_all"))))
+
+```
+
+<br>
+<br>
+
+#### Demographics and Walkability by County
+
+<details>
+  <summary>Click to show code</summary>
+  
+```{r, warning=FALSE}
+#Avg of demographics by county
+county_demographics = demographics_df %>% 
+  group_by(county) %>% 
+  summarise_each(funs(mean(., na.rm = TRUE))) %>% 
+  select(-c(race, percent_race, state))
+
+#Avg of race by county
+county_demographics_race = demographics_df %>% 
+  group_by(county, race) %>% 
+  summarise_each(funs(mean(., na.rm = TRUE))) %>% 
+  select(c(county, race, percent_race)) %>% 
+  pivot_wider(names_from = "race",
+              values_from = "percent_race")
+
+#Grab state name
+state_name = demographics_df %>% select(c(state,county)) %>% distinct()
+
+#Merge county level data
+county_demographics_merge = inner_join(county_demographics, county_demographics_race, by = "county") %>% 
+  mutate(across(where(is.numeric), ~ round(., 2))) 
+
+county_demographics_merge = left_join(county_demographics_merge, state_name,by = "county", all.x = TRUE) %>%
+  relocate(county, state, nat_walk_ind, sex_female, sex_male, age_18plus, median_income, white, hispanic, black, asian, aian) %>% drop_na()
+
+```
+</details>
+ 
+```{r, warning=FALSE, echo=FALSE}
+
+datatable(county_demographics_merge, 
+          rownames = FALSE, 
+          colnames = c('County', 'State','Average Walkability Score', 'Percentage of Female', 'Percentage of Male', 'Percentage of Adults', 'Average of Median Income ($)', 'Percentage of White', 'Percentage of Hispanic', 'Percentage of Black', 'Percentage of Asian', 'Percentage of American Indian and Alaska Native', 'Percentage of more than 2 Races'),
+          caption = htmltools::tags$caption(style = 'caption-side: top; text-align: left;', 
+                    'Table 3: ', htmltools::em('Demographics and walkability statistics of the dataset by county')), 
+          options = list(
+            order = list(list(3, 'desc')),
+            columnDefs = list(list(className = 'dt-center', targets = "_all"))))
+
+```
+
+<br>
+<br>
+ 
+### Health Outcome {.tabset}
+
+#### Overall Health Outcome
+
+<details>
+  <summary>Click to show code</summary>
+
+```{r, warning=FALSE}
+
+#Filter out variables needed for health outcome analysis
+health_df = explore_df %>% select(sex_female, sex_male, age_18plus, median_income, race, percent_race, county, state, nat_walk_ind, measure, data_value) %>% 
+  group_by(measure) %>% 
+  summarise_each(funs(mean(., na.rm = TRUE))) %>% 
+  select(-c(race, percent_race, county, state)) 
+
+health_df_race = explore_df %>% 
+  group_by(measure, race) %>% 
+  summarise_each(funs(mean(., na.rm = TRUE))) %>% 
+  select(c(measure, race, percent_race)) %>% 
+  pivot_wider(names_from = "race",
+              values_from = "percent_race")
+
+health_df = inner_join(health_df, health_df_race, by = "measure") %>% 
+  mutate(across(where(is.numeric), ~ round(., 2))) %>% 
+  relocate(measure, data_value, nat_walk_ind, sex_female, sex_male, age_18plus, median_income, white, hispanic, black, asian, aian)
+
+health_df = health_df[-6,]
+
+health_df = t(health_df)
+
+rownames(health_df) <- c("Health Outcome Measurments","Prevalence of Health Outcome (%)","Average Walkability Score","Percentage of Female", "Percentage of Male", "Percentage of Adults", "Average of Median Income ($)", "Percentage of White", "Percentage of Hispanic", "Percentage of Black", "Percentage of Asian", "Percentage of American Indian and Alaska Native", "Percentage of 2+ Races")
+
+#Dataframe for making the table only
+health_df_table = health_df[-1,]
+
+```
+
+</details>
+
+```{r, warning=FALSE, echo=FALSE}
+
+datatable(health_df_table, 
+          rownames = TRUE, 
+          colnames = c('High blood pressure among adults aged >=18 years', 'High cholesterol among adults aged >=18 years who have been screened in the past 5 years','Mental health not good for >=14 days among adults aged >=18 years', 'No leisure-time physical activity among adults aged >=18 years', 'Physical health not good for >=14 days among adults aged >=18 years'),
+          caption = htmltools::tags$caption(style = 'caption-side: top; text-align: left;', 
+                    'Table 4: ', htmltools::em('Overall Health Outcome statistics of the dataset')), 
+          options = list(
+            dom = 't', pageLength = 12,
+            columnDefs = list(list(className = 'dt-center', targets = "_all"))))
+
+```
+
+<br>
+<br>
+
+#### Health Outcome by State
+
+<details>
+  <summary>Click to show code</summary>
+
+```{r, warning=FALSE}
+
+health_df_state = explore_df %>% select(sex_female, sex_male, age_18plus, median_income, race, percent_race, county, state, nat_walk_ind, measure, data_value) %>% 
+  group_by(state, measure) %>% 
+  summarise_each(funs(mean(., na.rm = TRUE))) %>% 
+  select(-c(race, percent_race, county))
+
+health_df_state = health_df_state[!is.na(health_df_state$measure),]
+health_df_state$state_measure <- paste(health_df_state$state, "-", health_df_state$measure)
+
+health_df_state_race = explore_df %>% select(race, percent_race, state, measure) %>% 
+  group_by(state, measure, race) %>% 
+  summarise_each(funs(mean(., na.rm = TRUE))) %>% 
+  pivot_wider(names_from = "race",
+              values_from = "percent_race")
+
+health_df_state_race = health_df_state_race[!is.na(health_df_state_race$measure),]
+health_df_state_race$state_measure <- paste(health_df_state_race$state, "-", health_df_state_race$measure)
+
+health_df_merge = inner_join(health_df_state, health_df_state_race, by = "state_measure") %>% 
+  mutate(across(where(is.numeric), ~ round(., 2))) %>% 
+  select(-c(state.x, state.y, measure.x, measure.y)) %>% 
+  relocate(state_measure, data_value, nat_walk_ind, sex_female, sex_male, age_18plus, median_income, white, hispanic, black, asian, aian)
+
+```
+
+</details>
+
+```{r, warning=FALSE, echo=FALSE}
+
+datatable(health_df_merge, 
+          rownames = FALSE, 
+          colnames = c('State/Health Outcome', 'Prevalence of Health Outcome (%)', 'Average Walkability Score', 'Percentage of Female', 'Percentage of Male', 'Percentage of Adults', 'Average of Median Income ($)', 'Percentage of White', 'Percentage of Hispanic', 'Percentage of Black', 'Percentage of Asian', 'Percentage of American Indian and Alaska Native', 'Percentage of more than 2 Races'),
+          caption = htmltools::tags$caption(style = 'caption-side: top; text-align: left;', 
+                    'Table 2: ', htmltools::em('Demographics and walkability statistics of the dataset by state.')), 
+          options = list(order = list(list(0, 'asc')), columnDefs = list(list(className = 'dt-center', targets = "_all"))))
+
+```
+
+<br>
+<br>
+
+#### Health Outcome by County
+
+<details>
+  <summary>Click to show code</summary>
+
+```{r, warning=FALSE}
+
+health_df_county = explore_df %>% select(sex_female, sex_male, age_18plus, median_income, county, state, nat_walk_ind, measure, data_value) %>% 
+  group_by(state, county, measure) %>% 
+  summarise_each(funs(mean(., na.rm = TRUE)))
+
+health_df_county = health_df_county[!is.na(health_df_county$measure),]
+health_df_county$state_measure <- paste(health_df_county$county, "-", health_df_county$state, "-", health_df_county$measure)
+
+health_df_county_race = explore_df %>% select(race, percent_race, county, state, measure) %>% 
+  group_by(county, state, measure, race) %>% 
+  summarise_each(funs(mean(., na.rm = TRUE))) %>% 
+  pivot_wider(names_from = "race",
+              values_from = "percent_race")
+
+health_df_county_race = health_df_county_race[!is.na(health_df_county_race$measure),]
+health_df_county_race$state_measure <- paste(health_df_county_race$county, "-", health_df_county_race$state, "-", health_df_county_race$measure)
+
+health_df_merge2 = inner_join(health_df_county, health_df_county_race, by = "state_measure") %>% 
+  mutate(across(where(is.numeric), ~ round(., 2))) %>% 
+  select(-c(state.x, state.y, measure.x, measure.y, county.x, county.y)) %>% 
+  relocate(state_measure, data_value, nat_walk_ind, sex_female, sex_male, age_18plus, median_income, white, hispanic, black, asian, aian)
+
+
+```
+
+</details>
+
+```{r, warning=FALSE, echo=FALSE}
+
+datatable(health_df_merge2, 
+          rownames = FALSE, 
+          colnames = c('County/State/Health Outcome', 'Prevalence of Health Outcome (%)', 'Average Walkability Score', 'Percentage of Female', 'Percentage of Male', 'Percentage of Adults', 'Average of Median Income ($)', 'Percentage of White', 'Percentage of Hispanic', 'Percentage of Black', 'Percentage of Asian', 'Percentage of American Indian and Alaska Native', 'Percentage of more than 2 Races'),
+          caption = htmltools::tags$caption(style = 'caption-side: top; text-align: left;', 
+                    'Table 2: ', htmltools::em('Demographics and walkability statistics of the dataset by state.')), 
+          options = list(order = list(list(0, 'asc')), columnDefs = list(list(className = 'dt-center', targets = "_all"))))
+
+
+```
+
+<br>
+<br>
+
+### Exploratory Plots {.tabset}
+
+#### XXXX
+
+<details>
+  <summary>Click to show code</summary>
+
 ```{r, warning=FALSE}
 
 
 
 ```
- 
- 
+
+</details>
+
+```{r, warning=FALSE, echo=FALSE}
+
+
+
+```
+
+#### XXXX
+
+<details>
+  <summary>Click to show code</summary>
+
+```{r, warning=FALSE}
+
+
+
+```
+
+</details>
+
+```{r, warning=FALSE, echo=FALSE}
+
+
+
+```
