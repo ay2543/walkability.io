@@ -1,5 +1,5 @@
 ---
-title: "dashboard"
+title: "Dashboard"
 output: 
   flexdashboard::flex_dashboard:
     vertical_layout: fill
@@ -20,9 +20,9 @@ library(shiny)
 walkability = read_csv("./data/merge_final.csv") 
 
 walkability_clean = walkability %>% 
-  separate(name, c("census_tract", "county", "state"), sep = ", ") %>% 
-  mutate(county_state = str_c(county, state, sep = ", ")) %>% 
-  select(-census_tract)
+  separate(name, c("census_tract", "county", "state"), sep = ", ") #%>% 
+  #mutate(county_state = str_c(county, state, sep = ", ")) %>% 
+  #select(-census_tract)
   
 
 #rmarkdown::render("dashboard.Rmd", output_format = "flexdashboard::flex_dashboard")
@@ -34,22 +34,22 @@ Column {.sidebar}
 
 ```{r}
 
-location = walkability_clean %>% distinct(county_state)
+state = walkability_clean %>% distinct(state) %>% drop_na()
 
 # selectInput(
-#   inputId = "location_choice",
-#   label = h3("Location"), 
-#   choices = location
-# ) 
+#   inputId = "state_choice",
+#   label = h3("State"),
+#   choices = state
+# )
 
 fluidPage(
   title = "Search Bar",
   fluidRow(
     selectizeInput(
-      inputId = "location_choice", 
-      label = "Location Search Bar",
+      inputId = "state_choice",
+      label = "State Search Bar",
       multiple = FALSE,
-      choices = c("Search Bar" = "", location),
+      choices = c("Search Bar" = "", state),
       options = list(
         create = FALSE,
         placeholder = "Search Me",
@@ -81,12 +81,25 @@ Column {data-width=500}
 ### Demography
 
 ```{r}
-renderPlotly(
-walkability %>%
-  plot_ly(x = ~input[["demo_choice"]], y = ~nat_walk_ind,
-          type = "scatter", mode = "markers", alpha = 0.5)
-)
+
+renderPrint({
+  input[["state_choice"]]
+})
+
+# renderPlotly(
+# walkability_clean %>%
+#   filter(state == input[["location_choice"]]) %>% 
+#   plot_ly(x = ~county, y = ~nat_walk_ind,
+#           type = "bar", mode = "markers", alpha = 0.5)
+# )
 ```
+
+
+
+```{r}
+
+```
+
 
 Column {data-width=500}
 -----------------------------------------------------------------------
