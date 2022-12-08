@@ -36,29 +36,13 @@ Column {.sidebar}
 
 state = walkability_clean %>% distinct(state) %>% drop_na()
 
-# selectInput(
-#   inputId = "state_choice",
-#   label = h3("State"),
-#   choices = state
-# )
-
-fluidPage(
-  title = "Search Bar",
-  fluidRow(
-    selectizeInput(
-      inputId = "state_choice",
-      label = "State Search Bar",
-      multiple = FALSE,
-      choices = c("Search Bar" = "", state),
-      options = list(
-        create = FALSE,
-        placeholder = "Search Me",
-        maxItems = '1',
-        onDropdownOpen = I("function($dropdown) {if (!this.lastQuery.length) {this.close(); this.settings.openOnFocus = false;}}"),
-        onType = I("function (str) {if (str === \"\") {this.close();}}")
-      )
-    ))
+selectInput(
+  inputId = "state_choice",
+  label = h3("State"),
+  choices = state
 )
+
+
 
 
 selectInput(
@@ -83,7 +67,7 @@ Column {data-width=500}
 ```{r}
 
 renderPrint({
-  input[["state_choice"]]
+  input$state_choice
 })
 
 # renderPlotly(
