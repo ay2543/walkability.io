@@ -9,3 +9,41 @@ library(tidyverse)
 library(plotly)
 library(modelr)
 ```
+
+```{r poisson-test-code}
+merge_final
+
+# poisson_gen_model = glm(formula = health outcomes ~ walkability, family = poisson)
+
+# Model 1: High cholesterol vs walkability score
+# poisson_chol = glm(formula = health outcomes ~ walkability, data = [], family = poisson)
+
+# Model 2: Physical inactivity vs walkability score
+# poisson_inactivity = glm(formula = health outcomes ~ walkability, data = [], family = poisson)
+
+# Model 3: Mental health vs walkability score
+# poisson_mh = glm(formula = health outcomes ~ walkability, data = [], family = poisson)
+
+# Model 4: Physical health vs walkability score
+# poisson_ph = glm(formula = health outcomes ~ walkability, data = [], family = poisson)
+
+# Model 5: High blood pressure vs walkability scsore
+# poisson_hbp = glm(formula = health outcomes ~ walkability, data = [], family = poisson)
+
+```
+
+```{r reference-code}
+#baltimore_glm =
+#  baltimore_df %>%
+#  glm(solved ~ victim_age + victim_sex + victim_race,
+#    data = .,
+#    family = binomial()) %>%
+#  broom::tidy() %>%
+#  janitor::clean_names() %>%
+#  mutate(OR = exp(estimate),
+#         CI_lower = exp(estimate - 1.96*std_error),
+#         CI_upper = exp(estimate + 1.96*std_error))
+#baltimore_glm
+```
+
+
