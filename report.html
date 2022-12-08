@@ -11,7 +11,7 @@
 
 
 
-<title>Report</title>
+<title>Project Report</title>
 
 <script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -268,26 +268,25 @@ $(document).ready(function () {
     </li>
   </ul>
 </li>
-<li>
-  <a href="map.html">
-    <span class="fa fa-map"></span>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-file"></span>
      
-    Walkability Map
-  </a>
-</li>
-<li>
-  <a href="explore.html">
-    <span class="fa fa-map"></span>
+    Visualizations
      
-    Exploratory Analysis
+    <span class="caret"></span>
   </a>
-</li>
-<li>
-  <a href="dashboard.html">
-    <span class="fa fa-chart-simple"></span>
-     
-    Bivariate plots
-  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="map.html">Walkability Map</a>
+    </li>
+    <li>
+      <a href="explore.html">Exploratory Analysis</a>
+    </li>
+    <li>
+      <a href="dashboard.html">Bivariate plots</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="newscore.html">
@@ -341,12 +340,70 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Report</h1>
+<h1 class="title toc-ignore">Project Report</h1>
 
 </div>
 
 
-<p>Project Report</p>
+<div id="motivation" class="section level2">
+<h2>Motivation</h2>
+<p>Provide an overview of the project goals and motivation.</p>
+</div>
+<div id="related-work" class="section level2">
+<h2>Related work</h2>
+<p>Anything that inspired you, such as a paper, a web site, or something
+we discussed in class.</p>
+</div>
+<div id="initial-questions" class="section level2">
+<h2>Initial questions</h2>
+<p>What questions are you trying to answer? How did these questions
+evolve over the course of the project? What new questions did you
+consider in the course of your analysis?</p>
+</div>
+<div id="data" class="section level2">
+<h2>Data</h2>
+<p>Source, scraping method, cleaning, etc. SOPHIE</p>
+</div>
+<div id="exploratory-analysis" class="section level2">
+<h2>Exploratory analysis</h2>
+<p>Visualizations, summaries, and exploratory statistical analyses.
+Justify the steps you took, and show any major changes to your ideas. We
+explored the overall demographics, walkability and health outcome across
+geographical regions in the United States. First, we looked at overall
+statistics of demographics and walkability in the United States. The
+average walkability score, percentage of female, percentage of male,
+percentage of adults (age greater than 18), average median income,
+percentage of each race, and percentage of more than 2 races were
+included in the table. Then, we have the same statistics on the
+interactive tables showing results for each states and counties. The
+mean walkability score is 9.54, which is below average walkable
+according to the National Walkability Index score ranging from 1 to 20.
+The percentage of female and male is balance around 50%. The percentage
+of adults, which is older than 18 years old, is 78.23%. The average
+median income in this dataset is $68,387.44. Regarding race, there are
+70.49% White, 17.37% Hispanic, 13.58% Black, 4.91% Asian, 0.9% American
+Indian and Alaska Native, and 4.95% who have more than 2 races.</p>
+<p>Second, we looked at the five health outcomes related to walkability.
+The prevalence of the health outcome, average walkability score,
+percentage of female, percentage of male, percentage of adults (age
+greater than 18), average median income, percentage of each race, and
+percentage of more than 2 races were explored in the each health outcome
+for United States. Then, the interactive table showed the same
+statistics in five health outcomes for each states and counties.</p>
+<p>The third section we did some explortory plots between demographics
+vs. walkability and health outcomes vs. walkability to guide our future
+analysis.</p>
+</div>
+<div id="additional-analysis" class="section level2">
+<h2>Additional analysis</h2>
+<p>If you undertake formal statistical analyses, describe these in
+detail</p>
+</div>
+<div id="discussion" class="section level2">
+<h2>Discussion</h2>
+<p>What were your findings? Are they what you expect? What insights into
+the data can you make?</p>
+</div>
 
 
 

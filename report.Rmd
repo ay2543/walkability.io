@@ -1,9 +1,8 @@
 ---
-title: "Report"
+title: "Project Report"
 output: html_document
 ---
 
-# Project Report
 
 ## Motivation
 Provide an overview of the project goals and motivation.
