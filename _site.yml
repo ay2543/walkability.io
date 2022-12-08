@@ -19,6 +19,8 @@ navbar:
           href: map.html
         - text: "Exploratory Analysis"
           href: explore.html    
+        - text: "Statistical Analysis"
+          href: regression.html    
         - text: "Bivariate plots"
           href: dashboard.html
     - text: "New Walkability Index"
