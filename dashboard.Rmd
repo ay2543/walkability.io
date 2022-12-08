@@ -20,9 +20,8 @@ library(shiny)
 walkability = read_csv("./data/merge_final.csv") 
 
 walkability_clean = walkability %>% 
-  separate(name, c("census_tract", "county", "state"), sep = ", ") #%>% 
-  #mutate(county_state = str_c(county, state, sep = ", ")) %>% 
-  #select(-census_tract)
+  separate(name, c("census_tract", "county", "state"), sep = ", ") %>% 
+  drop_na(state)
   
 
 #rmarkdown::render("dashboard.Rmd", output_format = "flexdashboard::flex_dashboard")
@@ -66,9 +65,9 @@ Column {data-width=500}
 
 ```{r}
 
-renderPrint({
-  input$state_choice
-})
+# renderPrint({
+#   input$state_choice
+# })
 
 # renderPlotly(
 # walkability_clean %>%
@@ -76,6 +75,34 @@ renderPrint({
 #   plot_ly(x = ~county, y = ~nat_walk_ind,
 #           type = "bar", mode = "markers", alpha = 0.5)
 # )
+
+renderPlotly(
+walkability_clean %>% 
+  filter(!is.na(state) &
+         state == input[["state_choice"]] &
+         !is.na(nat_walk_ind)
+         ) %>% 
+  group_by(county) %>% 
+  summarise(walk = mean(nat_walk_ind)) %>% 
+  mutate(walkability <- NA,
+         walkability[walk>= 15.26] <- "Most walkable",
+         walkability[walk >= 10.51 & walk<= 15.25] <- "Above average walkable",
+         walkability[walk >= 5.76 & walk<= 10.5] <- "Below average walkable",
+         walkability[walk <= 5.75] <- "Least walkable",
+         walkability = factor(walkability,
+                              levels = c("Least walkable",
+                                         "Below average walkable",
+                                         "Above average walkable",
+                                         "Most walkable"),
+                              ordered = TRUE)
+         ) %>%
+  plot_ly(x = ~fct_reorder(county, walk), y = ~walk, color = ~walkability,
+          type = "bar") %>% 
+   layout(legend = list(x = 0.1, y = 0.9),
+          yaxis = list(title = 'Average walkability index (0-20)'),
+          xaxis = list(title = 'County'))
+)
+
 ```
 
 
@@ -91,6 +118,10 @@ Column {data-width=500}
 ### Health outcome
 
 ```{r}
+renderPrint({
+  input[["outcome_choice"]]
+})
+
 
 ```
 
