@@ -3,7 +3,14 @@ title: "Interactive Map"
 output: html_document
 ---
 
-Enjoy our interactive map!
+<style>
+div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
+</style>
+<div class = "blue">
+
+##### On this page, we will explore the National Walkability Index across geographical regions in the United States. 
+</div>
+
 
 When your mouse hover onto a county, the textbox displays the county name, National Walkability Index, and health outcomes percentage. These health outcomes are:
 
@@ -50,10 +57,10 @@ hover_test_df = walkability %>%
   janitor::clean_names()
 
 #Merge the two df by county-level FIPS
-walkability_plot = full_join(x = index_by_county, y = hover_test_df, by = "fips_county")
+walkability_map = full_join(x = index_by_county, y = hover_test_df, by = "fips_county")
 
 #Adding variable for hovertext
-walkability_plot$hover <- with(walkability_plot, 
+walkability_map$hover <- with(walkability_map, 
                             paste('<br>',
                                   "National Walkability Index (by County):", ind_mean, '<br>', 
                                   "% Health Outcomes (by County)", '<br>',
@@ -64,26 +71,105 @@ walkability_plot$hover <- with(walkability_plot,
                                   "High Blood Pressure:", bphigh))
 
 #Choropleth with hovertext of health outcomes by county by plotly
-fig_hover_test = plot_ly()
+choropleth_map = plot_ly()
 
-fig_hover_test = fig_hover_test %>% 
+choropleth_map = choropleth_map %>% 
   add_trace(type = "choropleth",
             geojson = counties,
-            locations = walkability_plot$fips_county,
-            z = walkability_plot$ind_mean,
-            text = walkability_plot$hover,
+            locations = walkability_map$fips_county,
+            z = walkability_map$ind_mean,
+            text = walkability_map$hover,
             colorscale = "Viridis",
             reversescale = T, #to get reverse color scheme
             zmin = 1,
             zmax = 16,
             marker = list(line = list(width = 0)))
 
-fig_hover_test = fig_hover_test %>%
+choropleth_map = choropleth_map %>%
   layout(title = "National Walkability Index in the US")
 
-fig_hover_test = fig_hover_test %>% 
+choropleth_map = choropleth_map %>% 
   layout(geo = g)
 
-fig_hover_test
+choropleth_map
+```
+
+
+### Clustering analysis for walkability
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, results= FALSE}
+library(rgeoda)
+library(sf)
+library(tmap)
+library(tidyverse)
+library(leaflet)
+
+
+# Read-in csv
+cluster_map <- st_read("./data/cluster_analysis/map_with_everything.shp", quiet = TRUE)
+
+cluster_map_clean = cluster_map %>% 
+  janitor::clean_names() %>% 
+  mutate(nat_walk_i = as.numeric(nat_walk_i),
+        nat_walk_i = round(nat_walk_i, digits = 1)) %>% 
+  filter(stusps == "NY",
+         namelsadco %in% c("Bronx County", "Kings County", "New York County", "Queens County", "Richmond County")) %>% 
+  rename(median_income = s1903_c03) %>% 
+  mutate(median_income = as.numeric(median_income))
+
+cluster_map_NY = cluster_map_clean[!is.na(cluster_map_clean$nat_walk_i),]
+  
+
+# Queen 1st order weights matrix 
+queen_w <- queen_weights(cluster_map_NY, order = 1)
+
+#summary(queen_w)
+
+# Local Moran's I
+lisa <- local_moran(queen_w, cluster_map_NY["nat_walk_i"],
+                    permutations = 9999)
+
+# What's contained under the "lisa" object?
+#names(lisa)
+
+
+# Get cluster column and join it to zip shp
+cluster_map_NY$cluster <- as.factor(lisa$GetClusterIndicators())
+str(cluster_map_NY)
+
+# Add labels to clusters
+levels(cluster_map_NY$cluster) <- lisa$GetLabels()
+
+# Map clusters
+#tm_shape(cluster_map) +
+#  tm_fill("cluster") 
+
+# We need the GeoDa colors!
+lisa_colors <- lisa_colors(lisa)
+
+# Recode clusters using tidyverse (dyplr)
+cluster_map_NY %>% 
+  mutate(cluster = recode_factor(.x = cluster,
+                                  `Undefined` = "Not significant",
+                                  `Isolated` = "Not significant")) -> cluster_map_NY
+
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Map new categories 
+tmap_mode("view")
+
+tm_basemap("CartoDB.Positron") +
+  tm_shape(cluster_map_NY) +
+  tm_polygons(col = "cluster", 
+              palette =  c("#eeeeee", 
+                      "#FF0000",
+                      "#0000FF",
+                      "#a7adf9",
+                      "#f4ada8"),
+              alpha = .8,
+              title = "Clusters",
+              border.col = "black",
+              border.alpha = .9) 
 ```
 

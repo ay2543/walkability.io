@@ -237,3 +237,151 @@ fig_hover_test = fig_hover_test %>%
 fig_hover_test
 
 ```
+
+
+
+### Clustering analysis for walkability
+
+```{r}
+library(rgeoda)
+library(sf)
+library(tmap)
+library(tidyverse)
+library(leaflet)
+
+
+# Read-in csv
+cluster_map <- st_read("./data/cluster_analysis/map_with_everything.shp")
+
+#cluster_map_check = cluster_map %>% 
+#  group_by(STUSPS) %>% 
+#  summarize(count = sum(is.na(nat_walk_i)))
+
+cluster_map_FL = cluster_map %>% 
+  janitor::clean_names() %>% 
+  mutate(nat_walk_i = as.numeric(nat_walk_i),
+        nat_walk_i = round(nat_walk_i, digits = 1)) %>% 
+  filter(stusps == "NY",
+         namelsadco %in% c("Bronx County", "Kings County", "New York County", "Queens County", "Richmond County")) %>% 
+  rename(median_income = s1903_c03) %>% 
+  mutate(median_income = as.numeric(median_income))
+
+cluster_map_NY = cluster_map_FL[!is.na(cluster_map_FL$nat_walk_i),]
+  
+
+# Queen 1st order weights matrix 
+queen_w <- queen_weights(cluster_map_NY, order = 1)
+
+summary(queen_w)
+
+
+# Local Moran's I
+lisa <- local_moran(queen_w, cluster_map_NY["nat_walk_i"],
+                    permutations = 9999)
+
+# What's contained under the "lisa" object?
+names(lisa)
+
+lisa$GetClusterIndicators()
+
+# Get cluster column and join it to zip shp
+cluster_map_NY$cluster <- as.factor(lisa$GetClusterIndicators())
+str(cluster_map_NY)
+
+# Add labels to clusters
+levels(cluster_map_NY$cluster) <- lisa$GetLabels()
+
+# Map clusters
+#tm_shape(cluster_map) +
+#  tm_fill("cluster") 
+
+# We need the GeoDa colors!
+lisa_colors <- lisa_colors(lisa)
+
+
+# Recode clusters using tidyverse (dyplr)
+cluster_map_NY %>% 
+  mutate(cluster = recode_factor(.x = cluster,
+                                  `Undefined` = "Not significant",
+                                  `Isolated` = "Not significant")) -> cluster_map_NY
+
+# Map new categories 
+tmap_mode("view")
+
+tm_basemap("CartoDB.Positron") +
+  tm_shape(cluster_map_NY) +
+  tm_polygons(col ="cluster", 
+              palette=  c("#eeeeee", 
+                      "#FF0000",
+                      "#0000FF",
+                      "#a7adf9",
+                      "#f4ada8"),
+              alpha = .8,
+              title = "Clusters",
+              border.col = "black",
+              border.alpha = .9) 
+```
+
+##median household income
+```{r}
+# Local Moran's I
+lisa <- local_moran(queen_w, cluster_map_NY["median_income"],
+                    permutations = 9999)
+
+# What's contained under the "lisa" object?
+names(lisa)
+
+# Get cluster column and join it to zip shp
+cluster_map_NY$cluster <- as.factor(lisa$GetClusterIndicators())
+str(cluster_map_NY)
+
+# Add labels to clusters
+levels(cluster_map_NY$cluster) <- lisa$GetLabels()
+
+# Map clusters
+#tm_shape(cluster_map) +
+#  tm_fill("cluster") 
+
+# We need the GeoDa colors!
+lisa_colors <- lisa_colors(lisa)
+
+
+# Recode clusters using tidyverse (dyplr)
+cluster_map_NY %>% 
+  mutate(cluster = recode_factor(.x = cluster,
+                                  `Undefined` = "Not significant",
+                                  `Isolated` = "Not significant")) -> cluster_map_NY
+
+# Map new categories 
+tm_shape(cluster_map_NY) +
+  tm_polygons(col ="cluster", 
+              palette=  c("#eeeeee", 
+                      "#FF0000",
+                      "#0000FF",
+                      "#a7adf9",
+                      "#f4ada8"),
+              alpha = .8,
+              title = "Clusters",
+              border.col = "black",
+              border.alpha = .9)
+
+
+tm_shape(cluster_map_NY) +
+  tm_polygons(col = "median_income", 
+              style = "jenks",
+              n = 5) 
+```
+
+
+```{r}
+bi_lisa <- local_bimoran(queen_w, cluster_map_NY[c("nat_walk_i", "median_income")],
+                    permutations = 9999)
+
+names(bi_lisa)
+
+bi_lisa$labels
+```
+
+
+
+
