@@ -38,57 +38,8 @@ walkability_tidy = walkability_clean %>%
 
 
 
-Column {data-width=350}
------------------------------------------------------------------------
 
-### Walkability by county
-
-```{r}
-
-# renderPrint({
-#   input$state_choice
-# })
-
-# renderPlotly(
-# walkability_clean %>%
-#   filter(state == input[["location_choice"]]) %>% 
-#   plot_ly(x = ~county, y = ~nat_walk_ind,
-#           type = "bar", mode = "markers", alpha = 0.5)
-# )
-
-
-
-#renderPlotly(
-  walkability_tidy %>% 
-  mutate(walkability <- NA,
-         walkability[walk>= 15.26] <- "Most walkable",
-         walkability[walk >= 10.51 & walk<= 15.25] <- "Above average walkable",
-         walkability[walk >= 5.76 & walk<= 10.5] <- "Below average walkable",
-         walkability[walk <= 5.75] <- "Least walkable",
-         walkability = factor(walkability,
-                              levels = c("Least walkable",
-                                         "Below average walkable",
-                                         "Above average walkable",
-                                         "Most walkable"),
-                              ordered = TRUE)
-         ) %>%
-  plot_ly(x = ~fct_reorder(county, walk), y = ~walk, color = ~walkability,
-          type = "scatter", mode = "line+markers") %>% 
-   layout(legend = list(x = 0.1, y = 0.9),
-          yaxis = list(title = 'Average walkability index (0-20)'),
-          xaxis = list(title = 'County'))
-#)
-
-```
-
-
-
-```{r}
-
-```
-
-
-Column {data-width=650}
+Column {data-width=1000}
 -----------------------------------------------------------------------
 
 ### Health outcome
@@ -100,7 +51,7 @@ Column {data-width=650}
 
 #renderPlotly(
 walkability_clean %>% 
-  filter(!is.na(state) &
+filter(!is.na(state) &
          state == "New York" &
          !is.na(nat_walk_ind)
          ) %>% 
@@ -117,9 +68,68 @@ walkability_clean %>%
              ) %>% 
    layout(#legend = list(x = 0.1, y = 0.9),
           yaxis = list(title = '% with health outcome'),
-          yaxis2=list(side="right",overlaying="y"),
+          yaxis2=list(side="right",overlaying="y", title = "Average walkability index"),
           xaxis = list(title = 'Health outcome'),
-          barmode = 'stack') 
+          barmode = 'stack',
+           shapes = list(
+               list(type = "rect",
+                    fillcolor = "navy", line = list(color = "navy"), opacity = 0.15,
+                    x0 = 0, x1 = 62, xref = "x",
+                    y0 = 0, y1 = 5.75, yref = "y2"),
+               list(type = "rect",
+                    fillcolor = "blue", line = list(color = "blue"), opacity = 0.15,
+                    x0 = 0, x1 = 62, xref = "x",
+                    y0 = 5.76, y1 = 10.5, yref = "y2"),
+               list(type = "rect",
+                    fillcolor = "teal", line = list(color = "teal"), opacity = 0.15,
+                    x0 = 0, x1 = 62, xref = "x",
+                    y0 = 10.51, y1 = 15.25, yref = "y2"),
+               list(type = "rect",
+                    fillcolor = "green", line = list(color = "green"), opacity = 0.15,
+                    x0 = 0, x1 = 62, xref = "x",
+                    y0 = 15.25, y1 = 20, yref = "y2")),
+          annotations = list(
+            list(x = 65,
+                 y = 105,
+                 font = list(size = 10),
+                 text = "<b>Most<br>walkable</br></b>",
+                 xref = "x",
+                 yref = "y",
+                 xanchor = "right",
+                 yanchor = "bottom",
+                 showarrow = FALSE,
+                 textangle = 90),
+            list(x = 65,
+                 y = 75,
+                 font = list(size = 10),
+                 text = "<b>Above avg<br>walkable</br></b>",
+                 xref = "x",
+                 yref = "y",
+                 xanchor = "right",
+                 yanchor = "bottom",
+                 showarrow = FALSE,
+                 textangle = 90),
+          list(x = 65,
+                 y = 45,
+                 font = list(size = 10),
+                 text = "<b>Below avg<br>walkable</br></b>",
+                 xref = "x",
+                 yref = "y",
+                 xanchor = "right",
+                 yanchor = "bottom",
+                 showarrow = FALSE,
+               textangle = 90),
+          list(x = 65,
+                 y = 8,
+                 font = list(size = 10),
+                 text = "<b>Least<br>walkable</br></b>",
+                 xref = "x",
+                 yref = "y",
+                 xanchor = "right",
+                 yanchor = "bottom",
+                 showarrow = FALSE,
+               textangle = 90))
+          )
 #)
 
 ```
