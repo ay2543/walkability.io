@@ -4,9 +4,9 @@ output: html_document
 ---
 
 
-<p style="text-align: center;">
+<center>
 ## **Walk the walk: The effect of neighborhood walkability on health**
-</p>
+<center>
 
 <br>
 <center><table style="table-layout: fixed; width: 70%"></center>
