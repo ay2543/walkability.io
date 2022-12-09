@@ -36,35 +36,7 @@ walkability_tidy = walkability_clean %>%
 
 ```
 
-Column {.sidebar}
------------------------------------------------------------------------
 
-```{r}
-
-state = walkability_clean %>% distinct(state) %>% drop_na()
-
-selectInput(
-  inputId = "state_choice",
-  label = h3("State"),
-  choices = state
-)
-
-
-
-
-selectInput(
-  inputId = "demo_choice",
-  label = h3("Demographic indicator"), 
-  choices = c("age", "sex", "race/ethnicity", "median Household Income")
-) 
-
-radioButtons(
-  inputId = "outcome_choice",
-  label = h3("Health outcome"),
-  choices = c("Physical health", "Physical activity", "Cholesterol", "Blood pressure", "Mental health")
-)
-
-```
 
 Column {data-width=350}
 -----------------------------------------------------------------------
@@ -122,9 +94,9 @@ Column {data-width=650}
 ### Health outcome
 
 ```{r}
-renderPrint({
-  input[["outcome_choice"]]
-})
+# renderPrint({
+#   input[["outcome_choice"]]
+# })
 
 #renderPlotly(
 walkability_clean %>% 
