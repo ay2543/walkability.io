@@ -22,6 +22,14 @@ walkability = read_csv("./data/merge_final.csv")
 walkability_clean = walkability %>% 
   separate(name, c("census_tract", "county", "state"), sep = ", ") %>% 
   drop_na(state)
+
+walkability_tidy = walkability_clean %>% 
+  filter(!is.na(state) &
+         state == "New York" &
+         !is.na(nat_walk_ind)
+         ) %>% 
+  group_by(county) %>% 
+  summarise(walk = mean(nat_walk_ind))
   
 
 #rmarkdown::render("dashboard.Rmd", output_format = "flexdashboard::flex_dashboard")
@@ -58,10 +66,10 @@ radioButtons(
 
 ```
 
-Column {data-width=500}
+Column {data-width=350}
 -----------------------------------------------------------------------
 
-### Demography
+### Walkability by county
 
 ```{r}
 
@@ -76,14 +84,10 @@ Column {data-width=500}
 #           type = "bar", mode = "markers", alpha = 0.5)
 # )
 
-renderPlotly(
-walkability_clean %>% 
-  filter(!is.na(state) &
-         state == input[["state_choice"]] &
-         !is.na(nat_walk_ind)
-         ) %>% 
-  group_by(county) %>% 
-  summarise(walk = mean(nat_walk_ind)) %>% 
+
+
+#renderPlotly(
+  walkability_tidy %>% 
   mutate(walkability <- NA,
          walkability[walk>= 15.26] <- "Most walkable",
          walkability[walk >= 10.51 & walk<= 15.25] <- "Above average walkable",
@@ -97,11 +101,11 @@ walkability_clean %>%
                               ordered = TRUE)
          ) %>%
   plot_ly(x = ~fct_reorder(county, walk), y = ~walk, color = ~walkability,
-          type = "bar") %>% 
+          type = "scatter", mode = "line+markers") %>% 
    layout(legend = list(x = 0.1, y = 0.9),
           yaxis = list(title = 'Average walkability index (0-20)'),
           xaxis = list(title = 'County'))
-)
+#)
 
 ```
 
@@ -112,7 +116,7 @@ walkability_clean %>%
 ```
 
 
-Column {data-width=500}
+Column {data-width=650}
 -----------------------------------------------------------------------
 
 ### Health outcome
@@ -122,7 +126,33 @@ renderPrint({
   input[["outcome_choice"]]
 })
 
+#renderPlotly(
+walkability_clean %>% 
+  filter(!is.na(state) &
+         state == "New York" &
+         !is.na(nat_walk_ind)
+         ) %>% 
+  group_by(county, measure_id) %>% 
+  summarise(walk = mean(nat_walk_ind),
+            outcome = mean(data_value)) %>% 
+  plot_ly(x = ~county, 
+          y = ~outcome, color = ~measure_id,
+          type = "bar") %>% 
+   add_trace(x = ~walkability_tidy$county, 
+             y = ~walkability_tidy$walk,  
+             type = 'scatter',  mode = 'lines+markers', name = 'Walkability index', 
+             yaxis = "y2", color = I('black')
+             ) %>% 
+   layout(#legend = list(x = 0.1, y = 0.9),
+          yaxis = list(title = '% with health outcome'),
+          yaxis2=list(side="right",overlaying="y"),
+          xaxis = list(title = 'Health outcome'),
+          barmode = 'stack') 
+#)
 
 ```
 
+```{r}
+
+```
 
