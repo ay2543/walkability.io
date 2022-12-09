@@ -1,5 +1,5 @@
 ---
-title: "Interactive Map"
+title: "Walkability Maps"
 output: html_document
 ---
 
@@ -8,9 +8,14 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 </style>
 <div class = "blue">
 
-##### On this page, we will explore the National Walkability Index across geographical regions in the United States. 
+##### On this page, we will explore the National Walkability Index on the county-level across the United States. Also, we will take a closer look at the walkability in New York City and conduct exploratory spatial data analysis. 
 </div>
+<br>
 
+
+### Interactive Map of National Walkability Index with Health Outcome Prevalence 
+
+For the National Walkability Index, we wanted to go beyond the [EPA’s current Walkability Map](https://www.arcgis.com/home/webmap/viewer.html?url=https%3A%2F%2Fgeodata.epa.gov%2Farcgis%2Frest%2Fservices%2FOA%2FWalkabilityIndex%2FMapServer&source=sd) and created the following interactive spatial visualization that demonstrates county-level walkability scores and the health outcomes prevalence. We utilized many geographic information systems (GIS) concepts and synthesized skills learned from both the Data Science I (BIOST P8105) and Public Health GIS (EHSC P8371) courses that we’re taking in the creation of this spatial visualization. 
 
 When your mouse hover onto a county, the textbox displays the county name, National Walkability Index, and health outcomes percentage. These health outcomes are:
 
@@ -20,35 +25,35 @@ When your mouse hover onto a county, the textbox displays the county name, Natio
 * Physical Health: Physical health not good for >=14 days among adults aged >=18 years
 * High Blood Pressure: High blood pressure among adults aged >=18 years
 
-You can also check out the interactive map showing the National Walkability Index published by the EPA [here](https://www.arcgis.com/home/webmap/viewer.html?url=https%3A%2F%2Fgeodata.epa.gov%2Farcgis%2Frest%2Fservices%2FOA%2FWalkabilityIndex%2FMapServer&source=sd).
 
-
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+<details>
+  <summary>Click to show code</summary>
+  
+```{r message=FALSE, warning=FALSE, fig.show='hide', results='hide'}
 library(rjson)
 library(leaflet)
 library(tidyverse)
 library(plotly)
 
-#Read in cleaned datafile
-
+# Read in cleaned datafile
 walkability = read_csv("./data/merge_final.csv")
 
-#Get the county-level .json file from the web
+# Get the county-level .json file from the web
 url = 'https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json'
 
 counties = rjson::fromJSON(file = url)
 
-#Set up the geographic projection for the map 
+# Set up the geographic projection for the map 
 g = list(scope = 'usa',
          projection = list(type = 'albers usa'))
 
-#Get the df for mean of walkability index by county
+# Get the df for mean of walkability index by county
 index_by_county = walkability %>% 
   mutate(fips_county = str_c(statefp, countyfp)) %>% 
   group_by(fips_county) %>% 
   summarise(ind_mean = round(mean(nat_walk_ind), 1))
 
-#Get the df for mean of health outcome prevalence by county
+# Get the df for mean of health outcome prevalence by county
 hover_test_df = walkability %>%
   mutate(fips_county = str_c(statefp, countyfp)) %>% 
   group_by(fips_county, measure_id) %>%
@@ -56,10 +61,10 @@ hover_test_df = walkability %>%
   pivot_wider(names_from = "measure_id", values_from = "county_hlth") %>% 
   janitor::clean_names()
 
-#Merge the two df by county-level FIPS
+# Merge the two df by county-level FIPS
 walkability_map = full_join(x = index_by_county, y = hover_test_df, by = "fips_county")
 
-#Adding variable for hovertext
+# Adding variable for hovertext
 walkability_map$hover <- with(walkability_map, 
                             paste('<br>',
                                   "National Walkability Index (by County):", ind_mean, '<br>', 
@@ -70,7 +75,7 @@ walkability_map$hover <- with(walkability_map,
                                   "Physical Health:", phlth, '<br>',
                                   "High Blood Pressure:", bphigh))
 
-#Choropleth with hovertext of health outcomes by county by plotly
+# Choropleth with hovertext of health outcomes by county by plotly
 choropleth_map = plot_ly()
 
 choropleth_map = choropleth_map %>% 
@@ -93,21 +98,112 @@ choropleth_map = choropleth_map %>%
 
 choropleth_map
 ```
+</details>
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+choropleth_map
+```
+<br>
+
+### Exploratory Spatial Data Analysis
 
 
-### Clustering analysis for walkability
+To further understand the National Walkability Index in a smaller spatial unit, we narrowed the exploration to New York City, where us five walkaholics reside. 
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, results= FALSE}
+The first step is to get a general understanding of the walkability index in the City by creating a decriptive choropleth map on the census tract level. We focused on the following counties:
+
+* Bronx County
+* Kings County
+* New York County
+* Queens County
+* Richmond County
+<br>
+
+#### *Descriptive Choropleth Map for Walkability in NYC*
+
+<details>
+  <summary>Click to show code</summary>
+  
+```{r message=FALSE, warning=FALSE, fig.show='hide', results='hide'}
+library(sf)
+library(tmap)
+library(tidyverse)
+library(leaflet)
+library(shinyjs)
+
+# Read-in shapefile
+choropleth_NYC <- st_read("./data/cluster_analysis/map_with_everything.shp", quiet = TRUE)
+
+# Clean up and filter
+choropleth_NYC = choropleth_NYC %>% 
+  janitor::clean_names() %>% 
+  mutate(nat_walk_i = as.numeric(nat_walk_i),
+        nat_walk_i = round(nat_walk_i, digits = 1)) %>% 
+  filter(stusps == "NY",
+         namelsadco %in% c("Bronx County", "Kings County", "New York County", "Queens County", "Richmond County")) %>% 
+  rename(median_income = s1903_c03) %>% 
+  mutate(median_income = as.numeric(median_income))
+
+choropleth_NYC = choropleth_NYC[!is.na(choropleth_NYC$nat_walk_i),]
+
+# Time to map
+tmap_mode("view")
+
+tm_basemap("CartoDB.Positron") +
+  tm_shape(choropleth_NYC) +
+  tm_polygons(col = "nat_walk_i", 
+              style = "fisher",
+              n = 5,
+              title = "National Walkability Index",
+              palette = ("Greens"))
+
+```
+</details>
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Time to map
+tmap_mode("view")
+
+tm_basemap("CartoDB.Positron") +
+  tm_shape(choropleth_NYC) +
+  tm_polygons(col = "nat_walk_i", 
+              style = "fisher",
+              n = 5,
+              title = "National Walkability Index",
+              palette = ("YlGn"))
+
+#get different color palette: tmaptools::palette_explorer()
+```
+
+From this choropleth map, we can see that New York City is walkable overall. However, we want to further identify census tracts that are statistically significant hot spots, cold spots, and spatial outliers using clustering analysis. 
+
+<br>
+
+#### *Clustering Analysis for Walkability in NYC*
+
+As mentioned, we want to find NYC census tracts that are statistically significant hot spots, cold spots, and spatial outliers. To start, it is crucial to understand the terms.
+
+* Hot spots/high positive clusters, **High-High**: census tracts that are high in walkability are surround by census tracts with high walkability index
+* Cold spots/low positive clusters, **Low-Low**: census tracts that are low in walkability are surround by census tracts with low walkability index
+* Spatial outliers:
+  * **High-Low**: census tracts that are high in walkability are surround by census tracts with low walkability index
+  * **Low-High**: census tracts that are low in walkability are surround by census tracts with high walkability index
+<br>
+
+<details>
+  <summary>Click to show code</summary>
+  
+```{r message=FALSE, warning=FALSE, fig.show='hide', results='hide'}
 library(rgeoda)
 library(sf)
 library(tmap)
 library(tidyverse)
 library(leaflet)
 
-
-# Read-in csv
+# Read-in shapefile
 cluster_map <- st_read("./data/cluster_analysis/map_with_everything.shp", quiet = TRUE)
 
+# Clean up and filter
 cluster_map_clean = cluster_map %>% 
   janitor::clean_names() %>% 
   mutate(nat_walk_i = as.numeric(nat_walk_i),
@@ -117,50 +213,36 @@ cluster_map_clean = cluster_map %>%
   rename(median_income = s1903_c03) %>% 
   mutate(median_income = as.numeric(median_income))
 
-cluster_map_NY = cluster_map_clean[!is.na(cluster_map_clean$nat_walk_i),]
+cluster_map_NYC = cluster_map_clean[!is.na(cluster_map_clean$nat_walk_i),]
   
-
 # Queen 1st order weights matrix 
-queen_w <- queen_weights(cluster_map_NY, order = 1)
-
-#summary(queen_w)
+queen_w <- queen_weights(cluster_map_NYC, order = 1)
 
 # Local Moran's I
-lisa <- local_moran(queen_w, cluster_map_NY["nat_walk_i"],
+lisa <- local_moran(queen_w, cluster_map_NYC["nat_walk_i"],
                     permutations = 9999)
 
-# What's contained under the "lisa" object?
-#names(lisa)
-
-
-# Get cluster column and join it to zip shp
-cluster_map_NY$cluster <- as.factor(lisa$GetClusterIndicators())
-str(cluster_map_NY)
+# Get cluster column and join it to shp
+cluster_map_NYC$cluster <- as.factor(lisa$GetClusterIndicators())
+str(cluster_map_NYC)
 
 # Add labels to clusters
-levels(cluster_map_NY$cluster) <- lisa$GetLabels()
+levels(cluster_map_NYC$cluster) <- lisa$GetLabels()
 
-# Map clusters
-#tm_shape(cluster_map) +
-#  tm_fill("cluster") 
-
-# We need the GeoDa colors!
+# We want the GeoDa colors
 lisa_colors <- lisa_colors(lisa)
 
 # Recode clusters using tidyverse (dyplr)
-cluster_map_NY %>% 
+cluster_map_NYC %>% 
   mutate(cluster = recode_factor(.x = cluster,
                                   `Undefined` = "Not significant",
-                                  `Isolated` = "Not significant")) -> cluster_map_NY
+                                  `Isolated` = "Not significant")) -> cluster_map_NYC
 
-```
-
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-# Map new categories 
+# Map the clusters with a basemap
 tmap_mode("view")
 
 tm_basemap("CartoDB.Positron") +
-  tm_shape(cluster_map_NY) +
+  tm_shape(cluster_map_NYC) +
   tm_polygons(col = "cluster", 
               palette =  c("#eeeeee", 
                       "#FF0000",
@@ -172,4 +254,25 @@ tm_basemap("CartoDB.Positron") +
               border.col = "black",
               border.alpha = .9) 
 ```
+</details>
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Map the clusters with a basemap
+tmap_mode("view")
+
+tm_basemap("CartoDB.Positron") +
+  tm_shape(cluster_map_NYC) +
+  tm_polygons(col = "cluster", 
+              palette =  c("#eeeeee", 
+                      "#FF0000",
+                      "#0000FF",
+                      "#a7adf9",
+                      "#f4ada8"),
+              alpha = .8,
+              title = "Clusters",
+              border.col = "black",
+              border.alpha = .9) 
+```
+
 
