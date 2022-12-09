@@ -13,7 +13,9 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 <br>
 
 
-### Interactive Map of National Walkability Index with Health Outcome Prevalence 
+## Interactive Map of National Walkability Index with Health Outcome Prevalence 
+
+#### Map Overview
 
 For the National Walkability Index, we wanted to go beyond the [EPA’s current Walkability Map](https://www.arcgis.com/home/webmap/viewer.html?url=https%3A%2F%2Fgeodata.epa.gov%2Farcgis%2Frest%2Fservices%2FOA%2FWalkabilityIndex%2FMapServer&source=sd) and created the following interactive spatial visualization that demonstrates county-level walkability scores and the health outcomes prevalence. We utilized many geographic information systems (GIS) concepts and synthesized skills learned from both the Data Science I (BIOST P8105) and Public Health GIS (EHSC P8371) courses that we’re taking in the creation of this spatial visualization. 
 
@@ -103,12 +105,11 @@ choropleth_map
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 choropleth_map
 ```
-<br>
 
-### Exploratory Spatial Data Analysis
+## Exploratory Spatial Data Analysis
 
 
-To further understand the National Walkability Index in a smaller spatial unit, we narrowed the exploration to New York City, where us five walkaholics reside. 
+To further understand the National Walkability Index in a smaller spatial unit, we narrowed the exploration to **New York City**, where us five walkaholics reside. 
 
 The first step is to get a general understanding of the walkability index in the City by creating a decriptive choropleth map on the census tract level. We focused on the following counties:
 
@@ -117,9 +118,10 @@ The first step is to get a general understanding of the walkability index in the
 * New York County
 * Queens County
 * Richmond County
+
 <br>
 
-#### *Descriptive Choropleth Map for Walkability in NYC*
+### *Descriptive Choropleth Map for Walkability in NYC*
 
 <details>
   <summary>Click to show code</summary>
@@ -177,10 +179,10 @@ tm_basemap("CartoDB.Positron") +
 
 From this choropleth map, we can see that New York City is walkable overall. However, we want to further identify census tracts that are statistically significant hot spots, cold spots, and spatial outliers using clustering analysis. 
 
-<br>
 
-#### *Clustering Analysis for Walkability in NYC*
+### *Clustering Analysis for Walkability in NYC*
 
+#### Understanding the terms
 As mentioned, we want to find NYC census tracts that are statistically significant hot spots, cold spots, and spatial outliers. To start, it is crucial to understand the terms.
 
 * Hot spots/high positive clusters, **High-High**: census tracts that are high in walkability are surround by census tracts with high walkability index
@@ -188,7 +190,36 @@ As mentioned, we want to find NYC census tracts that are statistically significa
 * Spatial outliers:
   * **High-Low**: census tracts that are high in walkability are surround by census tracts with low walkability index
   * **Low-High**: census tracts that are low in walkability are surround by census tracts with high walkability index
-<br>
+
+#### Local Moran's I
+
+To find these clusters, we will be using local Moran's I. The local spatial statistic Moran's I is calculated for each zone based on the spatial weights object used. The values returned include a Z-value, and may be used as a diagnostic tool. The statistic is:
+
+<center>
+$I_i = \frac{(x_i-\bar{x})}{{\sum_{k=1}^{n}(x_k-\bar{x})^2}/(n-1)}{\sum_{j=1}^{n}w_{ij}(x_j-\bar{x})}$
+
+Essentially, the local Moran's I tells us the local indicator of spatial association or LISA statistic. We will use these LISA cluster indicators to map different walkability clusters in the NYC.
+
+#### Defining Neighborhood for Spatial Weights
+
+For local Moran's I, we also need to specify the spatial weights by defining neighborhood connectivity. The goal of this step is to identify nearest census tract around a specific census tract. We used the Queen's first order contiguity to establish neighborhood connectivity in the following analysis. 
+
+If a census tract is within the threshold distance of the selected census tract, a 1 is given, otherwise a 0 is given. Neighborhoods are created based on which observations are judged “contiguous”.
+
+**Queen's first order contiguity** suggests that, if a census tract share a vertex or a line segment with the selected census tract, they are given a weight of 1 (adjacent and are treated as a neighbor), else they are given a value 0 (nonadjacent and are not treated as a neighbor). 
+
+Visually, it looks like this: 
+
+<center>
+<img src="images/queens_order.jpg" style="width:60%">
+
+Clearly defining the contiguity is needed to conduct the cluster analysis since we want to know what is considered as a neighboring census tract! 
+
+
+#### Clustering Map
+
+By having a basic understanding, we can plot the clustering map of walkability in NYC using Queen's first order contiguity and local Moran's I. 
+
 
 <details>
   <summary>Click to show code</summary>
@@ -274,5 +305,23 @@ tm_basemap("CartoDB.Positron") +
               border.col = "black",
               border.alpha = .9) 
 ```
+
+
+#### Highlights & Importance
+
+Look at Manhattan, we can see that there are several High-High clusterings (i.e., census tracts that are high in walkability are surround by census tracts with high walkability index) in the Midtown and SOHO area. Some parts of Queens, such as Flushing and Forest Hills, also indicates a High-High clustering. 
+
+However, part of the Bronx shows the Low-Low clustering, where census tracts that are low in walkability are surround by census tracts with low walkability index. The Low-Low clustering in Brooklyn, on the other hand, might be due to the location of the JFK airport. 
+
+You might be wondering, what is the importance of finding these statistically significant hot spots and cold spots of walkability in the census tract level?
+
+Reflecting back to the primary goal of the project, which is to highlight the connections between walkability, the built environment, and community-level health, identifying these clusters can help policy makers to put there attentions on those **Low-Low** areas. The **High-High** neighborhoods are doing a good job in building a walkable environment and the **Low-Low** areas will benefit a lot by improving built environment infrastructure to make the community more walkable for all. 
+
+
+#### Extra Resources
+
+You can get more information about local Moran's I [here](http://ceadserv1.nku.edu/longa/geomed/ppa/doc/LocalI/LocalI.htm#:~:text=Local%20Moran's%20I%20is%20a,spatial%20association%20or%20LISA%20statistic.), and read about [R package for analyzing spatial data](https://onlinelibrary.wiley.com/doi/10.1111/gean.12319).
+
+We referenced [this page](https://rpubs.com/corey_sparks/105700) when defining Queen's first order. 
 
 
