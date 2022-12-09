@@ -1,9 +1,19 @@
 ---
-title: "desc"
+title: "Project Description"
 output: html_document
 ---
 
-welcome to the description!!
+<style>
+div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
+</style>
+<div class = "blue">
+
+##### Welcome to the description!!
+
+</div>
+
+<br>
+
 
 ```{r}
 start_lat <- 100

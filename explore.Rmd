@@ -8,7 +8,11 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 </style>
 <div class = "blue">
 
-##### On this page, we are exploring the overall demographics, walkability and health outcome across geographical regions in the United States. There are three sections on this page. The first section is on demographics and walkability statistics of the dataset with interactive tables that enable search function to quickly locate data for a specific state or county. The second section is on health outcomes statistics of the dataset with researchable interactive tables. The third section is on explortory plots between demographics vs. walkability and health outcomes vs. walkability.
+##### On this page, we are exploring the overall demographics, walkability and health outcome across geographical regions in the United States. There are three sections on this page. 
+
+* ##### The first section is on demographics and walkability statistics of the dataset with interactive tables that enable search function to quickly locate data for a specific state or county. 
+* ##### The second section is on health outcomes statistics of the dataset with researchable interactive tables. 
+* ##### The third section is on explortory plots between demographics vs. walkability and health outcomes vs. walkability.
 
 </div>
 

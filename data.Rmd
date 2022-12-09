@@ -3,17 +3,25 @@ title: "Data Sources"
 output: html_document
 ---
 
-This is a description of our data sources and cleaning steps.
+<style>
+div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
+</style>
+<div class = "blue">
 
-We wish to identify associations between walkability and 
+##### This is a description of our data sources and cleaning steps.
 
-* demographic indicators 
-* health outcomes 
+##### We wish to identify associations between walkability and 
 
-We also wish to create our own updated walkability index and see how well it can estimate health outcomes compared to the original walkability index.
+* ##### demographic indicators 
+* ##### health outcomes 
 
+##### We also wish to create our own updated walkability index and see how well it can estimate health outcomes compared to the original walkability index.
 
-## Exposure: Walkability
+</div>
+
+<br>
+
+### Exposure: Walkability
 
 * Data: [Environmental Protection Agency's information on Walkability Index, 2021](http://edg.epa.gov/metadata/catalog/search/resource/details.page?uuid=%7B251AFDD9-23A7-4068-9B27-A3048A7E6012%7D)
   * The National Walkability Index from the EPA provides walkability scores based on a simple formula that ranks selected indicators from the Smart Location Database (which summarizes 90 indicators associated with the built environment) that have been demonstrated to affect the propensity of walk trips. Currently, the National Walkability Index dataset ranks each block group relative to all other block groups in the United States on a scale from 0-20; and data can be aggregated to larger spatial units using Federal Information Processing Standards (FIPS) codes.
@@ -26,7 +34,7 @@ We also wish to create our own updated walkability index and see how well it can
   * FIPS code
   * National Walkability Index 
   
-## Confounders: Demographics
+### Confounders: Demographics
 * Data: [US Census American Community Survey, 2020](https://data.census.gov/table?tid=ACSDP1Y2021.DP05)
   * The American Community Survey (ACS) is an annual, nationwide survey conducted by the U.S. Census Bureau and produces information on social, economic, housing, and demographic characteristics about our nation's population every year. This information is a vital tool that communities can use to see how they are changing across the years.
 * Cleaning steps:
@@ -39,7 +47,7 @@ We also wish to create our own updated walkability index and see how well it can
   * Race/ethnicity
   * Median household income
   
-## Outcome: Health outcomes
+### Outcome: Health outcomes
 * Data: [Behavioral Risk Factor Surveillance System (BRFSS), 2020](https://chronicdata.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh/data)
   * The Behavioral Risk Factor Surveillance System (BRFSS) is an annual, nationwide system of health-related telephone surveys conducted by the Centers for Disease Control and Prevention (CDC) which collects information about U.S. residents regarding their health-related risk behaviors, chronic health conditions, and use of preventive services. Established in 1984 with 15 states, BRFSS now collects data in all 50 states as well as the District of Columbia and three U.S. territories. BRFSS completes more than 400,000 adult interviews each year, making it the largest continuously conducted health survey system in the world.
 * Cleaning steps:
@@ -56,14 +64,14 @@ We also wish to create our own updated walkability index and see how well it can
 
 <br>
 
-## Considerations
+### Considerations
 
-### Spatial units
+#### Spatial units
 * For all of our variables of interest, we selected datasets that contained spatial (geographic) information
 * All variables were analyzed at the **census tract** level
   * Since walkability data was provided at a census block level (which is narrower than the census tract level), we took the average walkability indices of census blocks within a census tract for analysis for consistency with geographic data for other variables.
   
-### Timing
+#### Timing
 * Walkability dataset is from 2021, Demographic and health outcome datasets are from 2020
 * We recognize that there is a discrepancy in timing across datasets, so we are choosing to interpret with caution and avoid discussing causality
 

@@ -348,7 +348,42 @@ $(document).ready(function () {
 </div>
 
 
+<style>
+div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
+</style>
+<div id="on-this-page-xxxxx" class="section level5 blue">
+<h5>On this page XXXXX</h5>
+</div>
+<p><br></p>
+<pre class="r"><code># ADJUST FOR POTENTIAL CONFOUNDERS TOO???
 
+# poisson_gen_model = glm(formula = health outcomes ~ walkability, family = poisson)
+
+# Model 1: High cholesterol vs walkability score
+# poisson_chol = glm(formula = health outcomes ~ walkability, data = [], family = poisson)
+
+# Model 2: Physical inactivity vs walkability score
+# poisson_inactivity = glm(formula = health outcomes ~ walkability, data = [], family = poisson)
+
+# Model 3: Mental health vs walkability score
+# poisson_mh = glm(formula = health outcomes ~ walkability, data = [], family = poisson)
+
+# Model 4: Physical health vs walkability score
+# poisson_ph = glm(formula = health outcomes ~ walkability, data = [], family = poisson)
+
+# Model 5: High blood pressure vs walkability scsore
+# poisson_hbp = glm(formula = health outcomes ~ walkability, data = [], family = poisson)</code></pre>
+<pre class="r"><code>#baltimore_glm =
+#  baltimore_df %&gt;%
+#  glm(solved ~ victim_age + victim_sex + victim_race,
+#    data = .,
+#    family = binomial()) %&gt;%
+#  broom::tidy() %&gt;%
+#  janitor::clean_names() %&gt;%
+#  mutate(OR = exp(estimate),
+#         CI_lower = exp(estimate - 1.96*std_error),
+#         CI_upper = exp(estimate + 1.96*std_error))
+#baltimore_glm</code></pre>
 
 
 

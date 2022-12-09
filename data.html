@@ -11,7 +11,7 @@
 
 
 
-<title>Data Source</title>
+<title>Data Sources</title>
 
 <script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -261,26 +261,35 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="data.html">Data Source</a>
+      <a href="data.html">Data Sources</a>
     </li>
     <li>
       <a href="desc.html">Project Description</a>
     </li>
   </ul>
 </li>
-<li>
-  <a href="map.html">
-    <span class="fa fa-map"></span>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-file"></span>
      
-    Walkability Map
-  </a>
-</li>
-<li>
-  <a href="dashboard.html">
-    <span class="fa fa-chart-simple"></span>
+    Visualizations
      
-    Bivariate plots
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="map.html">Walkability Map</a>
+    </li>
+    <li>
+      <a href="explore.html">Exploratory Analysis</a>
+    </li>
+    <li>
+      <a href="regression.html">Statistical Analysis</a>
+    </li>
+    <li>
+      <a href="dashboard.html">Bivariate plots</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="newscore.html">
@@ -297,7 +306,14 @@ $(document).ready(function () {
   </a>
 </li>
 <li>
-  <a href="limtations.html">
+  <a href="report.html">
+    <span class="fa fa-map"></span>
+     
+    Report
+  </a>
+</li>
+<li>
+  <a href="limitations.html">
     <span class="fa fa-thought-bubble"></span>
      
     Limitations
@@ -327,22 +343,38 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Data Source</h1>
+<h1 class="title toc-ignore">Data Sources</h1>
 
 </div>
 
 
-<p>This is a description of our data sources and cleaning steps.</p>
-<p>We wish to identify associations between walkability and</p>
+<style>
+div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
+</style>
+<div class="blue">
+<div id="this-is-a-description-of-our-data-sources-and-cleaning-steps."
+class="section level5">
+<h5>This is a description of our data sources and cleaning steps.</h5>
+</div>
+<div id="we-wish-to-identify-associations-between-walkability-and"
+class="section level5">
+<h5>We wish to identify associations between walkability and</h5>
 <ul>
-<li>demographic indicators</li>
-<li>health outcomes</li>
+<li><h5 id="demographic-indicators">demographic indicators</h5></li>
+<li><h5 id="health-outcomes">health outcomes</h5></li>
 </ul>
-<p>We also wish to create our own updated walkability index and see how
+</div>
+<div
+id="we-also-wish-to-create-our-own-updated-walkability-index-and-see-how-well-it-can-estimate-health-outcomes-compared-to-the-original-walkability-index."
+class="section level5">
+<h5>We also wish to create our own updated walkability index and see how
 well it can estimate health outcomes compared to the original
-walkability index.</p>
-<div id="exposure-walkability" class="section level2">
-<h2>Exposure: Walkability</h2>
+walkability index.</h5>
+</div>
+</div>
+<p><br></p>
+<div id="exposure-walkability" class="section level3">
+<h3>Exposure: Walkability</h3>
 <ul>
 <li>Data: <a
 href="http://edg.epa.gov/metadata/catalog/search/resource/details.page?uuid=%7B251AFDD9-23A7-4068-9B27-A3048A7E6012%7D">Environmental
@@ -376,8 +408,8 @@ href="https://www.epa.gov/sites/default/files/2021-06/documents/epa_sld_3.0_tech
 </ul></li>
 </ul>
 </div>
-<div id="confounders-demographics" class="section level2">
-<h2>Confounders: Demographics</h2>
+<div id="confounders-demographics" class="section level3">
+<h3>Confounders: Demographics</h3>
 <ul>
 <li>Data: <a
 href="https://data.census.gov/table?tid=ACSDP1Y2021.DP05">US Census
@@ -406,8 +438,8 @@ other data sets</li>
 </ul></li>
 </ul>
 </div>
-<div id="outcome-health-outcomes" class="section level2">
-<h2>Outcome: Health outcomes</h2>
+<div id="outcome-health-outcomes" class="section level3">
+<h3>Outcome: Health outcomes</h3>
 <ul>
 <li>Data: <a
 href="https://chronicdata.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh/data">Behavioral
@@ -443,10 +475,10 @@ based on self-report</em></li>
 </ul>
 <p><br></p>
 </div>
-<div id="considerations" class="section level2">
-<h2>Considerations</h2>
-<div id="spatial-units" class="section level3">
-<h3>Spatial units</h3>
+<div id="considerations" class="section level3">
+<h3>Considerations</h3>
+<div id="spatial-units" class="section level4">
+<h4>Spatial units</h4>
 <ul>
 <li>For all of our variables of interest, we selected datasets that
 contained spatial (geographic) information</li>
@@ -460,8 +492,8 @@ for consistency with geographic data for other variables.</li>
 </ul></li>
 </ul>
 </div>
-<div id="timing" class="section level3">
-<h3>Timing</h3>
+<div id="timing" class="section level4">
+<h4>Timing</h4>
 <ul>
 <li>Walkability dataset is from 2021, Demographic and health outcome
 datasets are from 2020</li>
