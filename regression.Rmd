@@ -11,7 +11,7 @@ library(modelr)
 ```
 
 ```{r poisson-test-code}
-merge_final
+# ADJUST FOR POTENTIAL CONFOUNDERS TOO???
 
 # poisson_gen_model = glm(formula = health outcomes ~ walkability, family = poisson)
 
