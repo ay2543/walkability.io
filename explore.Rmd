@@ -26,6 +26,8 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 library(tidyverse)
 library(DT)
 library(dplyr)
+library(ggplot2)
+library(ggpmisc)
 
 #Explore using final cleaned data
 explore_df = read_csv("./data/merge_final.csv")
@@ -266,6 +268,7 @@ Form this dataset, we explored the prevalence of health outcomes in the United S
 * The prevalence of mental health not good for over 14 days is 15.09%
 * The prevalence of no leisure-time physical activity is 24.68%
 * The prevalence of physical health not good for over 14 days is 10.80%
+
 The walkability score across health outcomes are similar around 9.5, below average walkable. Other demographics of each health outcome is also similar to the national average.
 
 ```{r, warning=FALSE, echo=FALSE}
@@ -322,6 +325,27 @@ health_df_merge = inner_join(health_df_state, health_df_state_race, by = "state_
 ```
 
 </details>
+<br>
+**High blood pressure**:
+Mississippi state has the highest prevalence of 45.86%;
+Colorado state has the lowest prevalence of 25.24%
+
+**High cholesterol who have been screened in the past 5 years**:
+West Virginia state has the highest prevalence of 37.35%;
+Wyoming state has the lowest prevalence of 27.15%
+
+**Mental health not good for over 14 days**:
+West Virginia state has the highest prevalence of 18.9%;
+South Dakota state has the lowest prevalence of 11.12%
+
+**No leisure-time physical activity**:
+Mississippi state has the highest prevalence of 33.14%;
+Utah state has the lowest prevalence of 17.35%;
+
+**Physical health not good for over 14 days**:
+Mississippi state has the highest prevalence of 33.14%;
+District of Columbia has the lowest prevalence of 7.73%
+
 
 ```{r, warning=FALSE, echo=FALSE}
 
@@ -374,6 +398,26 @@ health_df_merge2 = inner_join(health_df_county, health_df_county_race, by = "sta
 ```
 
 </details>
+<br>
+**High blood pressure**:
+Monroe County in Alabama has the highest prevalence of 56.7%;
+Lincoln County in South Dakota has the lowest prevalence of 5.34%
+
+**High cholesterol who have been screened in the past 5 years**:
+Llano County in Texas has the highest prevalence of 45.44%;
+Lynchburg city in Virginia has the lowest prevalence of 8.9%
+
+**Mental health not good for over 14 days**:
+Socorro County in New Mexico has the highest prevalence of 27.3%;
+Collier County in Florida  has the lowest prevalence of 8.96%
+
+**No leisure-time physical activity**:
+Val Verde County in Texas has the highest prevalence of 52%;
+Eagle County in Colorado has the lowest prevalence of 10.85%
+
+**Physical health not good for over 14 days**:
+Val Verde County in Texas  has the highest prevalence of 52%;
+Lincoln County - South Dakota has the lowest prevalence of 5.34%
 
 ```{r, warning=FALSE, echo=FALSE}
 
@@ -400,7 +444,7 @@ datatable(health_df_merge2,
 
 ```{r, warning=FALSE}
 
-gender_walk_plot = county_demographics_merge %>% ggplot(mapping = aes(x = sex_female, y = nat_walk_ind))+
+gender_walk_plot = county_demographics_merge %>% ggplot(mapping = aes(x = sex_female, y = nat_walk_ind)) +
   geom_point(shape = "diamond", color = "steelblue", size = 2, alpha = 0.5) + labs(         
     x = "Percentage of Femlae",
     y = "Walkability Score",
@@ -408,7 +452,7 @@ gender_walk_plot = county_demographics_merge %>% ggplot(mapping = aes(x = sex_fe
   geom_smooth(                  
     formula = y ~ x,              
     method = "lm",        
-    size = 1, color = "beige", alpha = 0.5) 
+    size = 1, color = "beige", alpha = 0.5) + stat_poly_eq()
 
 ```
 
@@ -435,7 +479,7 @@ age_walk_plot = county_demographics_merge %>% ggplot(mapping = aes(x = age_18plu
   geom_smooth(                
     formula = y ~ x,
     method = "lm",        
-    size = 1, color = "beige", alpha = 0.5) 
+    size = 1, color = "beige", alpha = 0.5) + stat_poly_eq()
 
 ```
 
@@ -462,7 +506,7 @@ income_walk_plot = county_demographics_merge %>% ggplot(mapping = aes(x = median
   geom_smooth(                  
     formula = y ~ x,              
     method = "lm",        
-    size = 1, color = "beige", alpha = 0.5) 
+    size = 1, color = "beige", alpha = 0.5) + stat_poly_eq()
 
 ```
 
@@ -489,7 +533,7 @@ race_walk_plot = county_demographics_merge %>% ggplot(mapping = aes(x = white, y
   geom_smooth(                      
     formula = y ~ x,          
     method = "lm",        
-    size = 1, color = "beige", alpha = 0.5) 
+    size = 1, color = "beige", alpha = 0.5) + stat_poly_eq()
 
 ```
 
