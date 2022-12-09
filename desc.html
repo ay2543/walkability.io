@@ -13,10 +13,10 @@
 
 <title>desc</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -180,8 +180,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -189,16 +189,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -268,10 +261,10 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="desc.html">The Project</a>
+      <a href="data.html">Data Sources</a>
     </li>
     <li>
-      <a href="data.html">Data Source</a>
+      <a href="desc.html">Project Description</a>
     </li>
   </ul>
 </li>
@@ -279,39 +272,59 @@ $(document).ready(function () {
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-file"></span>
      
-    EDA
+    Visualizations
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="demo.html">Demographics</a>
+      <a href="map.html">Walkability Map</a>
     </li>
     <li>
-      <a href="health.html">Health Outcomes</a>
+      <a href="explore.html">Exploratory Analysis</a>
+    </li>
+    <li>
+      <a href="regression.html">Statistical Analysis</a>
+    </li>
+    <li>
+      <a href="dashboard.html">Bivariate plots</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="dashboard.html">Dashboard</a>
-</li>
-<li>
-  <a href="newscore.html">New Walkability Index</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    The Team
+  <a href="newscore.html">
+    <span class="fa fa-magnifying-glass"></span>
      
-    <span class="caret"></span>
+    New Walkability Index
   </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="team.html">Who We Are</a>
-    </li>
-    <li>
-      <a href="memes.html">Other names</a>
-    </li>
-  </ul>
+</li>
+<li>
+  <a href="results.html">
+    <span class="fa fa-pen"></span>
+     
+    Findings
+  </a>
+</li>
+<li>
+  <a href="report.html">
+    <span class="fa fa-map"></span>
+     
+    Report
+  </a>
+</li>
+<li>
+  <a href="limitations.html">
+    <span class="fa fa-thought-bubble"></span>
+     
+    Limitations
+  </a>
+</li>
+<li>
+  <a href="team.html">
+    <span class="fa fa-people-group"></span>
+     
+    Who We Are
+  </a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -336,6 +349,37 @@ $(document).ready(function () {
 
 
 <p>welcome to the description!!</p>
+<pre class="r"><code>start_lat &lt;- 100
+start_lng &lt;- 0
+griddf &lt;- expand.grid(latcoords = seq(from = start_lat, by = -10, l = 5),
+                      lngcoords = seq(from = start_lng, by = -10, l = 5))
+griddf</code></pre>
+<pre><code>##    latcoords lngcoords
+## 1        100         0
+## 2         90         0
+## 3         80         0
+## 4         70         0
+## 5         60         0
+## 6        100       -10
+## 7         90       -10
+## 8         80       -10
+## 9         70       -10
+## 10        60       -10
+## 11       100       -20
+## 12        90       -20
+## 13        80       -20
+## 14        70       -20
+## 15        60       -20
+## 16       100       -30
+## 17        90       -30
+## 18        80       -30
+## 19        70       -30
+## 20        60       -30
+## 21       100       -40
+## 22        90       -40
+## 23        80       -40
+## 24        70       -40
+## 25        60       -40</code></pre>
 
 
 

@@ -4,3 +4,14 @@ output: html_document
 ---
 
 welcome to the description!!
+
+```{r}
+start_lat <- 100
+start_lng <- 0
+griddf <- expand.grid(latcoords = seq(from = start_lat, by = -10, l = 5),
+                      lngcoords = seq(from = start_lng, by = -10, l = 5))
+griddf
+```
+
+
+
