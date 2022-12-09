@@ -196,13 +196,8 @@ As mentioned, we want to find NYC census tracts that are statistically significa
 
 #### Local Moran's I
 
-To find these clusters, we will be using local Moran's I. The local spatial statistic Moran's I is calculated for each zone based on the spatial weights object used. The values returned include a Z-value, and may be used as a diagnostic tool. The statistic is:
+To find these clusters, we will be using local Moran's I. The local spatial statistic Moran's I is calculated for each zone based on the spatial weights object used. The values returned include a Z-value, and may be used as a diagnostic tool. The statistic is: 
 
-<center>
-
-```{r}
-#$$I_i = \frac{(x_i-\bar{x})}{{\sum_{k=1}^{n}(x_k-\bar{x})^2}/(n-1)}{\sum_{j=1}^{n}w_{ij}(x_j-\bar{x})}$$
-```
 
 Essentially, the local Moran's I tells us the local indicator of spatial association or LISA statistic. We will use these LISA cluster indicators to map different walkability clusters in the NYC.
 
