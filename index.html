@@ -268,19 +268,28 @@ $(document).ready(function () {
     </li>
   </ul>
 </li>
-<li>
-  <a href="map.html">
-    <span class="fa fa-map"></span>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-file"></span>
      
-    Walkability Map
-  </a>
-</li>
-<li>
-  <a href="dashboard.html">
-    <span class="fa fa-chart-simple"></span>
+    Visualizations
      
-    Bivariate plots
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="map.html">Walkability Map</a>
+    </li>
+    <li>
+      <a href="explore.html">Exploratory Analysis</a>
+    </li>
+    <li>
+      <a href="regression.html">Statistical Analysis</a>
+    </li>
+    <li>
+      <a href="dashboard.html">Bivariate plots</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="newscore.html">
@@ -294,6 +303,13 @@ $(document).ready(function () {
     <span class="fa fa-pen"></span>
      
     Findings
+  </a>
+</li>
+<li>
+  <a href="report.html">
+    <span class="fa fa-map"></span>
+     
+    Report
   </a>
 </li>
 <li>
