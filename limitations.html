@@ -11,7 +11,7 @@
 
 
 
-<title>limitations</title>
+<title>Limitations</title>
 
 <script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -275,19 +275,28 @@ $(document).ready(function () {
     </li>
   </ul>
 </li>
-<li>
-  <a href="map.html">
-    <span class="fa fa-map"></span>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-file"></span>
      
-    Walkability Map
-  </a>
-</li>
-<li>
-  <a href="dashboard.html">
-    <span class="fa fa-chart-simple"></span>
+    Visualizations
      
-    Bivariate plots
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="map.html">Walkability Map</a>
+    </li>
+    <li>
+      <a href="explore.html">Exploratory Analysis</a>
+    </li>
+    <li>
+      <a href="regression.html">Statistical Analysis</a>
+    </li>
+    <li>
+      <a href="dashboard.html">Bivariate plots</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="newscore.html">
@@ -301,6 +310,13 @@ $(document).ready(function () {
     <span class="fa fa-pen"></span>
      
     Findings
+  </a>
+</li>
+<li>
+  <a href="report.html">
+    <span class="fa fa-map"></span>
+     
+    Report
   </a>
 </li>
 <li>
@@ -334,12 +350,59 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">limitations</h1>
+<h1 class="title toc-ignore">Limitations</h1>
 
 </div>
 
 
-<p>Limitations</p>
+<p>As detailed as our analyses are, they are not without
+limitations.</p>
+<div id="temporality" class="section level2">
+<h2>1. Temporality</h2>
+<ul>
+<li>Our walkability dataset is from 2021, but the health outcomes
+dataset is from a 2020 survey</li>
+<li>Technically our exposure data comes after our outcome data, so we
+should not be able to infer temporality and hence causality</li>
+<li>As data on walkability was last updated in 2014, we assumed that
+walkability did not change from 2020 to 2021
+<ul>
+<li>But some may argue that since employment is a factor in obtaining
+the walkability index, the pandemic may have restructured the
+employment, so the walkability index cannot be considered the same</li>
+<li>The only thing we can do is wait for the most recent survey report
+to be released for fair and update it accordingly.</li>
+</ul></li>
+</ul>
+</div>
+<div id="missing-data" class="section level2">
+<h2>2. Missing data</h2>
+<ul>
+<li>The raw walkability data had 220,740 entries</li>
+<li>The health outcome data (filtered for our variables of interest) had
+71,335 entries (in the long format)</li>
+<li>There were 85,395 entries on age, sex, race and income</li>
+<li>In the final merged dataframe, there are 116,311 distinct FIPS codes
+containing at least 1 health outcome variable of interest (* is there a
+way to see how many entries with all outcomes of interest? this doesn’t
+seem right bc of the way health outcomes were pivoted; need to check
+again)</li>
+<li>This means that we lost 47.3% of our walkability entries</li>
+</ul>
+<pre class="r"><code># Amy&#39;s attempt at extracting data points with complete data
+# merge_final = read_csv(&quot;./data/merge_final.csv&quot;)
+# merge_final %&gt;% 
+#   separate(name, c(&quot;census_tract&quot;, &quot;county&quot;, &quot;state&quot;), sep = &quot;, &quot;) %&gt;% 
+#   drop_na(state) %&gt;% 
+#   select(fips, nat_walk_ind,sex_male, sex_female, age_18plus, median_income, percent_race, measure_id, data_value, county) %&gt;% 
+#   group_by(county) %&gt;% 
+#   drop_na(measure_id) %&gt;% 
+#   summarize(n = length(unique(measure_id))) %&gt;% 
+#   filter(n&gt;=5)
+#   drop_na() %&gt;% 
+#   View()
+#   distinct(county)</code></pre>
+</div>
 
 
 

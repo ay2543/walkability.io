@@ -1,6 +1,39 @@
 ---
-title: "limitations"
+title: "Limitations"
 output: html_document
 ---
 
-Limitations
+As detailed as our analyses are, they are not without limitations. 
+
+## 1. Temporality
+
+* Our walkability dataset is from 2021, but the health outcomes dataset is from a 2020 survey
+* Technically our exposure data comes after our outcome data, so we should not be able to infer temporality and hence causality
+* As data on walkability was last updated in 2014, we assumed that walkability did not change from 2020 to 2021
+  * But some may argue that since employment is a factor in obtaining the walkability index, the pandemic may have restructured the employment, so the walkability index cannot be considered the same 
+  * The only thing we can do is wait for the most recent survey report to be released for fair and update it accordingly.
+  
+## 2. Missing data
+
+* The raw walkability data had 220,740 entries
+* The health outcome data (filtered for our variables of interest) had 71,335 entries (in the long format)
+* There were 85,395 entries on age, sex, race and income
+* In the final merged dataframe, there are 116,311 distinct FIPS codes containing at least 1 health outcome variable of interest (* is there a way to see how many entries with all outcomes of interest? this doesn't seem right bc of the way health outcomes were pivoted; need to check again)
+* This means that we lost 47.3% of our walkability entries
+
+```{r}
+# Amy's attempt at extracting data points with complete data
+# merge_final = read_csv("./data/merge_final.csv")
+# merge_final %>% 
+#   separate(name, c("census_tract", "county", "state"), sep = ", ") %>% 
+#   drop_na(state) %>% 
+#   select(fips, nat_walk_ind,sex_male, sex_female, age_18plus, median_income, percent_race, measure_id, data_value, county) %>% 
+#   group_by(county) %>% 
+#   drop_na(measure_id) %>% 
+#   summarize(n = length(unique(measure_id))) %>% 
+#   filter(n>=5)
+#   drop_na() %>% 
+#   View()
+#   distinct(county)
+```
+
