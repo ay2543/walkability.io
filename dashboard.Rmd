@@ -58,6 +58,13 @@ filter(!is.na(state) &
   group_by(county, measure_id) %>% 
   summarise(walk = mean(nat_walk_ind),
             outcome = mean(data_value)) %>% 
+  mutate(
+    measure_id = replace(measure_id, measure_id == "HIGHCHOL", "High cholesterol"),
+    measure_id = replace(measure_id, measure_id == "PHLTH", "Poor physical health"),
+    measure_id = replace(measure_id, measure_id == "MHLTH", "Poor mental health"),
+    measure_id = replace(measure_id, measure_id == "LPA", "No leisure physical activity"),
+    measure_id = replace(measure_id, measure_id == "BPHIGH", "High blood pressure")
+  ) %>% 
   plot_ly(x = ~county, 
           y = ~outcome, color = ~measure_id,
           type = "bar") %>% 
@@ -74,19 +81,19 @@ filter(!is.na(state) &
            shapes = list(
                list(type = "rect",
                     fillcolor = "navy", line = list(color = "navy"), opacity = 0.15,
-                    x0 = 0, x1 = 62, xref = "x",
+                    x0 = -0.5, x1 = 62, xref = "x",
                     y0 = 0, y1 = 5.75, yref = "y2"),
                list(type = "rect",
                     fillcolor = "blue", line = list(color = "blue"), opacity = 0.15,
-                    x0 = 0, x1 = 62, xref = "x",
+                    x0 = -0.5, x1 = 62, xref = "x",
                     y0 = 5.76, y1 = 10.5, yref = "y2"),
                list(type = "rect",
                     fillcolor = "teal", line = list(color = "teal"), opacity = 0.15,
-                    x0 = 0, x1 = 62, xref = "x",
+                    x0 = -0.5, x1 = 62, xref = "x",
                     y0 = 10.51, y1 = 15.25, yref = "y2"),
                list(type = "rect",
                     fillcolor = "green", line = list(color = "green"), opacity = 0.15,
-                    x0 = 0, x1 = 62, xref = "x",
+                    x0 = -0.5, x1 = 62, xref = "x",
                     y0 = 15.25, y1 = 20, yref = "y2")),
           annotations = list(
             list(x = 65,
