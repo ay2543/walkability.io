@@ -1,6 +1,9 @@
 ---
 title: "Walkability Maps"
-output: html_document
+output: 
+  html_document:
+    toc: true
+    toc_float: true
 ---
 
 <style>
@@ -13,7 +16,7 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 <br>
 
 
-## Interactive Map of National Walkability Index with Health Outcome Prevalence 
+## Interactive Map with National Walkability Index
 
 #### Map Overview
 
@@ -106,7 +109,7 @@ choropleth_map
 choropleth_map
 ```
 
-## Exploratory Spatial Data Analysis
+## Exploratory Spatial Data Analysis for NYC
 
 
 To further understand the National Walkability Index in a smaller spatial unit, we narrowed the exploration to **New York City**, where us five walkaholics reside. 
@@ -121,7 +124,7 @@ The first step is to get a general understanding of the walkability index in the
 
 <br>
 
-### *Descriptive Choropleth Map for Walkability in NYC*
+### *Descriptive Choropleth Map for Walkability*
 
 <details>
   <summary>Click to show code</summary>
@@ -180,7 +183,7 @@ tm_basemap("CartoDB.Positron") +
 From this choropleth map, we can see that New York City is walkable overall. However, we want to further identify census tracts that are statistically significant hot spots, cold spots, and spatial outliers using clustering analysis. 
 
 
-### *Clustering Analysis for Walkability in NYC*
+### *Clustering Analysis for Walkability*
 
 #### Understanding the terms
 As mentioned, we want to find NYC census tracts that are statistically significant hot spots, cold spots, and spatial outliers. To start, it is crucial to understand the terms.
@@ -212,6 +215,7 @@ Visually, it looks like this:
 
 <center>
 <img src="images/queens_order.jpg" style="width:60%">
+<br>
 
 Clearly defining the contiguity is needed to conduct the cluster analysis since we want to know what is considered as a neighboring census tract! 
 
