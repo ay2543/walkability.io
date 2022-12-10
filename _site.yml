@@ -22,7 +22,7 @@ navbar:
       menu:
         - text: "Walkability Map"
           href: map.html
-        - text: "Dashboard"
+        - text: "NY State Dashboard"
           href: dashboard.html
     - text: "Report"
       icon: fa-folder-open

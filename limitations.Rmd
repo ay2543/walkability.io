@@ -35,6 +35,7 @@ The project included plenty of interactive maps and tables to allow audience to 
 The project inspected multiple health outcomes that showed associated with walkability through the literature research. The five health outcomes include high cholesterol, physical health, blood pressure, physical inactivity, mental health. The health outcomes includes both physical and mental health that are addressed with walkability.
 
 <br>
+<br>
 
 ### Limitaiotns
 As detailed as our analyses are, they are not without limitations.
