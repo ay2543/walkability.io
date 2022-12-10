@@ -8,14 +8,14 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 </style>
 <div class = "blue">
 
-##### This is a description of our data sources and cleaning steps.
+##### This is a description of our data sources.
 
 ##### We wish to identify associations between walkability and 
 
 * ##### demographic indicators 
 * ##### health outcomes 
 
-##### We also wish to create our own updated walkability index and see how well it can estimate health outcomes compared to the original walkability index.
+##### **Due to the size of the original data files, please download the datasets according to the links below and save the .csv files locally in its original name. And save all .csv file in a new folder called "Data" in order to run the code.**
 
 </div>
 
@@ -25,11 +25,7 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 
 * Data: [Environmental Protection Agency's information on Walkability Index, 2021](http://edg.epa.gov/metadata/catalog/search/resource/details.page?uuid=%7B251AFDD9-23A7-4068-9B27-A3048A7E6012%7D)
   * The National Walkability Index from the EPA provides walkability scores based on a simple formula that ranks selected indicators from the Smart Location Database (which summarizes 90 indicators associated with the built environment) that have been demonstrated to affect the propensity of walk trips. Currently, the National Walkability Index dataset ranks each block group relative to all other block groups in the United States on a scale from 0-20; and data can be aggregated to larger spatial units using Federal Information Processing Standards (FIPS) codes.
-* [Methodology & User Guide](https://www.epa.gov/sites/default/files/2021-06/documents/national_walkability_index_methodology_and_user_guide_june2021.pdf), [Codebook](https://www.epa.gov/sites/default/files/2021-06/documents/epa_sld_3.0_technicaldocumentationuserguide_may2021.pdf)
-* Cleaning steps:
-  * Added leading zeros for all Federal Information Processing Standard (FIPS) codes (numbers which uniquely identify geographic areas)
-  * Combined state, county and tract FIPS into an 11-digit code
-  * Selected relevant variables
+  * [Methodology & User Guide](https://www.epa.gov/sites/default/files/2021-06/documents/national_walkability_index_methodology_and_user_guide_june2021.pdf), [Codebook](https://www.epa.gov/sites/default/files/2021-06/documents/epa_sld_3.0_technicaldocumentationuserguide_may2021.pdf)
 * Variables of interest:
   * FIPS code
   * National Walkability Index 
@@ -37,10 +33,6 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 ### Confounders: Demographics
 * Data: [US Census American Community Survey, 2020](https://data.census.gov/table?tid=ACSDP1Y2021.DP05)
   * The American Community Survey (ACS) is an annual, nationwide survey conducted by the U.S. Census Bureau and produces information on social, economic, housing, and demographic characteristics about our nation's population every year. This information is a vital tool that communities can use to see how they are changing across the years.
-* Cleaning steps:
-  * removed second row with detailed column names
-  * removed columns for annotations and margins of error
-  * created a census tract column derived from the geo_id column (removed the "1400000US" at the beginning of each entry) to match with other data sets
 * Variables of interest:
   * Age
   * Sex
@@ -50,9 +42,6 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 ### Outcome: Health outcomes
 * Data: [Behavioral Risk Factor Surveillance System (BRFSS), 2020](https://chronicdata.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh/data)
   * The Behavioral Risk Factor Surveillance System (BRFSS) is an annual, nationwide system of health-related telephone surveys conducted by the Centers for Disease Control and Prevention (CDC) which collects information about U.S. residents regarding their health-related risk behaviors, chronic health conditions, and use of preventive services. Established in 1984 with 15 states, BRFSS now collects data in all 50 states as well as the District of Columbia and three U.S. territories. BRFSS completes more than 400,000 adult interviews each year, making it the largest continuously conducted health survey system in the world.
-* Cleaning steps:
-  * Removed footnote variables
-  * Filtered for relevant health outcomes
 * Variables of interest:
   * High cholesterol
   * Physical health

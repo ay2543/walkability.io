@@ -6,17 +6,17 @@ navbar:
       icon: fa-home
       href: index.html
     - text: "Data Sources"
-      icon: fa-home
+      icon: fa-book
       href: data.html
     - text: "Visualizations"
-      icon: fa-file
+      icon: fa-eye
       menu:
         - text: "Walkability Map"
           href: map.html
         - text: "Dashboard"
           href: dashboard.html
     - text: "Data Analysis"
-      icon: fa-file
+      icon: fa-bar-chart-o
       menu:
         - text: "Data Cleaning"
           href: Testing.html  
@@ -25,17 +25,20 @@ navbar:
         - text: "Statistical Analysis"
           href: regression.html  
     - text: "Report"
-      icon: fa-file
+      icon: fa-folder-open
       menu:
-        - text: "Findings"
+        - text: "Key Findings"
           href: results.html    
         - text: "Limitations"
           href: limitations.html 
-        - text: "Report"
+        - text: "Project Report"
           href: report.html 
     - text: "Who We Are"
-      icon: fa-people-group
+      icon: fa-group
       href: team.html
+    - text: "Fun Facts"
+      icon: fa-smile-o
+      href: fun.html
        
   right:
     - icon: fa-github fa-lg
