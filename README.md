@@ -1,14 +1,7 @@
 # Walk the walk: The effect of neighborhood walkability on health
 
-<style>
-div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
-</style>
-<div class = "blue">
+##### **Due to the size of the original data files, please download the datasets according to the links described in our `data.Rmd` file and save the .csv files locally using their original names. Save all .csv files in an RProject folder called "data" in order to run the code.**
 
-##### Due to the size of the original data files, please download the datasets according to the links described in our `data.Rmd` file and save the .csv files locally using their original names. Save all .csv files in an RProject folder called "data" in order to run the code.
-</div>
-
-<br>
 
 ### Background
 Urban planning around the U.S. is increasingly [designed around cars and not walking](https://www.vox.com/features/23191527/urban-planning-friendship-houston-cars-loneliness), and not everywhere in the U.S. is walkable for its residents. This trend accelerated in the post-war era, with 
@@ -25,15 +18,7 @@ To explore the landscape of walkability in the US, we wanted to learn more about
 
 As five *passionate walkaholics*🚶🏻‍♂️and current public health graduate students, we also wanted to explore the intersection of our shared interests. We hope that our project will help to highlight the connections between walkability, the built environment, and community-level health in order to promote change towards a more accessible (and walkable) future. We also hope that our project and findings will spark the same passion we have in walking in others.
 
-<br>
 
-<style>
-div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
-</style>
-<div class = "blue">
 
-##### Check out the website we've created for this project [here!](walkability.github.io)
+##### **Check out the website we've created for this project [here!](walkability.github.io)**
 
-</div>
-
-<br>
