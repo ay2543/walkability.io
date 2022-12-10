@@ -1,8 +1,8 @@
 ---
-title: "NYC Walkability and Health Outcomes Dashboard"
+title: "NY State Walkability Dashboard"
 output: 
   flexdashboard::flex_dashboard:
-    vertical_layout: fill
+    vertical_layout: scroll
     orientation: rows
     navbar:
       - { title: "Home", href: "index.html", align: right }
@@ -74,10 +74,10 @@ filter(!is.na(state) &
              type = 'scatter',  mode = 'lines+markers', name = 'Walkability index', 
              yaxis = "y2", color = I('black')
              ) %>% 
-   layout(legend = list(x = 0.1, y = 200),
+   layout(legend = list(x = 0.1, y = 180, orientation = 'h'),
           yaxis = list(title = '% with health outcome'),
           yaxis2=list(side="right",overlaying="y", title = "Average walkability index"),
-          xaxis = list(title = 'Health outcome'),
+          xaxis = list(title = 'County'),
           barmode = 'stack',
            shapes = list(
                list(type = "rect",
@@ -168,9 +168,9 @@ walkability_clean %>%
   plot_ly(x = ~fct_reorder(county, percent_race), 
           y = ~percent_race, color = ~race,
           type = "bar") %>% 
-   layout(legend = list(x = 0.1, y = 200, xanchor = "left"),
+   layout(legend = list(x = 0.1, y = 200, orientation = 'h'),
           yaxis = list(title = '% of each race category'),
-          xaxis = list(title = 'Health outcome'),
+          xaxis = list(title = 'County'),
           barmode = 'stack'
           )
 
@@ -210,9 +210,9 @@ walkability_clean %>%
   plot_ly(x = ~county, 
           y = ~median_income, color = ~income,
           type = "bar") %>% 
-   layout(legend = list(x = 0.1, y = 0.9),
+   layout(legend = list(x = 0.1, y = 0.9, orientation = 'h'),
           yaxis = list(title = 'Median household income'),
-          xaxis = list(title = 'Health outcome'),
+          xaxis = list(title = 'County'),
           barmode = 'stack'
           )
 ```
