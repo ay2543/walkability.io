@@ -121,10 +121,10 @@ write_csv(merge_final, "./data/merge_final.csv")
 
 ## Plot try
 ```{r}
-merge_final %>%
-  plot_ly(
-    x = ~lat, y = ~long, type = "scatter", mode = "markers",
-    color = ~nat_walk_ind, alpha = 0.5)
+#merge_final %>% plot_ly(
+#    x = ~lat, y = ~long, type = "scatter", mode = "markers",
+#    color = ~nat_walk_ind, alpha = 0.5)
+
 ```
 
 
@@ -325,61 +325,61 @@ tm_basemap("CartoDB.Positron") +
 ##median household income
 ```{r}
 # Local Moran's I
-lisa <- local_moran(queen_w, cluster_map_NY["median_income"],
+#lisa <- local_moran(queen_w, cluster_map_NY["median_income"],
                     permutations = 9999)
 
 # What's contained under the "lisa" object?
-names(lisa)
+#names(lisa)
 
 # Get cluster column and join it to zip shp
-cluster_map_NY$cluster <- as.factor(lisa$GetClusterIndicators())
-str(cluster_map_NY)
+#cluster_map_NY$cluster <- as.factor(lisa$GetClusterIndicators())
+#str(cluster_map_NY)
 
 # Add labels to clusters
-levels(cluster_map_NY$cluster) <- lisa$GetLabels()
+#levels(cluster_map_NY$cluster) <- lisa$GetLabels()
 
 # Map clusters
 #tm_shape(cluster_map) +
 #  tm_fill("cluster") 
 
 # We need the GeoDa colors!
-lisa_colors <- lisa_colors(lisa)
+#lisa_colors <- lisa_colors(lisa)
 
 
 # Recode clusters using tidyverse (dyplr)
-cluster_map_NY %>% 
-  mutate(cluster = recode_factor(.x = cluster,
-                                  `Undefined` = "Not significant",
-                                  `Isolated` = "Not significant")) -> cluster_map_NY
+#cluster_map_NY %>% 
+#  mutate(cluster = recode_factor(.x = cluster,
+#                                  `Undefined` = "Not significant",
+#                                  `Isolated` = "Not significant")) -> cluster_map_NY
 
 # Map new categories 
-tm_shape(cluster_map_NY) +
-  tm_polygons(col ="cluster", 
-              palette=  c("#eeeeee", 
-                      "#FF0000",
-                      "#0000FF",
-                      "#a7adf9",
-                      "#f4ada8"),
-              alpha = .8,
-              title = "Clusters",
-              border.col = "black",
-              border.alpha = .9)
+#tm_shape(cluster_map_NY) +
+ # tm_polygons(col ="cluster", 
+#              palette=  c("#eeeeee", 
+#                      "#FF0000",
+#                      "#0000FF",
+#                      "#a7adf9",
+#                      "#f4ada8"),
+#              alpha = .8,
+#              title = "Clusters",
+#              border.col = "black",
+#              border.alpha = .9)
 
 
-tm_shape(cluster_map_NY) +
-  tm_polygons(col = "median_income", 
-              style = "jenks",
-              n = 5) 
+#tm_shape(cluster_map_NY) +
+#  tm_polygons(col = "median_income", 
+ #             style = "jenks",
+ #             n = 5) 
 ```
 
 
 ```{r}
-bi_lisa <- local_bimoran(queen_w, cluster_map_NY[c("nat_walk_i", "median_income")],
+#bi_lisa <- local_bimoran(queen_w, cluster_map_NY[c("nat_walk_i", "median_income")],
                     permutations = 9999)
 
-names(bi_lisa)
+#names(bi_lisa)
 
-bi_lisa$labels
+#bi_lisa$labels
 ```
 
 </details>
