@@ -64,14 +64,15 @@ filter(!is.na(state) &
     measure_id = replace(measure_id, measure_id == "PHLTH", "Poor physical health"),
     measure_id = replace(measure_id, measure_id == "MHLTH", "Poor mental health"),
     measure_id = replace(measure_id, measure_id == "LPA", "No leisure physical activity"),
-    measure_id = replace(measure_id, measure_id == "BPHIGH", "High blood pressure")
+    measure_id = replace(measure_id, measure_id == "BPHIGH", "High blood pressure"),
+    county = fct_reorder(county, walk)
   ) %>% 
-  plot_ly(x = ~county, 
+  plot_ly(x = ~fct_reorder(county, walk), 
           y = ~outcome, color = ~measure_id,
           type = "bar") %>% 
-   add_trace(x = ~walkability_tidy$county, 
+   add_trace(x = ~fct_reorder(walkability_tidy$county, walkability_tidy$walk), 
              y = ~walkability_tidy$walk,  
-             type = 'scatter',  mode = 'lines+markers', name = 'Walkability index', 
+             type = 'scatter',  mode = 'markers', name = 'Walkability index', 
              yaxis = "y2", color = I('black')
              ) %>% 
    layout(legend = list(x = 0.1, y = 180, orientation = 'h'),
@@ -142,8 +143,9 @@ filter(!is.na(state) &
 
 ```
 
-Row {data-height=200}
+Row {.tabset  .tabset-fade}
 -----------------------------------------------------------------------
+### Race
 ```{r}
 walkability_clean %>%
   mutate(percent_race = as.numeric(percent_race)) %>% 
@@ -165,10 +167,16 @@ walkability_clean %>%
     race = factor(race, levels = c("White", "Black", "Asian", "Hispanic/Latin American", 
                                    "American Indian/Alaska Native", "≥2 races"), ordered = TRUE)
   ) %>% 
-  plot_ly(x = ~fct_reorder(county, percent_race), 
+  plot_ly(x = ~fct_reorder(county, walk), 
           y = ~percent_race, color = ~race,
           type = "bar") %>% 
+     add_trace(x = ~fct_reorder(walkability_tidy$county, walkability_tidy$walk), 
+             y = ~walkability_tidy$walk,  
+             type = 'scatter',  mode = 'markers', name = 'Walkability index', 
+             yaxis = "y2", color = I('grey')
+             ) %>% 
    layout(legend = list(x = 0.1, y = 200, orientation = 'h'),
+          yaxis2=list(side="right",overlaying="y", title = "Average walkability index"),
           yaxis = list(title = '% of each race category'),
           xaxis = list(title = 'County'),
           barmode = 'stack'
@@ -176,6 +184,8 @@ walkability_clean %>%
 
 ```
 
+
+### Median income
 ```{r}
 walkability_clean %>%
   mutate(median_income = as.numeric(median_income)) %>% 
@@ -205,15 +215,79 @@ walkability_clean %>%
                                        "$20000 - $24999", "$25000 - $34999", "$35000 - $44999",
                                        "$45000 - $54999", "$55000 - $64999", "$65000 - $74999",
                                        "$75000 - $99999", "≥$100000"), ordered = TRUE),
-    county = fct_reorder(county, median_income)
+    county = fct_reorder(county, walk)
   ) %>% 
-  plot_ly(x = ~county, 
+  plot_ly(x = ~fct_reorder(county, walk), 
           y = ~median_income, color = ~income,
           type = "bar") %>% 
+  add_trace(x = ~fct_reorder(walkability_tidy$county, walkability_tidy$walk), 
+            y = ~walkability_tidy$walk,  
+            type = 'scatter',  mode = 'markers', name = 'Walkability index', 
+            yaxis = "y2", color = I('grey')
+            ) %>% 
    layout(legend = list(x = 0.1, y = 0.9, orientation = 'h'),
+          yaxis2=list(side="right",overlaying="y", title = "Average walkability index"),
           yaxis = list(title = 'Median household income'),
           xaxis = list(title = 'County'),
           barmode = 'stack'
           )
 ```
 
+### % Male
+```{r}
+walkability_clean %>%
+  mutate(sex_male = as.numeric(sex_male)) %>% 
+  filter(!is.na(state) &
+         state == "New York" &
+         !is.na(nat_walk_ind) &
+         !is.na(sex_male)
+         ) %>% 
+  group_by(county) %>% 
+  summarise(walk = mean(nat_walk_ind),
+            sex_male = mean(sex_male)) %>% 
+  mutate(county = fct_reorder(county, sex_male)) %>% 
+  plot_ly(x = ~fct_reorder(county, walk), 
+          y = ~sex_male, 
+          name = '% Males',
+          type = "bar") %>% 
+  add_trace(x = ~fct_reorder(walkability_tidy$county, walkability_tidy$walk), 
+            y = ~walkability_tidy$walk,  
+            type = 'scatter',  mode = 'markers', name = 'Walkability index', 
+            yaxis = "y2", color = I('grey')
+            ) %>% 
+   layout(yaxis2=list(side="right",overlaying="y", title = "Average walkability index"),
+          yaxis = list(title = '% Male'),
+          xaxis = list(title = 'County'),
+          barmode = 'stack'
+          )
+
+```
+
+### % Adults
+```{r}
+walkability_clean %>%
+  mutate(age_18plus = as.numeric(age_18plus)) %>% 
+  filter(!is.na(state) &
+         state == "New York" &
+         !is.na(nat_walk_ind) &
+         !is.na(age_18plus)
+         ) %>% 
+  group_by(county) %>% 
+  summarise(walk = mean(nat_walk_ind),
+            age_18plus = mean(age_18plus)) %>% 
+  mutate(county = fct_reorder(county, age_18plus)) %>% 
+  plot_ly(x = ~fct_reorder(county, walk), 
+          y = ~age_18plus, 
+          type = "bar",
+          name = '% Adults') %>% 
+  add_trace(x = ~fct_reorder(walkability_tidy$county, walkability_tidy$walk), 
+            y = ~walkability_tidy$walk,  
+            type = 'scatter',  mode = 'markers', name = 'Walkability index', 
+            yaxis = "y2", color = I('grey')
+            ) %>% 
+   layout(yaxis2=list(side="right",overlaying="y", title = "Average walkability index"),
+          yaxis = list(title = '% Adults'),
+          xaxis = list(title = 'County'),
+          barmode = 'stack'
+          )
+```

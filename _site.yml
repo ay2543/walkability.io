@@ -12,7 +12,7 @@ navbar:
       icon: fa-bar-chart-o
       menu:
         - text: "Data Cleaning"
-          href: Testing.html  
+          href: cleaning.html  
         - text: "Exploratory Analysis"
           href: explore.html    
         - text: "Statistical Analysis"
@@ -38,7 +38,7 @@ navbar:
       href: team.html
     - text: "Fun Facts"
       icon: fa-smile-o
-      href: fun.html
+      href: Fun.html
        
   right:
     - icon: fa-github fa-lg

@@ -64,7 +64,6 @@ There was also quite a large percentage of missing data in the Walkability Index
   <summary>Click to show code</summary>
   
 ```{r}
-# Amy's attempt at extracting data points with complete data
 # merge_final = read_csv("./data/merge_final.csv")
 # merge_final %>% 
 #   separate(name, c("census_tract", "county", "state"), sep = ", ") %>% 
