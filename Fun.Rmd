@@ -1,0 +1,40 @@
+---
+title: "Fun Facts"
+output: html_document
+---
+
+<style>
+div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
+</style>
+<div class = "blue">
+
+##### This page includes all the fun facts in the project!
+
+</div>
+
+<br>
+
+#### Alternative topic names
+* Walk a mile in my shoes (if the urban design allows for it)
+* Walkability in the US
+* Why not walk?
+* Where is my walking space?
+* Walk with me (can you?)
+* Walk would you do?
+* waaaaaaaa(lk)
+* This isn’t walking out
+* Coffee, tea, or walk?
+* Stepping forward: The case for walkability
+* What the walk is wrong with urban planning?
+* I really want chicken mcnuggets from (W)cDonald’s 
+
+#### Guesses of total number of commits
+* Winston Luhur: 
+* Wenyan Ma: 
+* Amy Yeung: 230
+* Sophie Zhang: 214
+* Shirley Liang: 200
+<br>
+
+###### **Total numbers of commits on Dec 10th: **
+
