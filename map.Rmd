@@ -110,7 +110,7 @@ choropleth_map
 ```
 
 <style>
-div.blue { background-color:grey; border-radius: 5px; padding: 20px;}
+div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 </style>
 <div class = "blue">
 
