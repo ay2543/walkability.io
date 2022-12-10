@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Data Cleaning</title>
+
+<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li>
+  <a href="data.html">
+    <span class="fa fa-book"></span>
+     
+    Data Sources
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-bar-chart-o"></span>
+     
+    Data Analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Testing.html">Data Cleaning</a>
+    </li>
+    <li>
+      <a href="explore.html">Exploratory Analysis</a>
+    </li>
+    <li>
+      <a href="regression.html">Statistical Analysis</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-eye"></span>
+     
+    Visualizations
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="map.html">Walkability Map</a>
+    </li>
+    <li>
+      <a href="dashboard.html">NY State Dashboard</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-folder-open"></span>
+     
+    Report
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="results.html">Key Findings</a>
+    </li>
+    <li>
+      <a href="limitations.html">Strengths and Limitation</a>
+    </li>
+    <li>
+      <a href="report.html">Project Report</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="team.html">
+    <span class="fa fa-group"></span>
+     
+    Who We Are
+  </a>
+</li>
+<li>
+  <a href="fun.html">
+    <span class="fa fa-smile-o"></span>
+     
+    Fun Facts
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/ay2543/walkability.io">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Data Cleaning</h1>
+
+</div>
+
+
+<style>
+div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
+</style>
+<div class="blue">
+<div id="this-is-a-description-of-our-data-cleaning-process."
+class="section level5">
+<h5>This is a description of our data cleaning process.</h5>
+</div>
+<div
+id="due-to-the-size-of-the-original-data-files-please-download-the-datasets-according-to-the-links-below-and-save-the-.csv-files-locally-in-its-original-name.-and-save-all-.csv-file-in-a-new-folder-called-data-in-order-to-run-the-code."
+class="section level5">
+<h5><strong>Due to the size of the original data files, please download
+the datasets according to the links below and save the .csv files
+locally in its original name. And save all .csv file in a new folder
+called “Data” in order to run the code.</strong></h5>
+</div>
+</div>
+<p><br></p>
+<div id="walkability" class="section level5">
+<h5>Walkability</h5>
+<ul>
+<li>Data: <a
+href="http://edg.epa.gov/metadata/catalog/search/resource/details.page?uuid=%7B251AFDD9-23A7-4068-9B27-A3048A7E6012%7D">Environmental
+Protection Agency’s information on Walkability Index, 2021</a></li>
+<li>Cleaning steps:
+<ul>
+<li>Added leading zeros for all Federal Information Processing Standard
+(FIPS) codes (numbers which uniquely identify geographic areas)</li>
+<li>Combined state, county and tract FIPS into an 11-digit code</li>
+<li>Selected relevant variables</li>
+</ul></li>
+<li>Variables of interest:
+<ul>
+<li>FIPS code</li>
+<li>National Walkability Index</li>
+</ul></li>
+</ul>
+<details>
+<summary>
+Click to show code
+</summary>
+<pre class="r"><code>#Added leading zeros for all Federal Information Processing Standard (FIPS) codes
+#Combined state, county and tract FIPS into an 11-digit code 
+walkability_raw = read_csv(&quot;./data/EPA_SmartLocationDatabase_V3_Jan_2021_Final.csv&quot;)</code></pre>
+<pre><code>## Rows: 220740 Columns: 117
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr   (2): CSA_Name, CBSA_Name
+## dbl (115): OBJECTID, GEOID10, GEOID20, STATEFP, COUNTYFP, TRACTCE, BLKGRPCE,...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>walkability_new = walkability_raw %&gt;% 
+  janitor::clean_names() %&gt;% 
+  mutate(statefp = str_pad(statefp, width = 2, pad = &quot;0&quot;),
+         countyfp = str_pad(countyfp, width = 3, pad = &quot;0&quot;),
+         tractce = str_pad(tractce, width = 6, pad = &quot;0&quot;),
+         fips = str_c(statefp, countyfp, tractce, blkgrpce, sep = &quot;&quot;)) %&gt;% 
+  select(fips, everything(), -objectid)
+
+#Selected relevant variables
+walkability_clean = walkability_new %&gt;% 
+  select(fips, statefp, countyfp, tractce, blkgrpce, nat_walk_ind, csa_name) %&gt;% 
+  mutate(location_name = str_c(statefp, countyfp, tractce, sep = &quot;&quot;))</code></pre>
+</details>
+<p><br></p>
+</div>
+<div id="demographics" class="section level5">
+<h5>Demographics</h5>
+<ul>
+<li>Data: <a
+href="https://data.census.gov/table?tid=ACSDP1Y2021.DP05">US Census
+American Community Survey, 2020</a></li>
+<li>Cleaning steps:
+<ul>
+<li>removed second row with detailed column names</li>
+<li>removed columns for annotations and margins of error</li>
+<li>created a census tract column derived from the geo_id column
+(removed the “1400000US” at the beginning of each entry) to match with
+other data sets</li>
+</ul></li>
+<li>Variables of interest:
+<ul>
+<li>Age</li>
+<li>Sex</li>
+<li>Race/ethnicity</li>
+<li>Median household income</li>
+</ul></li>
+</ul>
+<details>
+<summary>
+Click to show code
+</summary>
+<p>Demographic Data - ACS 2020 Age, Gender, and Race</p>
+<pre class="r"><code>demo_raw = read_csv(&quot;./data/ACSDP5Y2020.DP05-Data.csv&quot;)</code></pre>
+<pre><code>## New names:
+## Rows: 85396 Columns: 715
+## ── Column specification
+## ──────────────────────────────────────────────────────── Delimiter: &quot;,&quot; chr
+## (714): GEO_ID, NAME, DP05_0001E, DP05_0001M, DP05_0001MA, DP05_0001EA, D... lgl
+## (1): ...715
+## ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
+## Specify the column types or set `show_col_types = FALSE` to quiet this message.
+## • `` -&gt; `...715`</code></pre>
+<pre class="r"><code>#removed second row with detailed column names
+#removed columns for annotations and margins of error
+#created a census tract column derived from the geo_id column (removed the &quot;1400000US&quot; at the beginning of each entry) to match with other data sets
+demo_clean = demo_raw %&gt;% 
+  slice(-1) %&gt;% 
+  janitor::clean_names() %&gt;%
+  select(-ends_with(c(&quot;ea&quot;, &quot;m&quot;, &quot;ma&quot;))) %&gt;% 
+  mutate(geo_clean = geo_id, 
+         geo_clean = str_replace(geo_clean, &quot;^1400000US&quot;, &quot;&quot;)) %&gt;% 
+  select(geo_clean, dp05_0002pe, dp05_0003pe, dp05_0021pe, dp05_0037pe, dp05_0038pe, dp05_0039pe, dp05_0044pe, dp05_0058pe, dp05_0071pe)</code></pre>
+<p>Median household income</p>
+<pre class="r"><code>income_raw = read_csv(&quot;./data/ACSST5Y2020.S1903-Data.csv&quot;)</code></pre>
+<pre><code>## New names:
+## Rows: 85396 Columns: 483
+## ── Column specification
+## ──────────────────────────────────────────────────────── Delimiter: &quot;,&quot; chr
+## (482): GEO_ID, NAME, S1903_C01_001E, S1903_C01_001EA, S1903_C01_001M, S1... lgl
+## (1): ...483
+## ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
+## Specify the column types or set `show_col_types = FALSE` to quiet this message.
+## • `` -&gt; `...483`</code></pre>
+<pre class="r"><code>income_clean = income_raw %&gt;% 
+  janitor::clean_names() %&gt;%
+  select(geo_id, name, s1903_c03_001e) %&gt;% 
+  slice(-1) %&gt;% 
+  mutate(geo_clean = geo_id, 
+         geo_clean = str_replace(geo_clean, &quot;^1400000US&quot;, &quot;&quot;)) %&gt;% 
+  select(geo_clean, everything())</code></pre>
+</details>
+<p><br></p>
+</div>
+<div id="health-outcomes" class="section level5">
+<h5>Health outcomes</h5>
+<ul>
+<li>Data: <a
+href="https://chronicdata.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh/data">Behavioral
+Risk Factor Surveillance System (BRFSS), 2020</a></li>
+<li>Cleaning steps:
+<ul>
+<li>Removed footnote variables</li>
+<li>Filtered for relevant health outcomes</li>
+</ul></li>
+<li>Variables of interest:
+<ul>
+<li>High cholesterol</li>
+<li>Physical health</li>
+<li>Blood pressure</li>
+<li>Physical inactivity</li>
+<li>Mental health</li>
+</ul></li>
+</ul>
+<details>
+<summary>
+Click to show code
+</summary>
+<p>Health Outcome Data - BRFSS</p>
+<pre class="r"><code># raw data with all health outcomes
+health_df = read_csv(&quot;./data/PLACES__Local_Data_for_Better_Health__Census_Tract_Data_2022_release.csv&quot;)</code></pre>
+<pre><code>## Rows: 2161543 Columns: 23
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (16): StateAbbr, StateDesc, CountyName, CountyFIPS, LocationName, DataSo...
+## dbl  (4): Year, Data_Value, Low_Confidence_Limit, High_Confidence_Limit
+## lgl  (2): Data_Value_Footnote_Symbol, Data_Value_Footnote
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>health_new = health_df %&gt;% 
+  janitor::clean_names() %&gt;%
+  mutate(location_name = str_pad(location_name, width = 11, pad = &quot;0&quot;),
+         geolocation = str_replace(geolocation, &quot;^POINT &quot;, &quot;&quot;),
+         geolocation = str_replace(geolocation, &quot;^\\(&quot;, &quot;&quot;),
+         geolocation = str_replace(geolocation, &quot;\\)$&quot;, &quot;&quot;)) %&gt;% 
+  separate(geolocation, into = c(&quot;lat&quot;, &quot;long&quot;), sep = &quot; &quot;)</code></pre>
+<p>Further cleaning</p>
+<pre class="r"><code>#For health outcome, we are focusing on 5 outcomes that are likely to be related to walkability 
+health_clean = health_new %&gt;% 
+  filter(measure_id == c(&quot;BPHIGH&quot;, &quot;PHLTH&quot;, &quot;LPA&quot;, &quot;MHLTH&quot;, &quot;HIGHCHOL&quot;)) %&gt;% 
+  select(location_name, lat, long, measure, data_value, data_value_type, data_value_unit, measure_id)</code></pre>
+<pre><code>## Warning in measure_id == c(&quot;BPHIGH&quot;, &quot;PHLTH&quot;, &quot;LPA&quot;, &quot;MHLTH&quot;, &quot;HIGHCHOL&quot;):
+## longer object length is not a multiple of shorter object length</code></pre>
+</details>
+<p><br></p>
+</div>
+<div id="cleaned-dataset-for-analysis-use" class="section level5">
+<h5>Cleaned Dataset for Analysis Use</h5>
+<p>After cleaning all three data sources, we merged the dataset by
+geographical locations.</p>
+<details>
+<summary>
+Click to show code
+</summary>
+<p>Merge</p>
+<pre class="r"><code># merging walkability and health outcomes
+merge1 = full_join(x = walkability_clean, y = health_clean, by = &quot;location_name&quot;)
+
+#mergeing demographic into one df - age&amp;race + median household income
+merge2 = full_join(demo_clean, income_clean, by = &quot;geo_clean&quot;)
+  
+merge2 = merge2 %&gt;% 
+  mutate(location_name = geo_clean) 
+
+# merge merge1 and merge2
+merge_final = full_join(x = merge1, y = merge2, by = &quot;location_name&quot;)
+
+merge_final = merge_final %&gt;% 
+  rename(sex_male = dp05_0002pe,
+         sex_female = dp05_0003pe,
+         age_18plus = dp05_0021pe,
+         race_white = dp05_0037pe,
+         race_black = dp05_0038pe,
+         race_aian = dp05_0039pe,
+         race_asian = dp05_0044pe,
+         race_2_plus = dp05_0058pe,
+         race_hispanic = dp05_0071pe,
+         median_income = s1903_c03_001e) %&gt;% 
+  pivot_longer(names_to = &quot;race&quot;,
+               values_to = &quot;percent_race&quot;,
+               cols = starts_with(&quot;race&quot;),
+               names_prefix = &quot;race_&quot;) %&gt;% 
+  select(-data_value_type, -data_value_unit)
+
+write_csv(merge_final, &quot;./data/merge_final.csv&quot;)</code></pre>
+</details>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
