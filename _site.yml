@@ -45,4 +45,4 @@ navbar:
       href: https://github.com/ay2543/walkability.io
 output:
   html_document:
-      theme: paper
+      theme: sandstone
