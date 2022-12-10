@@ -253,14 +253,14 @@ $(document).ready(function () {
 </li>
 <li>
   <a href="data.html">
-    <span class="fa fa-home"></span>
+    <span class="fa fa-book"></span>
      
     Data Sources
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    <span class="fa fa-file"></span>
+    <span class="fa fa-eye"></span>
      
     Visualizations
      
@@ -277,7 +277,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    <span class="fa fa-file"></span>
+    <span class="fa fa-bar-chart-o"></span>
      
     Data Analysis
      
@@ -297,7 +297,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    <span class="fa fa-file"></span>
+    <span class="fa fa-folder-open"></span>
      
     Report
      
@@ -305,21 +305,28 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="results.html">Findings</a>
+      <a href="results.html">Key Findings</a>
     </li>
     <li>
       <a href="limitations.html">Limitations</a>
     </li>
     <li>
-      <a href="report.html">Report</a>
+      <a href="report.html">Project Report</a>
     </li>
   </ul>
 </li>
 <li>
   <a href="team.html">
-    <span class="fa fa-people-group"></span>
+    <span class="fa fa-group"></span>
      
     Who We Are
+  </a>
+</li>
+<li>
+  <a href="fun.html">
+    <span class="fa fa-smile-o"></span>
+     
+    Fun Facts
   </a>
 </li>
       </ul>
@@ -347,39 +354,609 @@ $(document).ready(function () {
 <style>
 div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 </style>
-<div id="on-this-page-xxxxx" class="section level5 blue">
-<h5>On this page XXXXX</h5>
+<div
+id="on-this-page-we-explored-how-walkability-is-correlated-with-health-outcomes-at-the-national-level."
+class="section level5 blue">
+<h5>On this page, we explored how walkability is correlated with health
+outcomes at the national level.</h5>
 </div>
 <p><br></p>
-<pre class="r"><code># ADJUST FOR POTENTIAL CONFOUNDERS TOO???
+<div id="setup" class="section level3">
+<h3>Setup</h3>
+<p>To ease interpretation, the walkability score was dichotomized
+according to <a
+href="https://www.epa.gov/sites/default/files/2021-06/documents/national_walkability_index_methodology_and_user_guide_june2021.pdf">cutoff
+values</a> provided by EPA, where values above 10.5 are classified as
+“More Walkable”, and those below as “Less Walkable”.</p>
+<details>
+<summary>
+Click to show code
+</summary>
+<pre class="r"><code>dataset = read_csv(&quot;./data/merge_final.csv&quot;)</code></pre>
+<pre><code>## Rows: 1877910 Columns: 24
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (19): fips, statefp, countyfp, tractce, csa_name, location_name, measure...
+## dbl  (5): blkgrpce, nat_walk_ind, lat, long, data_value
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>regress_df = dataset %&gt;% 
+  pivot_wider(names_from = &quot;race&quot;,
+               values_from = &quot;percent_race&quot;) %&gt;% 
+  pivot_wider(names_from = &quot;measure_id&quot;,
+              values_from = &quot;data_value&quot;) %&gt;% 
+  janitor::clean_names() %&gt;% 
+  dplyr::select(tractce, nat_walk_ind, csa_name, lat, long, sex_male, sex_female, age_18plus, median_income, white, black, aian, asian, x2_plus, hispanic, highchol, mhlth, lpa, phlth, bphigh) %&gt;% 
+  mutate(
+    sex_male = as.numeric(sex_male)/100,
+    age_18plus = as.numeric(age_18plus)/100,
+    white = as.numeric(white)/100,
+    black = as.numeric(black)/100,
+    aian = as.numeric(aian)/100,
+    asian = as.numeric(asian)/100, 
+    x2_plus = as.numeric(x2_plus)/100, 
+    hispanic = as.numeric(hispanic)/100, 
+    highchol = highchol/100, 
+    mhlth = mhlth/100, 
+    lpa = lpa/100, 
+    phlth = phlth/100, 
+    bphigh = bphigh/100,
+    median_income = as.numeric(median_income)
+    ) %&gt;%
+  group_by(tractce) %&gt;% 
+  summarize(
+    nat_walk_tract = mean(nat_walk_ind),
+    sex_male = mean(sex_male),
+    age_18plus = mean(age_18plus),
+    white = mean(white),
+    black = mean(black),
+    aian = mean(aian),
+    asian = mean(asian), 
+    x2_plus = mean(x2_plus), 
+    hispanic = mean(hispanic), 
+    highchol = mean(highchol), 
+    mhlth = mean(mhlth), 
+    lpa = mean(lpa), 
+    phlth = mean(phlth), 
+    bphigh = mean(bphigh),
+    median_income = mean(median_income),
+    lat = lat,
+    long = long
+    ) %&gt;% 
+  dplyr::select(!c(&quot;lat&quot;, &quot;long&quot;)) %&gt;% 
+  mutate(walkable = ifelse(nat_walk_tract&lt;10.5, &quot;Less Walkable&quot;, &quot;More Walkable&quot;)) %&gt;% 
+  unique()</code></pre>
+<pre><code>## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
 
-# poisson_gen_model = glm(formula = health outcomes ~ walkability, family = poisson)
+## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
 
-# Model 1: High cholesterol vs walkability score
-# poisson_chol = glm(formula = health outcomes ~ walkability, data = [], family = poisson)
+## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
 
-# Model 2: Physical inactivity vs walkability score
-# poisson_inactivity = glm(formula = health outcomes ~ walkability, data = [], family = poisson)
+## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
 
-# Model 3: Mental health vs walkability score
-# poisson_mh = glm(formula = health outcomes ~ walkability, data = [], family = poisson)
+## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
 
-# Model 4: Physical health vs walkability score
-# poisson_ph = glm(formula = health outcomes ~ walkability, data = [], family = poisson)
+## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
 
-# Model 5: High blood pressure vs walkability scsore
-# poisson_hbp = glm(formula = health outcomes ~ walkability, data = [], family = poisson)</code></pre>
-<pre class="r"><code>#baltimore_glm =
-#  baltimore_df %&gt;%
-#  glm(solved ~ victim_age + victim_sex + victim_race,
-#    data = .,
-#    family = binomial()) %&gt;%
-#  broom::tidy() %&gt;%
-#  janitor::clean_names() %&gt;%
-#  mutate(OR = exp(estimate),
-#         CI_lower = exp(estimate - 1.96*std_error),
-#         CI_upper = exp(estimate + 1.96*std_error))
-#baltimore_glm</code></pre>
+## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;tractce&#39;. You can override using the
+## `.groups` argument.</code></pre>
+<pre class="r"><code># mod &lt;- gam(highchol ~ nat_walk_tract + sex_male + age_18plus + black + median_income + s(lat, long, bs=&quot;gp&quot;, m=2),
+#            family = betar(link=&#39;logit&#39;),
+#            data = regress_df)
+# 
+# summary(mod)
+# 
+# residual1_plot =
+#     regress_df %&gt;%
+#     add_predictions(mod) %&gt;%
+#     add_residuals(mod) %&gt;%
+#     ggplot(aes(x = nat_walk_tract, y = resid)) +
+#     geom_point(alpha = 0.3, size = 0.3) +
+#     geom_smooth(se = FALSE, method = &quot;lm&quot;)
+# 
+# residual1_plot
+
+# mod_beta = betareg(mhlth ~ nat_walk_tract + sex_male + age_18plus + black, data = test)
+# 
+# summary(mod_beta)
+# 
+# residual_plot =
+#     test %&gt;%
+#     add_predictions(mod_beta) %&gt;%
+#     add_residuals(mod_beta) %&gt;%
+#     ggplot(aes(x = nat_walk_tract, y = resid)) +
+#     geom_point(alpha = 0.3) +
+#     geom_smooth(se = FALSE, method = &quot;lm&quot;)
+# 
+# residual_plot</code></pre>
+</details>
+<p><br></p>
+</div>
+<div id="regression-model" class="section level3 tabset">
+<h3 class="tabset">Regression Model</h3>
+<p>We utilized beta regression to model the relationship between health
+outcomes with the dichotomzied walkability variable, controlling for
+sociodemographic variables. We chose this regression method as the
+outcome variable is in proportions, and thus takes the form of a
+continous value bounded between 0 and 1. The R package
+<code>betareg</code> was used to implement this method, while the
+<code>betamfx</code> command under the <code>mfx</code> package was used
+to obtain the changes in marginal probabilities on the outcome resulting
+from changes in the predictor. We will report both numbers, however, we
+will be interpreting the marginal probabilities for its more direct
+relevance to the real world.</p>
+<details>
+<summary>
+Click to show code
+</summary>
+<pre class="r"><code># Beta regression model
+chol = betareg(highchol ~ walkable + sex_male + age_18plus + black, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
+mental = betareg(mhlth ~ walkable + sex_male + age_18plus + black, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
+lpa = betareg(lpa ~ walkable + sex_male + age_18plus + black, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
+physical = betareg(phlth ~ walkable + sex_male + age_18plus + black, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
+bloodpres = betareg(bphigh ~ walkable + sex_male + age_18plus + black, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
+
+# Margins
+chol_margin = betamfx(highchol ~ walkable + sex_male + age_18plus + black, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
+mental_margin = betamfx(mhlth ~ walkable + sex_male + age_18plus + black, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
+lpa_margin = betamfx(lpa ~ walkable + sex_male + age_18plus + black, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
+physical_margin = betamfx(phlth ~ walkable + sex_male + age_18plus + black, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
+bloodpres_margin = betamfx(bphigh ~ walkable + sex_male + age_18plus + black, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
+
+# Collate estimates into one data frame
+modeldata = 
+  chol %&gt;% 
+  filter(grepl(&#39;walk&#39;, term)) %&gt;% 
+  rbind(mental[2,]) %&gt;% 
+  rbind(lpa[2,]) %&gt;% 
+  rbind(physical[2,]) %&gt;% 
+  rbind(bloodpres[2,]) %&gt;% 
+  mutate(
+    outcome = c(&quot;High Cholesterol&quot;, &quot;Mental Health&quot;, &quot;Physical Activity&quot;, &quot;Physical Health&quot;, &quot;High Blood Pressure&quot;),
+    OR = exp(estimate),
+    lowlim = exp(conf.low),
+    highlim = exp(conf.high)
+  ) %&gt;% 
+  dplyr::select(outcome, OR, lowlim, highlim, p.value) %&gt;% 
+  arrange(desc(OR)) %&gt;% 
+  knitr::kable(digits = 3, col.names = c(&#39;Outcome&#39;, &#39;Coefficient&#39;, &#39;CI (lower)&#39;, &#39;CI (upper)&#39;, &#39;p-value&#39;))
+
+marginsdata = 
+  chol_margin %&gt;% 
+  filter(grepl(&#39;walk&#39;, term)) %&gt;% 
+  rbind(mental_margin[1,]) %&gt;% 
+  rbind(lpa_margin[1,]) %&gt;% 
+  rbind(physical_margin[1,]) %&gt;% 
+  rbind(bloodpres_margin[1,]) %&gt;% 
+  mutate(
+    outcome = c(&quot;High Cholesterol&quot;, &quot;Mental Health&quot;, &quot;Physical Activity&quot;, &quot;Physical Health&quot;, &quot;High Blood Pressure&quot;),
+    pct = estimate*100,
+    pct.conf.low = conf.low*100,
+    pct.conf.high = conf.high*100
+  ) %&gt;% 
+  dplyr::select(outcome, pct, pct.conf.low, pct.conf.high, p.value) %&gt;% 
+  arrange(desc(pct)) %&gt;% 
+  knitr::kable(digits = 3, col.names = c(&#39;Outcome&#39;, &#39;% change&#39;, &#39;CI (lower)&#39;, &#39;CI (upper)&#39;, &#39;p-value&#39;))</code></pre>
+</details>
+<div id="physical-activity" class="section level4">
+<h4>Physical activity</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Term</th>
+<th align="right">Coefficient</th>
+<th align="right">p-value</th>
+<th align="right">CI (lower)</th>
+<th align="right">CI (high)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-0.928</td>
+<td align="right">0.000</td>
+<td align="right">-1.274</td>
+<td align="right">-0.583</td>
+</tr>
+<tr class="even">
+<td align="left">walkableMore Walkable</td>
+<td align="right">0.099</td>
+<td align="right">0.000</td>
+<td align="right">0.059</td>
+<td align="right">0.138</td>
+</tr>
+<tr class="odd">
+<td align="left">sex_male</td>
+<td align="right">0.567</td>
+<td align="right">0.027</td>
+<td align="right">0.066</td>
+<td align="right">1.067</td>
+</tr>
+<tr class="even">
+<td align="left">age_18plus</td>
+<td align="right">-0.961</td>
+<td align="right">0.000</td>
+<td align="right">-1.270</td>
+<td align="right">-0.651</td>
+</tr>
+<tr class="odd">
+<td align="left">black</td>
+<td align="right">0.658</td>
+<td align="right">0.000</td>
+<td align="right">0.563</td>
+<td align="right">0.754</td>
+</tr>
+<tr class="even">
+<td align="left">(phi)</td>
+<td align="right">53.218</td>
+<td align="right">0.000</td>
+<td align="right">48.692</td>
+<td align="right">57.745</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="mental-health" class="section level4">
+<h4>Mental health</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Term</th>
+<th align="right">Coefficient</th>
+<th align="right">p-value</th>
+<th align="right">CI (lower)</th>
+<th align="right">CI (high)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-1.330</td>
+<td align="right">0</td>
+<td align="right">-1.515</td>
+<td align="right">-1.144</td>
+</tr>
+<tr class="even">
+<td align="left">walkableMore Walkable</td>
+<td align="right">0.046</td>
+<td align="right">0</td>
+<td align="right">0.022</td>
+<td align="right">0.070</td>
+</tr>
+<tr class="odd">
+<td align="left">sex_male</td>
+<td align="right">0.477</td>
+<td align="right">0</td>
+<td align="right">0.226</td>
+<td align="right">0.729</td>
+</tr>
+<tr class="even">
+<td align="left">age_18plus</td>
+<td align="right">-0.978</td>
+<td align="right">0</td>
+<td align="right">-1.159</td>
+<td align="right">-0.798</td>
+</tr>
+<tr class="odd">
+<td align="left">black</td>
+<td align="right">0.347</td>
+<td align="right">0</td>
+<td align="right">0.288</td>
+<td align="right">0.406</td>
+</tr>
+<tr class="even">
+<td align="left">(phi)</td>
+<td align="right">198.422</td>
+<td align="right">0</td>
+<td align="right">181.963</td>
+<td align="right">214.882</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="physical-health" class="section level4">
+<h4>Physical health</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Term</th>
+<th align="right">Coefficient</th>
+<th align="right">p-value</th>
+<th align="right">CI (lower)</th>
+<th align="right">CI (high)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-2.245</td>
+<td align="right">0.000</td>
+<td align="right">-2.558</td>
+<td align="right">-1.932</td>
+</tr>
+<tr class="even">
+<td align="left">walkableMore Walkable</td>
+<td align="right">0.045</td>
+<td align="right">0.010</td>
+<td align="right">0.011</td>
+<td align="right">0.080</td>
+</tr>
+<tr class="odd">
+<td align="left">sex_male</td>
+<td align="right">0.365</td>
+<td align="right">0.081</td>
+<td align="right">-0.046</td>
+<td align="right">0.776</td>
+</tr>
+<tr class="even">
+<td align="left">age_18plus</td>
+<td align="right">-0.293</td>
+<td align="right">0.034</td>
+<td align="right">-0.564</td>
+<td align="right">-0.023</td>
+</tr>
+<tr class="odd">
+<td align="left">black</td>
+<td align="right">0.290</td>
+<td align="right">0.000</td>
+<td align="right">0.202</td>
+<td align="right">0.377</td>
+</tr>
+<tr class="even">
+<td align="left">(phi)</td>
+<td align="right">135.763</td>
+<td align="right">0.000</td>
+<td align="right">124.293</td>
+<td align="right">147.233</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="high-cholesterol" class="section level4">
+<h4>High cholesterol</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Term</th>
+<th align="right">Coefficient</th>
+<th align="right">p-value</th>
+<th align="right">CI (lower)</th>
+<th align="right">CI (high)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-0.853</td>
+<td align="right">0.000</td>
+<td align="right">-1.052</td>
+<td align="right">-0.654</td>
+</tr>
+<tr class="even">
+<td align="left">walkableMore Walkable</td>
+<td align="right">-0.100</td>
+<td align="right">0.000</td>
+<td align="right">-0.123</td>
+<td align="right">-0.076</td>
+</tr>
+<tr class="odd">
+<td align="left">sex_male</td>
+<td align="right">-0.462</td>
+<td align="right">0.001</td>
+<td align="right">-0.734</td>
+<td align="right">-0.189</td>
+</tr>
+<tr class="even">
+<td align="left">age_18plus</td>
+<td align="right">0.445</td>
+<td align="right">0.000</td>
+<td align="right">0.257</td>
+<td align="right">0.632</td>
+</tr>
+<tr class="odd">
+<td align="left">black</td>
+<td align="right">-0.113</td>
+<td align="right">0.000</td>
+<td align="right">-0.170</td>
+<td align="right">-0.055</td>
+</tr>
+<tr class="even">
+<td align="left">(phi)</td>
+<td align="right">124.189</td>
+<td align="right">0.000</td>
+<td align="right">113.496</td>
+<td align="right">134.882</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="high-blood-pressure" class="section level4">
+<h4>High blood pressure</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Term</th>
+<th align="right">Coefficient</th>
+<th align="right">p-value</th>
+<th align="right">CI (lower)</th>
+<th align="right">CI (high)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-0.493</td>
+<td align="right">0.001</td>
+<td align="right">-0.788</td>
+<td align="right">-0.197</td>
+</tr>
+<tr class="even">
+<td align="left">walkableMore Walkable</td>
+<td align="right">-0.113</td>
+<td align="right">0.000</td>
+<td align="right">-0.144</td>
+<td align="right">-0.081</td>
+</tr>
+<tr class="odd">
+<td align="left">sex_male</td>
+<td align="right">-1.344</td>
+<td align="right">0.000</td>
+<td align="right">-1.757</td>
+<td align="right">-0.932</td>
+</tr>
+<tr class="even">
+<td align="left">age_18plus</td>
+<td align="right">0.356</td>
+<td align="right">0.005</td>
+<td align="right">0.107</td>
+<td align="right">0.606</td>
+</tr>
+<tr class="odd">
+<td align="left">black</td>
+<td align="right">0.600</td>
+<td align="right">0.000</td>
+<td align="right">0.519</td>
+<td align="right">0.681</td>
+</tr>
+<tr class="even">
+<td align="left">(phi)</td>
+<td align="right">73.025</td>
+<td align="right">0.000</td>
+<td align="right">66.743</td>
+<td align="right">79.308</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="interpretation" class="section level3">
+<h3>Interpretation</h3>
+<p>By exponentiating the regression coefficient, we obtained the odds
+ratios for the association between health outcomes and walkability
+below. However, they are not at all straightforward to interpret, as
+they correspond to the odds of change in proportion of a selected health
+outcome, controlling for sociodemographic variables.</p>
+<details>
+<summary>
+Show
+</summary>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Outcome</th>
+<th align="right">Coefficient</th>
+<th align="right">CI (lower)</th>
+<th align="right">CI (upper)</th>
+<th align="right">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Physical Activity</td>
+<td align="right">1.104</td>
+<td align="right">1.061</td>
+<td align="right">1.148</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Mental Health</td>
+<td align="right">1.047</td>
+<td align="right">1.023</td>
+<td align="right">1.073</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Physical Health</td>
+<td align="right">1.046</td>
+<td align="right">1.011</td>
+<td align="right">1.083</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="even">
+<td align="left">High Cholesterol</td>
+<td align="right">0.905</td>
+<td align="right">0.884</td>
+<td align="right">0.927</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">High Blood Pressure</td>
+<td align="right">0.893</td>
+<td align="right">0.865</td>
+<td align="right">0.922</td>
+<td align="right">0.00</td>
+</tr>
+</tbody>
+</table>
+</details>
+<p><br></p>
+<p>It is easier to convert the regression results into changes in
+marginal probabilities of the outcome variable:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Outcome</th>
+<th align="right">% change</th>
+<th align="right">CI (lower)</th>
+<th align="right">CI (upper)</th>
+<th align="right">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Physical Activity</td>
+<td align="right">1.690</td>
+<td align="right">1.010</td>
+<td align="right">2.371</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Mental Health</td>
+<td align="right">0.568</td>
+<td align="right">0.274</td>
+<td align="right">0.862</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Physical Health</td>
+<td align="right">0.396</td>
+<td align="right">0.095</td>
+<td align="right">0.696</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="even">
+<td align="left">High Cholesterol</td>
+<td align="right">-2.133</td>
+<td align="right">-2.642</td>
+<td align="right">-1.624</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">High Blood Pressure</td>
+<td align="right">-2.359</td>
+<td align="right">-3.023</td>
+<td align="right">-1.696</td>
+<td align="right">0.00</td>
+</tr>
+</tbody>
+</table>
+<p>Here, we see that more walkable places have the following difference
+in prevalence for a particular health outcome compared to less walkable
+places:</p>
+<ul>
+<li>1.690% increase in physical activity</li>
+<li>0.568% increase in good mental health</li>
+<li>0.396% increase in good physical health</li>
+<li>2.133% decrease in high cholesterol</li>
+<li>2.359% decrease in high blood pressure</li>
+</ul>
+</div>
 
 
 

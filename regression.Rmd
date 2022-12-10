@@ -8,13 +8,19 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 </style>
 <div class = "blue">
 
-##### On this page XXXXX
+##### On this page, we explored how walkability is correlated with health outcomes at the national level.
 
 </div>
 
 <br>
 
+### Setup
 
+To ease interpretation, the walkability score was dichotomized according to [cutoff values](https://www.epa.gov/sites/default/files/2021-06/documents/national_walkability_index_methodology_and_user_guide_june2021.pdf) provided by EPA, where values above 10.5 are classified as "More Walkable", and those below as "Less Walkable".
+
+<details>
+  <summary>Click to show code</summary>
+  
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
@@ -25,18 +31,18 @@ library(mgcv)
 library(purrr)
 library(broom)
 library(mfx)
-
-dataset = read_csv("./data/merge_final.csv")
 ```
 
-```{r pivot-dataset}
+```{r pivot-dataset, cache=TRUE}
+dataset = read_csv("./data/merge_final.csv")
+
 regress_df = dataset %>% 
   pivot_wider(names_from = "race",
                values_from = "percent_race") %>% 
   pivot_wider(names_from = "measure_id",
               values_from = "data_value") %>% 
   janitor::clean_names() %>% 
-  select(tractce, nat_walk_ind, csa_name, lat, long, sex_male, sex_female, age_18plus, median_income, white, black, aian, asian, x2_plus, hispanic, highchol, mhlth, lpa, phlth, bphigh) %>% 
+  dplyr::select(tractce, nat_walk_ind, csa_name, lat, long, sex_male, sex_female, age_18plus, median_income, white, black, aian, asian, x2_plus, hispanic, highchol, mhlth, lpa, phlth, bphigh) %>% 
   mutate(
     sex_male = as.numeric(sex_male)/100,
     age_18plus = as.numeric(age_18plus)/100,
@@ -73,16 +79,12 @@ regress_df = dataset %>%
     lat = lat,
     long = long
     ) %>% 
-  unique()
-```
-
-
-```{r beta-test-code}
-test = regress_df %>% 
   dplyr::select(!c("lat", "long")) %>% 
   mutate(walkable = ifelse(nat_walk_tract<10.5, "Less Walkable", "More Walkable")) %>% 
   unique()
+```
 
+```{r beta-test-code}
 # mod <- gam(highchol ~ nat_walk_tract + sex_male + age_18plus + black + median_income + s(lat, long, bs="gp", m=2),
 #            family = betar(link='logit'),
 #            data = regress_df)
@@ -112,20 +114,31 @@ test = regress_df %>%
 #     geom_smooth(se = FALSE, method = "lm")
 # 
 # residual_plot
+```
+</details>
+<br>
 
+### Regression Model {.tabset}
+
+We utilized beta regression to model the relationship between health outcomes with the dichotomzied walkability variable, controlling for sociodemographic variables. We chose this regression method as the outcome variable is in proportions, and thus takes the form of a continous value bounded between 0 and 1. The R package `betareg` was used to implement this method, while the `betamfx` command under the `mfx` package was used to obtain the changes in marginal probabilities on the outcome resulting from changes in the predictor. We will report both numbers, however, we will be interpreting the marginal probabilities for its more direct relevance to the real world.
+
+<details>
+  <summary>Click to show code</summary>
+  
+``` {r regress}
 # Beta regression model
-chol = betareg(highchol ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
-mental = betareg(mhlth ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
-lpa = betareg(lpa ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
-physical = betareg(phlth ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
-bloodpres = betareg(bphigh ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
+chol = betareg(highchol ~ walkable + sex_male + age_18plus + black, data = regress_df) %>% broom::tidy(conf.int=TRUE)
+mental = betareg(mhlth ~ walkable + sex_male + age_18plus + black, data = regress_df) %>% broom::tidy(conf.int=TRUE)
+lpa = betareg(lpa ~ walkable + sex_male + age_18plus + black, data = regress_df) %>% broom::tidy(conf.int=TRUE)
+physical = betareg(phlth ~ walkable + sex_male + age_18plus + black, data = regress_df) %>% broom::tidy(conf.int=TRUE)
+bloodpres = betareg(bphigh ~ walkable + sex_male + age_18plus + black, data = regress_df) %>% broom::tidy(conf.int=TRUE)
 
 # Margins
-chol_margin = betamfx(highchol ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
-mental_margin = betamfx(mhlth ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
-lpa_margin = betamfx(lpa ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
-physical_margin = betamfx(phlth ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
-bloodpres_margin = betamfx(bphigh ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
+chol_margin = betamfx(highchol ~ walkable + sex_male + age_18plus + black, data = regress_df) %>% broom::tidy(conf.int=TRUE)
+mental_margin = betamfx(mhlth ~ walkable + sex_male + age_18plus + black, data = regress_df) %>% broom::tidy(conf.int=TRUE)
+lpa_margin = betamfx(lpa ~ walkable + sex_male + age_18plus + black, data = regress_df) %>% broom::tidy(conf.int=TRUE)
+physical_margin = betamfx(phlth ~ walkable + sex_male + age_18plus + black, data = regress_df) %>% broom::tidy(conf.int=TRUE)
+bloodpres_margin = betamfx(bphigh ~ walkable + sex_male + age_18plus + black, data = regress_df) %>% broom::tidy(conf.int=TRUE)
 
 # Collate estimates into one data frame
 modeldata = 
@@ -140,7 +153,10 @@ modeldata =
     OR = exp(estimate),
     lowlim = exp(conf.low),
     highlim = exp(conf.high)
-  )
+  ) %>% 
+  dplyr::select(outcome, OR, lowlim, highlim, p.value) %>% 
+  arrange(desc(OR)) %>% 
+  knitr::kable(digits = 3, col.names = c('Outcome', 'Coefficient', 'CI (lower)', 'CI (upper)', 'p-value'))
 
 marginsdata = 
   chol_margin %>% 
@@ -150,32 +166,74 @@ marginsdata =
   rbind(physical_margin[1,]) %>% 
   rbind(bloodpres_margin[1,]) %>% 
   mutate(
-    outcome = c("High Cholesterol", "Mental Health", "Physical Activity", "Physical Health", "High Blood Pressure")
-  )
+    outcome = c("High Cholesterol", "Mental Health", "Physical Activity", "Physical Health", "High Blood Pressure"),
+    pct = estimate*100,
+    pct.conf.low = conf.low*100,
+    pct.conf.high = conf.high*100
+  ) %>% 
+  dplyr::select(outcome, pct, pct.conf.low, pct.conf.high, p.value) %>% 
+  arrange(desc(pct)) %>% 
+  knitr::kable(digits = 3, col.names = c('Outcome', '% change', 'CI (lower)', 'CI (upper)', 'p-value'))
+```
+</details>
+
+#### Physical activity
+
+```{r, echo=FALSE}
+lpa %>% 
+  dplyr::select(!c("component", "statistic", "std.error")) %>% 
+  knitr::kable(digits=3, col.names = c("Term", "Coefficient", "p-value", "CI (lower)", "CI (high)"))
 ```
 
-```{r reference-code}
-# baltimore_glm =
-#  baltimore_df %>%
-#  glm(solved ~ victim_age + victim_sex + victim_race,
-#    data = .,
-#    family = binomial()) %>%
-#  broom::tidy() %>%
-#  janitor::clean_names() %>%
-#  mutate(OR = exp(estimate),
-#         CI_lower = exp(estimate - 1.96*std_error),
-#         CI_upper = exp(estimate + 1.96*std_error))
-# baltimore_glm
-# 
-# unsolved_all = homicide_city_state %>% 
-#   mutate(
-#     prop_test = map2(.x = unsolved, .y = total, ~prop.test(x = .x, n = .y)),
-#     prop_est = map(.x = prop_test, ~broom::tidy(.x))
-#   ) %>% 
-#   select(-prop_test) %>% 
-#   unnest(prop_est) %>% 
-#   select(city_state, estimate, conf.low, conf.high) %>% 
-#   mutate(across(where(is.numeric), function(x) x*100))
+#### Mental health
+
+```{r, echo=FALSE}
+mental %>% 
+  dplyr::select(!c("component", "statistic", "std.error")) %>% 
+  knitr::kable(digits=3, col.names = c("Term", "Coefficient", "p-value", "CI (lower)", "CI (high)"))
 ```
 
+#### Physical health
+```{r, echo=FALSE}
+physical %>% 
+  dplyr::select(!c("component", "statistic", "std.error")) %>% 
+  knitr::kable(digits=3, col.names = c("Term", "Coefficient", "p-value", "CI (lower)", "CI (high)"))
+```
 
+#### High cholesterol
+```{r, echo=FALSE}
+chol %>% 
+  dplyr::select(!c("component", "statistic", "std.error")) %>% 
+  knitr::kable(digits=3, col.names = c("Term", "Coefficient", "p-value", "CI (lower)", "CI (high)"))
+```
+#### High blood pressure
+```{r, echo=FALSE}
+bloodpres %>% 
+  dplyr::select(!c("component", "statistic", "std.error")) %>% 
+  knitr::kable(digits=3, col.names = c("Term", "Coefficient", "p-value", "CI (lower)", "CI (high)"))
+```
+
+### Interpretation
+
+By exponentiating the regression coefficient, we obtained the odds ratios for the association between health outcomes and walkability below. However, they are not at all straightforward to interpret, as they correspond to the odds of change in proportion of a selected health outcome, controlling for sociodemographic variables.
+
+<details>
+<summary>Show</summary>
+```{r model, echo=FALSE}
+modeldata
+```
+</details>
+<br>
+
+It is easier to convert the regression results into changes in marginal probabilities of the outcome variable:
+```{r margins, echo=FALSE}
+marginsdata
+```
+
+Here, we see that more walkable places have the following difference in prevalence for a particular health outcome compared to less walkable places:
+
+* 1.690% increase in physical activity
+* 0.568% increase in good mental health
+* 0.396% increase in good physical health
+* 2.133% decrease in high cholesterol
+* 2.359% decrease in high blood pressure
