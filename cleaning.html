@@ -513,11 +513,12 @@ Click to show code
 <p>Health Outcome Data - BRFSS</p>
 <pre class="r"><code># raw data with all health outcomes
 health_df = read_csv(&quot;./data/PLACES__Local_Data_for_Better_Health__Census_Tract_Data_2022_release.csv&quot;)</code></pre>
-<pre><code>## Rows: 2161543 Columns: 23
+<pre><code>## Rows: 1048575 Columns: 23
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
-## chr (16): StateAbbr, StateDesc, CountyName, CountyFIPS, LocationName, DataSo...
-## dbl  (4): Year, Data_Value, Low_Confidence_Limit, High_Confidence_Limit
+## chr (13): StateAbbr, StateDesc, CountyName, DataSource, Category, Measure, D...
+## dbl  (7): Year, CountyFIPS, LocationName, Data_Value, Low_Confidence_Limit, ...
+## num  (1): TotalPopulation
 ## lgl  (2): Data_Value_Footnote_Symbol, Data_Value_Footnote
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
@@ -534,8 +535,6 @@ health_df = read_csv(&quot;./data/PLACES__Local_Data_for_Better_Health__Census_T
 health_clean = health_new %&gt;% 
   filter(measure_id == c(&quot;BPHIGH&quot;, &quot;PHLTH&quot;, &quot;LPA&quot;, &quot;MHLTH&quot;, &quot;HIGHCHOL&quot;)) %&gt;% 
   select(location_name, lat, long, measure, data_value, data_value_type, data_value_unit, measure_id)</code></pre>
-<pre><code>## Warning in measure_id == c(&quot;BPHIGH&quot;, &quot;PHLTH&quot;, &quot;LPA&quot;, &quot;MHLTH&quot;, &quot;HIGHCHOL&quot;):
-## longer object length is not a multiple of shorter object length</code></pre>
 </details>
 <p><br></p>
 </div>
