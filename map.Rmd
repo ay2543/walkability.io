@@ -133,9 +133,9 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 ## Exploratory Spatial Data Analysis for NYC
 
 
-To further understand the National Walkability Index in a smaller spatial unit, we narrowed the exploration to **New York City**, where us five walkaholics reside. 
+To further understand the National Walkability Index in smaller spatial units, we narrowed the exploration to **New York City**, where us five walkaholics reside. 
 
-The first step is to get a general understanding of the walkability index in the City by creating a descriptive choropleth map on the census tract level. We focused on the following counties:
+The first step is to get a general understanding of the walkability index in the City by creating a descriptive choropleth (discrete density) map on the census tract level. We focused on the following counties:
 
 * Bronx County
 * Kings County
@@ -209,11 +209,18 @@ From this choropleth map, we can see that New York City is walkable overall. How
 #### Understanding the terms
 As mentioned, we want to find NYC census tracts that are statistically significant hot spots, cold spots, and spatial outliers. To start, it is crucial to understand the terms.
 
-* Hot spots/high positive clusters, **High-High**: census tracts that are high in walkability are surround by census tracts with high walkability index
-* Cold spots/low positive clusters, **Low-Low**: census tracts that are low in walkability are surround by census tracts with low walkability index
+* Hot spots/high positive clusters or Cold spots/low positive clusters
+  * **High-High**: census tracts with high walkability that are surrounded by census tracts with a high walkability index
+  * **Low-Low**: census tracts with low walkability that are surrounded by census tracts with a low walkability index
 * Spatial outliers:
-  * **High-Low**: census tracts that are high in walkability are surround by census tracts with low walkability index
-  * **Low-High**: census tracts that are low in walkability are surround by census tracts with high walkability index
+  * **High-Low**: census tracts with high walkability that are surrounded by census tracts with a low walkability index
+  * **Low-High**: census tracts with low walkability are surrounded by census tracts with high walkability index
+
+                                          High-high    Low-low               High-low           Low-high
+-----------------------------------    ------------   --------       ----------------    --------------- 
+Census tract walkability                       High        Low                   High                Low
+Neighboring census tract walkability           High        Low                    Low               High
+Category                                   Hot spot  Cold spot 1      Spatial outlier    Spatial outlier      
 
 #### Local Moran's I
 
