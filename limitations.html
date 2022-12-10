@@ -11,7 +11,7 @@
 
 
 
-<title>Limitations</title>
+<title>Strengths and Limitations</title>
 
 <script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -29,6 +29,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -221,6 +224,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -228,6 +294,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -260,23 +336,6 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    <span class="fa fa-eye"></span>
-     
-    Visualizations
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="map.html">Walkability Map</a>
-    </li>
-    <li>
-      <a href="dashboard.html">Dashboard</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-bar-chart-o"></span>
      
     Data Analysis
@@ -297,6 +356,23 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-eye"></span>
+     
+    Visualizations
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="map.html">Walkability Map</a>
+    </li>
+    <li>
+      <a href="dashboard.html">Dashboard</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-folder-open"></span>
      
     Report
@@ -308,7 +384,7 @@ $(document).ready(function () {
       <a href="results.html">Key Findings</a>
     </li>
     <li>
-      <a href="limitations.html">Limitations</a>
+      <a href="limitations.html">Strengths and Limitation</a>
     </li>
     <li>
       <a href="report.html">Project Report</a>
@@ -346,7 +422,7 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Limitations</h1>
+<h1 class="title toc-ignore">Strengths and Limitations</h1>
 
 </div>
 
@@ -355,14 +431,59 @@ $(document).ready(function () {
 div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 </style>
 <div
-id="as-detailed-as-our-analyses-are-they-are-not-without-limitations."
+id="this-is-a-description-on-the-strengths-and-limitations-of-our-project."
 class="section level5 blue">
-<h5>As detailed as our analyses are, they are not without
-limitations.</h5>
+<h5>This is a description on the strengths and limitations of our
+project.</h5>
 </div>
 <p><br></p>
-<div id="temporality" class="section level3">
-<h3>1. Temporality</h3>
+<div id="strenghts" class="section level3">
+<h3>Strenghts</h3>
+<div id="reliable-and-updated-data-sources" class="section level4">
+<h4>1. Reliable and updated data sources</h4>
+<p>The data sources were downloaded from reliable sources, such as
+Environmental Protection Agency, US Census American Community Survey,
+and Behavioral Risk Factor Surveillance System. The latested data from
+2020 is used in the project for the most updated information.</p>
+</div>
+<div id="comprehensive-of-quatitative-data-analysis"
+class="section level4">
+<h4>2. Comprehensive of quatitative data analysis</h4>
+<p>The project provided a comprehensive data analysis including
+explortoey analysis, regression analysis, and spatial analysis to gain a
+wholistic understanding of national, state, and county walkability with
+health outcomes.</p>
+</div>
+<div id="look-at-nation-wide-walkability-data" class="section level4">
+<h4>3. Look at nation wide walkability data</h4>
+<p>The project provided a extensive understand of national walkability
+data, as well as demographics and health outcomes associated with each
+area. The project did not focus on a specific region, rather explored
+nationwide data on state and county level.</p>
+</div>
+<div id="interactive-maps-and-tables" class="section level4">
+<h4>4. Interactive maps and tables</h4>
+<p>The project included plenty of interactive maps and tables to allow
+audience to search for specific information they are interested. The
+interactive maps and tables also allowed for efficient and effective
+learning of walkability in desired geographical region.</p>
+</div>
+<div id="look-at-multiple-health-outcomes" class="section level4">
+<h4>5. Look at multiple health outcomes</h4>
+<p>The project inspected multiple health outcomes that showed associated
+with walkability through the literature research. The five health
+outcomes include high cholesterol, physical health, blood pressure,
+physical inactivity, mental health. The health outcomes includes both
+physical and mental health that are addressed with walkability.</p>
+<p><br> <br></p>
+</div>
+</div>
+<div id="limitaiotns" class="section level3">
+<h3>Limitaiotns</h3>
+<p>As detailed as our analyses are, they are not without
+limitations.</p>
+<div id="temporality" class="section level4">
+<h4>1. Temporality</h4>
 <p>We used the latest National Walkability Index data from 2021 (our
 exposure dataset), and ACS demographics and BRFSS health outcomes
 (outcome) datasets from 2020. Though our outcome data precede our
@@ -391,8 +512,8 @@ report to be released and update our analyses accordingly</li>
 </ul></li>
 </ul>
 </div>
-<div id="missing-data" class="section level3">
-<h3>2. Missing data</h3>
+<div id="missing-data" class="section level4">
+<h4>2. Missing data</h4>
 <p>There was also quite a large percentage of missing data in the
 Walkability Index dataset we used.</p>
 <ul>
@@ -407,6 +528,10 @@ seem right bc of the way health outcomes were pivoted; need to check
 again)</li>
 <li>This means that we lost 47.3% of our walkability entries</li>
 </ul>
+<details>
+<summary>
+Click to show code
+</summary>
 <pre class="r"><code># Amy&#39;s attempt at extracting data points with complete data
 # merge_final = read_csv(&quot;./data/merge_final.csv&quot;)
 # merge_final %&gt;% 
@@ -420,10 +545,24 @@ again)</li>
 #   drop_na() %&gt;% 
 #   View()
 #   distinct(county)</code></pre>
+</details>
+<p><br></p>
+</div>
+<div id="lack-of-city-specific-analyses" class="section level4">
+<h4>3. Lack of city-specific analyses</h4>
+<p>We had initially hoped to look at the spatial clustering of our
+various health outcomes at a New York City census-tract level, and to
+compare the geographic clustering of health outcomes to that of
+walkability scores. However, we found that there was a lack of BRFSS
+health outcomes data for New York City and were unable to conduct this
+additional spatial clustering analyses.</p>
+</div>
 </div>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -456,6 +595,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

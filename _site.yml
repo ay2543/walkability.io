@@ -8,13 +8,6 @@ navbar:
     - text: "Data Sources"
       icon: fa-book
       href: data.html
-    - text: "Visualizations"
-      icon: fa-eye
-      menu:
-        - text: "Walkability Map"
-          href: map.html
-        - text: "Dashboard"
-          href: dashboard.html
     - text: "Data Analysis"
       icon: fa-bar-chart-o
       menu:
@@ -24,12 +17,19 @@ navbar:
           href: explore.html    
         - text: "Statistical Analysis"
           href: regression.html  
+    - text: "Visualizations"
+      icon: fa-eye
+      menu:
+        - text: "Walkability Map"
+          href: map.html
+        - text: "NY State Dashboard"
+          href: dashboard.html
     - text: "Report"
       icon: fa-folder-open
       menu:
         - text: "Key Findings"
           href: results.html    
-        - text: "Limitations"
+        - text: "Strengths and Limitation"
           href: limitations.html 
         - text: "Project Report"
           href: report.html 
