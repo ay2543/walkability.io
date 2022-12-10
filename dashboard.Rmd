@@ -142,8 +142,9 @@ filter(!is.na(state) &
 
 ```
 
-Row {data-height=200}
+Row {.tabset  .tabset-fade}
 -----------------------------------------------------------------------
+### Race
 ```{r}
 walkability_clean %>%
   mutate(percent_race = as.numeric(percent_race)) %>% 
@@ -176,6 +177,8 @@ walkability_clean %>%
 
 ```
 
+
+### Median income
 ```{r}
 walkability_clean %>%
   mutate(median_income = as.numeric(median_income)) %>% 
@@ -217,3 +220,50 @@ walkability_clean %>%
           )
 ```
 
+### % Male
+```{r}
+walkability_clean %>%
+  mutate(sex_male = as.numeric(sex_male)) %>% 
+  filter(!is.na(state) &
+         state == "New York" &
+         !is.na(nat_walk_ind) &
+         !is.na(sex_male)
+         ) %>% 
+  group_by(county) %>% 
+  summarise(walk = mean(nat_walk_ind),
+            sex_male = mean(sex_male)) %>% 
+  mutate(county = fct_reorder(county, sex_male)) %>% 
+  plot_ly(x = ~county, 
+          y = ~sex_male, 
+          # color = ~sex,
+          type = "bar") %>% 
+   layout(#legend = list(x = 0.1, y = 200, orientation = 'h'),
+          yaxis = list(title = '% Male'),
+          xaxis = list(title = 'County'),
+          barmode = 'stack'
+          )
+
+```
+
+### % Adults
+```{r}
+walkability_clean %>%
+  mutate(age_18plus = as.numeric(age_18plus)) %>% 
+  filter(!is.na(state) &
+         state == "New York" &
+         !is.na(nat_walk_ind) &
+         !is.na(age_18plus)
+         ) %>% 
+  group_by(county) %>% 
+  summarise(walk = mean(nat_walk_ind),
+            age_18plus = mean(age_18plus)) %>% 
+  mutate(county = fct_reorder(county, age_18plus)) %>% 
+  plot_ly(x = ~county, 
+          y = ~age_18plus, 
+          type = "bar") %>% 
+   layout(legend = list(x = 0.1, y = 200, orientation = 'h'),
+          yaxis = list(title = '% Adults'),
+          xaxis = list(title = 'County'),
+          barmode = 'stack'
+          )
+```
