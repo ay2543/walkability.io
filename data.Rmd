@@ -60,7 +60,7 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
   * Physical inactivity
   * Mental health
   
-  *Note: Cholesterol and blood pressure status is based on physician diagnosis, physical health, physical inactivity and mental health are based on self-report*
+  *Note: Cholesterol and blood pressure status is based on physician diagnosis, while physical health, physical inactivity and mental health are based on self-report*
 
 <br>
 
@@ -73,7 +73,7 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
   
 #### Timing
 * Walkability dataset is from 2021, Demographic and health outcome datasets are from 2020
-* We recognize that there is a discrepancy in timing across datasets, so we are choosing to interpret with caution and avoid discussing causality
+* We assumed that walkability in 2021 is the same as in 2020, since the last time the walkability index was updated was in 2014
 
 </br>
 

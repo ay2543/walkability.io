@@ -11,7 +11,7 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 </style>
 <div class = "blue">
 
-##### On this page, we will explore the National Walkability Index on the county-level across the United States. Also, we will take a closer look at the walkability in New York City and conduct exploratory spatial data analysis. 
+##### On this page, we explore the National Walkability Index at the county-level across the United States. Also, we will take a closer look at the walkability in New York City and conduct exploratory spatial data analysis. 
 </div>
 <br>
 
@@ -20,9 +20,9 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 
 #### Map Overview
 
-For the National Walkability Index, we wanted to go beyond the [EPA’s current Walkability Map](https://www.arcgis.com/home/webmap/viewer.html?url=https%3A%2F%2Fgeodata.epa.gov%2Farcgis%2Frest%2Fservices%2FOA%2FWalkabilityIndex%2FMapServer&source=sd) and created the following interactive spatial visualization that demonstrates county-level walkability scores and the health outcomes prevalence. We utilized many geographic information systems (GIS) concepts and synthesized skills learned from both the Data Science I (BIOST P8105) and Public Health GIS (EHSC P8371) courses that we’re taking in the creation of this spatial visualization. 
+For the National Walkability Index, we wanted to go beyond the [EPA’s current Walkability Map](https://www.arcgis.com/home/webmap/viewer.html?url=https%3A%2F%2Fgeodata.epa.gov%2Farcgis%2Frest%2Fservices%2FOA%2FWalkabilityIndex%2FMapServer&source=sd) and created the following interactive spatial visualization that demonstrates county-level walkability scores and prevalence of health outcomes. We utilized many geographic information systems (GIS) concepts and synthesized skills learned from both the Data Science I (BIST P8105) and Public Health GIS (EHSC P8371) courses that we’re taking in the creation of this spatial visualization. 
 
-When your mouse hover onto a county, the textbox displays the county name, National Walkability Index, and health outcomes percentage. These health outcomes are:
+Our health outcomes of interest are:
 
 * High Cholesterol: High cholesterol among adults aged >=18 years who have been screened in the past 5 years
 * Physical Inactivity: No leisure-time physical activity among adults aged >=18 years
@@ -109,12 +109,33 @@ choropleth_map
 choropleth_map
 ```
 
+<style>
+div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
+</style>
+<div class = "blue">
+
+##### Key upon hover
+
+* Walkability score
+<br>
+* National Walkability Index (by county) [1,20)
+</br>
+<br>
+* % of the county population reporting high cholesterol
+* % of the county population reporting physical inactivity
+* % of the county population reporting poor mental health
+* % of the county population reporting poor physical health
+* % of the county population reporting high blood pressure
+</br>
+</div>
+<br>
+
 ## Exploratory Spatial Data Analysis for NYC
 
 
-To further understand the National Walkability Index in a smaller spatial unit, we narrowed the exploration to **New York City**, where us five walkaholics reside. 
+To further understand the National Walkability Index in smaller spatial units, we narrowed the exploration to **New York City**, where us five walkaholics reside. 
 
-The first step is to get a general understanding of the walkability index in the City by creating a decriptive choropleth map on the census tract level. We focused on the following counties:
+The first step is to get a general understanding of the walkability index in the City by creating a descriptive choropleth (discrete density) map on the census tract level. We focused on the following counties:
 
 * Bronx County
 * Kings County
@@ -188,11 +209,18 @@ From this choropleth map, we can see that New York City is walkable overall. How
 #### Understanding the terms
 As mentioned, we want to find NYC census tracts that are statistically significant hot spots, cold spots, and spatial outliers. To start, it is crucial to understand the terms.
 
-* Hot spots/high positive clusters, **High-High**: census tracts that are high in walkability are surround by census tracts with high walkability index
-* Cold spots/low positive clusters, **Low-Low**: census tracts that are low in walkability are surround by census tracts with low walkability index
+* Hot spots/high positive clusters or Cold spots/low positive clusters
+  * **High-High**: census tracts with high walkability that are surrounded by census tracts with a high walkability index
+  * **Low-Low**: census tracts with low walkability that are surrounded by census tracts with a low walkability index
 * Spatial outliers:
-  * **High-Low**: census tracts that are high in walkability are surround by census tracts with low walkability index
-  * **Low-High**: census tracts that are low in walkability are surround by census tracts with high walkability index
+  * **High-Low**: census tracts with high walkability that are surrounded by census tracts with a low walkability index
+  * **Low-High**: census tracts with low walkability are surrounded by census tracts with high walkability index
+
+                                          High-high    Low-low               High-low           Low-high
+-----------------------------------    ------------   --------       ----------------    --------------- 
+Census tract walkability                       High        Low                   High                Low
+Neighboring census tract walkability           High        Low                    Low               High
+Category                                   Hot spot  Cold spot 1      Spatial outlier    Spatial outlier      
 
 #### Local Moran's I
 
