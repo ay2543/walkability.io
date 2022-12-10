@@ -29,7 +29,7 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 * I really want chicken mcnuggets from (W)cDonald’s 
 
 #### Guesses of total number of commits
-* Winston Luhur: 
+* Winston Luhur: 180
 * Wenyan Ma: 222
 * Amy Yeung: 230
 * Sophie Zhang: 214

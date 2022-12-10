@@ -1,6 +1,9 @@
 ---
-title: "Limitations"
-output: html_document
+title: "Strengths and Limitations"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
 ---
 
 <style>
@@ -8,13 +11,35 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 </style>
 <div class = "blue">
 
-##### As detailed as our analyses are, they are not without limitations. 
+##### This is a description on the strengths and limitations of our project. 
 
 </div>
 
 <br>
 
-### 1. Temporality
+### Strenghts
+
+#### 1. Reliable and updated data sources
+The data sources were downloaded from reliable sources, such as Environmental Protection Agency, US Census American Community Survey, and Behavioral Risk Factor Surveillance System. The latested data from 2020 is used in the project for the most updated information.
+
+#### 2. Comprehensive of quatitative data analysis
+The project provided a comprehensive data analysis including explortoey analysis, regression analysis, and spatial analysis to gain a wholistic understanding of national, state, and county walkability with health outcomes. 
+
+#### 3. Look at nation wide walkability data
+The project provided a extensive understand of national walkability data, as well as demographics and health outcomes associated with each area. The project did not focus on a specific region, rather explored nationwide data on state and county level. 
+
+#### 4. Interactive maps and tables
+The project included plenty of interactive maps and tables to allow audience to search for specific information they are interested. The interactive maps and tables also allowed for efficient and effective learning of walkability in desired geographical region. 
+
+#### 5. Look at multiple health outcomes
+The project inspected multiple health outcomes that showed associated with walkability through the literature research. The five health outcomes include high cholesterol, physical health, blood pressure, physical inactivity, mental health. The health outcomes includes both physical and mental health that are addressed with walkability.
+
+<br>
+
+### Limitaiotns
+As detailed as our analyses are, they are not without limitations.
+
+#### 1. Temporality
 
 We used the latest National Walkability Index data from 2021 (our exposure dataset), and ACS demographics and BRFSS health outcomes (outcome) datasets from 2020. Though our outcome data precede our exposure data -- meaning we are not able to infer temporality and hence causality -- we believe that this is acceptable given the specific circumstances surrounding our data:
 
@@ -24,7 +49,7 @@ We used the latest National Walkability Index data from 2021 (our exposure datas
 * Additionally, some may argue that since employment is a factor in obtaining the walkability index, the pandemic may have restructured the employment, so the walkability index cannot be considered the same
   * To address this, we can wait for the most recent 2022 BRFSS survey report to be released and update our analyses accordingly
   
-### 2. Missing data
+#### 2. Missing data
 
 There was also quite a large percentage of missing data in the Walkability Index dataset we used.
 
@@ -34,6 +59,9 @@ There was also quite a large percentage of missing data in the Walkability Index
 * In the final merged dataframe, there are 116,311 distinct FIPS codes containing at least 1 health outcome variable of interest (* is there a way to see how many entries with all outcomes of interest? this doesn't seem right bc of the way health outcomes were pivoted; need to check again)
 * This means that we lost 47.3% of our walkability entries
 
+<details>
+  <summary>Click to show code</summary>
+  
 ```{r}
 # Amy's attempt at extracting data points with complete data
 # merge_final = read_csv("./data/merge_final.csv")
@@ -50,3 +78,9 @@ There was also quite a large percentage of missing data in the Walkability Index
 #   distinct(county)
 ```
 
+</details>
+<br>
+
+#### 3. Lack of city-specific analyses
+
+We had initially hoped to look at the spatial clustering of our various health outcomes at a New York City census-tract level, and to compare the geographic clustering of health outcomes to that of walkability scores. However, we found that there was a lack of BRFSS health outcomes data for New York City and were unable to conduct this additional spatial clustering analyses.
