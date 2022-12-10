@@ -1,8 +1,10 @@
 ---
-title: "Testing"
+title: "Data Cleaning"
 output: github_document
 ---
-
+<details>
+  <summary>Click to show all code chunks</summary>
+  
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
@@ -134,9 +136,9 @@ library(maptools)
 library(spatstat)
 library(sf)
 
-map_try = st_read("./data/cb_2020_us_tract_500k/cb_2020_us_tract_500k.shp")
+#map_try = st_read("./data/cb_2020_us_tract_500k/cb_2020_us_tract_500k.shp")
 
-plot(map_try["geometry"])
+#plot(map_try["geometry"])
 ```
 
 ## Plot more and successed
@@ -382,6 +384,6 @@ names(bi_lisa)
 bi_lisa$labels
 ```
 
-
+</details>
 
 

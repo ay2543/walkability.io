@@ -5,36 +5,34 @@ navbar:
     - text: "Home"
       icon: fa-home
       href: index.html
-    - text: "About"
-      icon: fa-file
-      menu:
-        - text: "Data Sources"
-          href: data.html
-        - text: "Project Description"
-          href: desc.html
+    - text: "Data Sources"
+      icon: fa-home
+      href: data.html
     - text: "Visualizations"
       icon: fa-file
       menu:
         - text: "Walkability Map"
           href: map.html
+        - text: "Dashboard"
+          href: dashboard.html
+    - text: "Data Analysis"
+      icon: fa-file
+      menu:
+        - text: "Data Cleaning"
+          href: Testing.html  
         - text: "Exploratory Analysis"
           href: explore.html    
         - text: "Statistical Analysis"
-          href: regression.html    
-        - text: "Bivariate plots"
-          href: dashboard.html
-    - text: "New Walkability Index"
-      icon: fa-magnifying-glass    
-      href: newscore.html
-    - text: "Findings"
-      icon: fa-pen
-      href: results.html
+          href: regression.html  
     - text: "Report"
-      icon: fa-map
-      href: report.html
-    - text: "Limitations"
-      icon: fa-thought-bubble
-      href: limitations.html
+      icon: fa-file
+      menu:
+        - text: "Findings"
+          href: results.html    
+        - text: "Limitations"
+          href: limitations.html 
+        - text: "Report"
+          href: report.html 
     - text: "Who We Are"
       icon: fa-people-group
       href: team.html
