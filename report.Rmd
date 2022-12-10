@@ -2,10 +2,10 @@
 title: "Project Report"
 output: 
   html_document:
+    code_folding: hide
     toc: true
     toc_float: true
 ---
-
 
 ## Motivation
 Provide an overview of the project goals and motivation.
