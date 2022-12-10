@@ -16,32 +16,99 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 
 
 ```{r setup, include=FALSE}
+#install.packages("betareg")
+
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(plotly)
 library(modelr)
+library(betareg)
+library(mgcv)
+
+dataset = read_csv("./data/merge_final.csv")
 ```
 
-```{r poisson-test-code}
-# ADJUST FOR POTENTIAL CONFOUNDERS TOO???
+```{r pivot-dataset}
+regress_df = dataset %>% 
+  pivot_wider(names_from = "race",
+               values_from = "percent_race") %>% 
+  pivot_wider(names_from = "measure_id",
+              values_from = "data_value") %>% 
+  janitor::clean_names() %>% 
+  select(tractce, nat_walk_ind, csa_name, lat, long, sex_male, sex_female, age_18plus, median_income, white, black, aian, asian, x2_plus, hispanic, highchol, mhlth, lpa, phlth, bphigh)
+```
 
-# poisson_gen_model = glm(formula = health outcomes ~ walkability, family = poisson)
 
-# Model 1: High cholesterol vs walkability score
-# poisson_chol = glm(formula = health outcomes ~ walkability, data = [], family = poisson)
+```{r beta-test-code}
+test = regress_df %>% 
+  filter(grepl('UT', csa_name)) %>% 
+  mutate(
+    sex_male = as.numeric(sex_male)/100,
+    age_18plus = as.numeric(age_18plus)/100,
+    white = as.numeric(white)/100,
+    black = as.numeric(black)/100,
+    aian = as.numeric(aian)/100,
+    asian = as.numeric(asian)/100, 
+    x2_plus = as.numeric(x2_plus)/100, 
+    hispanic = as.numeric(hispanic)/100, 
+    highchol = highchol/100, 
+    mhlth = mhlth/100, 
+    lpa = lpa/100, 
+    phlth = phlth/100, 
+    bphigh = bphigh/100,
+    median_income = as.numeric(median_income)
+    ) %>%
+  group_by(tractce) %>% 
+  summarize(
+    nat_walk_tract = mean(nat_walk_ind),
+    sex_male = mean(sex_male),
+    age_18plus = mean(age_18plus),
+    white = mean(white),
+    black = mean(black),
+    aian = mean(aian),
+    asian = mean(asian), 
+    x2_plus = mean(x2_plus), 
+    hispanic = mean(hispanic), 
+    highchol = mean(highchol), 
+    mhlth = mean(mhlth), 
+    lpa = mean(lpa), 
+    phlth = mean(phlth), 
+    bphigh = mean(bphigh),
+    median_income = mean(median_income),
+    lat = lat,
+    long = long
+    ) %>% 
+  distinct(.keep_all = TRUE)
 
-# Model 2: Physical inactivity vs walkability score
-# poisson_inactivity = glm(formula = health outcomes ~ walkability, data = [], family = poisson)
+mod_ut <- gam(highchol ~ nat_walk_tract + sex_male + age_18plus + black + median_income + s(lat, long, bs="gp", m=2), 
+           family = betar(link='logit'), 
+           data = test)
 
-# Model 3: Mental health vs walkability score
-# poisson_mh = glm(formula = health outcomes ~ walkability, data = [], family = poisson)
+summary(mod_ut)
 
-# Model 4: Physical health vs walkability score
-# poisson_ph = glm(formula = health outcomes ~ walkability, data = [], family = poisson)
+mod_utbeta <- betareg(highchol ~ nat_walk_tract + sex_male + age_18plus + black + median_income, data = test)
 
-# Model 5: High blood pressure vs walkability scsore
-# poisson_hbp = glm(formula = health outcomes ~ walkability, data = [], family = poisson)
+summary(mod_utbeta)
 
+residual1_plot =
+    test %>%
+    add_predictions(mod_utbeta) %>%
+    add_residuals(mod_utbeta) %>%
+    ggplot(aes(x = nat_walk_ind, y = resid)) +
+    geom_point(alpha = 0.3, size = 0.3) +
+    geom_smooth(se = FALSE, method = "lm")
+
+residual1_plot
+
+residual_plot =
+    test %>%
+    add_predictions(mod_ut) %>%
+    add_residuals(mod_ut) %>%
+    ggplot(aes(x = nat_walk_ind, y = resid)) +
+    geom_point(alpha = 0.3, size = 0.3) +
+    geom_smooth(se = FALSE, method = "lm")
+
+residual_plot
 ```
 
 ```{r reference-code}
