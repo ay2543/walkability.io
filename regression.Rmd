@@ -16,8 +16,6 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 
 
 ```{r setup, include=FALSE}
-#install.packages("betareg")
-
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(plotly)
@@ -25,6 +23,8 @@ library(modelr)
 library(betareg)
 library(mgcv)
 library(purrr)
+library(broom)
+library(mfx)
 
 dataset = read_csv("./data/merge_final.csv")
 ```
@@ -79,7 +79,8 @@ regress_df = dataset %>%
 
 ```{r beta-test-code}
 test = regress_df %>% 
-  select(!c("lat", "long")) %>% 
+  dplyr::select(!c("lat", "long")) %>% 
+  mutate(walkable = ifelse(nat_walk_tract<10.5, "Less Walkable", "More Walkable")) %>% 
   unique()
 
 # mod <- gam(highchol ~ nat_walk_tract + sex_male + age_18plus + black + median_income + s(lat, long, bs="gp", m=2),
@@ -112,24 +113,45 @@ test = regress_df %>%
 # 
 # residual_plot
 
-chol = betareg(highchol ~ nat_walk_tract + sex_male + age_18plus + black, data = test) %>% broom::tidy()
-mental = betareg(mhlth ~ nat_walk_tract + sex_male + age_18plus + black, data = test) %>% broom::tidy()
-lpa = betareg(lpa ~ nat_walk_tract + sex_male + age_18plus + black, data = test) %>% broom::tidy()
-physical = betareg(phlth ~ nat_walk_tract + sex_male + age_18plus + black, data = test) %>% broom::tidy()
-bloodpres = betareg(bphigh ~ nat_walk_tract + sex_male + age_18plus + black, data = test) %>% broom::tidy()
+# Beta regression model
+chol = betareg(highchol ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
+mental = betareg(mhlth ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
+lpa = betareg(lpa ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
+physical = betareg(phlth ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
+bloodpres = betareg(bphigh ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
 
+# Margins
+chol_margin = betamfx(highchol ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
+mental_margin = betamfx(mhlth ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
+lpa_margin = betamfx(lpa ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
+physical_margin = betamfx(phlth ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
+bloodpres_margin = betamfx(bphigh ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
+
+# Collate estimates into one data frame
 modeldata = 
   chol %>% 
-  filter(grepl('nat', term)) %>% 
+  filter(grepl('walk', term)) %>% 
   rbind(mental[2,]) %>% 
   rbind(lpa[2,]) %>% 
   rbind(physical[2,]) %>% 
   rbind(bloodpres[2,]) %>% 
   mutate(
-    outcome = c("High Cholesterol", "Mental Health", "Physical Activity", "Physical Health", "High Blood Pressure")
+    outcome = c("High Cholesterol", "Mental Health", "Physical Activity", "Physical Health", "High Blood Pressure"),
+    OR = exp(estimate),
+    lowlim = exp(conf.low),
+    highlim = exp(conf.high)
   )
 
-
+marginsdata = 
+  chol_margin %>% 
+  filter(grepl('walk', term)) %>% 
+  rbind(mental_margin[1,]) %>% 
+  rbind(lpa_margin[1,]) %>% 
+  rbind(physical_margin[1,]) %>% 
+  rbind(bloodpres_margin[1,]) %>% 
+  mutate(
+    outcome = c("High Cholesterol", "Mental Health", "Physical Activity", "Physical Health", "High Blood Pressure")
+  )
 ```
 
 ```{r reference-code}
