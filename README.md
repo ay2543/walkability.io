@@ -1,6 +1,6 @@
 # Walk the walk: The effect of neighborhood walkability on health
 
-##### **Due to the size of the original data files, please download the datasets according to the links described in our `data.Rmd` file and save the .csv files locally using their original names. Save all .csv files in an RProject folder called "data" in order to run the code.**
+#### **Due to the size of the original data files, please download the datasets according to the links described in our `data.Rmd` file and save the .csv files locally using their original names. Save all .csv files in an RProject folder called "data" in order to run the code.**
 
 
 ### Background
@@ -20,5 +20,5 @@ As five *passionate walkaholics*🚶🏻‍♂️and current public health gradu
 
 
 
-##### **Check out the website we've created for this project [here!](walkability.github.io)**
+#### **Check out the website we've created for this project [here!](walkability.github.io)**
 
