@@ -14,7 +14,7 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 ##### On this page, we explore the National Walkability Index at the county-level across the United States. Also, we will take a closer look at the walkability in New York City and conduct exploratory spatial data analysis. 
 </div>
 <br>
-
+</br>
 
 ## Interactive Map with National Walkability Index
 
@@ -30,6 +30,15 @@ Our health outcomes of interest are:
 * Physical Health: Physical health not good for >=14 days among adults aged >=18 years
 * High Blood Pressure: High blood pressure among adults aged >=18 years
 
+According to the the [EPA](https://www.epa.gov/sites/default/files/2021-06/documents/national_walkability_index_methodology_and_user_guide_june2021.pdf), National Walkability Index scores on a scale of 1 to 20 are categorized as follows: 
+
+
+National Walkability Index            Level
+---------------------------         -----------------------------------
+1 - 5.75                              Least walkable
+5.76 - 10.5                           Below average walkable
+10.51 - 15.25                         Above average walkable 
+15.26 - 20                            Most walkable 
 
 <details>
   <summary>Click to show code</summary>
@@ -118,17 +127,18 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 
 * Walkability score
 <br>
-* National Walkability Index (by county) [1,20)
 </br>
-<br>
+* National Walkability Index (by county) [1,20)
 * % of the county population reporting high cholesterol
 * % of the county population reporting physical inactivity
 * % of the county population reporting poor mental health
 * % of the county population reporting poor physical health
 * % of the county population reporting high blood pressure
+Note: the county FIPS code is displayed on the right 
 </br>
 </div>
 <br>
+</br>
 
 ## Exploratory Spatial Data Analysis for NYC
 
@@ -144,6 +154,7 @@ The first step is to get a general understanding of the walkability index in the
 * Richmond County
 
 <br>
+</br>
 
 ### *Descriptive Choropleth Map for Walkability*
 
@@ -201,6 +212,7 @@ tm_basemap("CartoDB.Positron") +
 #get different color palette: tmaptools::palette_explorer()
 ```
 
+
 From this choropleth map, we can see that New York City is walkable overall. However, we want to further identify census tracts that are statistically significant hot spots, cold spots, and spatial outliers using clustering analysis. 
 
 
@@ -222,13 +234,10 @@ As mentioned, we want to find NYC census tracts that are statistically significa
 To find these clusters, we used local Moran's I. The local spatial statistic Moran's I is calculated for each zone based on the spatial weights object used. The values returned include a Z-value, and may be used as a diagnostic tool. The statistic is: 
 
 <center>
-<img src="images/moranI.jpg" style="width:90%">
+<img src="images/moranI.jpg" style="width:70%">
 <br>
 </center>
 
-$$
-I_i = \frac{(x_i-\bar{x})}{{\sum_{k=1}^{n}(x_k-\bar{x})^2}/(n-1)}{\sum_{j=1}^{n}w_{ij}(x_j-\bar{x})}
-$$
 
 Essentially, the local Moran's I tells us the local indicator of spatial association or LISA statistic, which is used as a cluster indicator to map different walkability clusters in the NYC.
 
@@ -358,4 +367,10 @@ You can get more information about local Moran's I [here](http://ceadserv1.nku.e
 
 We referenced [this page](https://rpubs.com/corey_sparks/105700) when defining Queen's first order. 
 
-
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
