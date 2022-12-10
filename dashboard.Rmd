@@ -1,8 +1,9 @@
----
+ ---
 title: "Dashboard"
 output: 
   flexdashboard::flex_dashboard:
     vertical_layout: fill
+    orientation: columns
     navbar:
       - { title: "Home", href: "index.html", align: right }
 runtime: shiny
@@ -14,7 +15,9 @@ library(flexdashboard)
 library(tidyverse)
 library(plotly)
 library(shiny)
+```
 
+```{r data-setup, include=FALSE}
 # Read data
 
 walkability = read_csv("./data/merge_final.csv") 
@@ -48,7 +51,8 @@ selectInput(
 ) 
 ```
 
-
+Column {.sidebar}
+-----------------------------------------------------------------------
 
 Column {data-width=1000}
 -----------------------------------------------------------------------
