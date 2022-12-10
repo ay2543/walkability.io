@@ -28,6 +28,9 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 * What the walk is wrong with urban planning?
 * I really want chicken mcnuggets from (W)cDonald’s 
 
+<br>
+
+
 #### Guesses of total number of commits
 * Winston Luhur: 180
 * Wenyan Ma: 222
