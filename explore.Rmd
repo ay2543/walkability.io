@@ -35,6 +35,7 @@ library(DT)
 library(dplyr)
 library(ggplot2)
 library(ggpmisc)
+library(ggpubr)
 
 #Explore using final cleaned data
 explore_df = read_csv("./data/merge_final.csv")
@@ -459,7 +460,8 @@ gender_walk_plot = county_demographics_merge %>% ggplot(mapping = aes(x = sex_fe
   geom_smooth(                  
     formula = y ~ x,              
     method = "lm",        
-    size = 1, color = "beige", alpha = 0.5) + stat_poly_eq()
+    size = 1, color = "beige", alpha = 0.5) + 
+  stat_cor(p.accuracy = 0.001, r.accuracy = 0.01)
 
 ```
 
@@ -486,7 +488,8 @@ age_walk_plot = county_demographics_merge %>% ggplot(mapping = aes(x = age_18plu
   geom_smooth(                
     formula = y ~ x,
     method = "lm",        
-    size = 1, color = "beige", alpha = 0.5) + stat_poly_eq()
+    size = 1, color = "beige", alpha = 0.5) + 
+  stat_cor(p.accuracy = 0.001, r.accuracy = 0.01)
 
 ```
 
@@ -513,7 +516,8 @@ income_walk_plot = county_demographics_merge %>% ggplot(mapping = aes(x = median
   geom_smooth(                  
     formula = y ~ x,              
     method = "lm",        
-    size = 1, color = "beige", alpha = 0.5) + stat_poly_eq()
+    size = 1, color = "beige", alpha = 0.5) + 
+  stat_cor(p.accuracy = 0.001, r.accuracy = 0.01)
 
 ```
 
@@ -540,7 +544,8 @@ race_walk_plot = county_demographics_merge %>% ggplot(mapping = aes(x = white, y
   geom_smooth(                      
     formula = y ~ x,          
     method = "lm",        
-    size = 1, color = "beige", alpha = 0.5) + stat_poly_eq()
+    size = 1, color = "beige", alpha = 0.5) + 
+  stat_cor(p.accuracy = 0.001, r.accuracy = 0.01)
 
 ```
 
@@ -562,7 +567,8 @@ race_walk_plot
 health_walk_plot = health_df_county %>% ggplot(mapping = aes(x = data_value, y = nat_walk_ind, color = measure)) + geom_point(shape = "diamond", size = 2, alpha = 0.5, show.legend = FALSE) + labs(         
     x = "Prevalence of Health Outcome (%)",
     y = "Walkability Score",
-    title = "Figure 6. Prevalence of Health Outcome vs. Walkability Score") + scale_color_brewer(palette = "Spectral")
+    title = "Figure 6. Prevalence of Health Outcome vs. Walkability Score") + scale_color_brewer(palette = "Spectral") + 
+  stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, show.legend = FALSE, label.x.npc = 0.8)
 
 ```
 

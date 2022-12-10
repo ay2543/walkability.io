@@ -30,7 +30,7 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 
 #### Guesses of total number of commits
 * Winston Luhur: 
-* Wenyan Ma: 
+* Wenyan Ma: 222
 * Amy Yeung: 230
 * Sophie Zhang: 214
 * Shirley Liang: 200
