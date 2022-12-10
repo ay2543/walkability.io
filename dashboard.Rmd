@@ -6,7 +6,6 @@ output:
     orientation: rows
     navbar:
       - { title: "Home", href: "index.html", align: right }
-runtime: shiny
 
 ---
 

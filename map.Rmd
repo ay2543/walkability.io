@@ -14,7 +14,7 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 ##### On this page, we explore the National Walkability Index at the county-level across the United States. Also, we will take a closer look at the walkability in New York City and conduct exploratory spatial data analysis. 
 </div>
 <br>
-</br>
+
 
 ## Interactive Map with National Walkability Index
 
@@ -138,7 +138,6 @@ Note: the county FIPS code is displayed on the right
 </br>
 </div>
 <br>
-</br>
 
 ## Exploratory Spatial Data Analysis for NYC
 
@@ -153,10 +152,8 @@ The first step is to get a general understanding of the walkability index in the
 * Queens County
 * Richmond County
 
-<br>
-</br>
 
-### *Descriptive Choropleth Map for Walkability*
+### Descriptive Choropleth Map for Walkability
 
 <details>
   <summary>Click to show code</summary>
@@ -216,7 +213,7 @@ tm_basemap("CartoDB.Positron") +
 From this choropleth map, we can see that New York City is walkable overall. However, we want to further identify census tracts that are statistically significant hot spots, cold spots, and spatial outliers using clustering analysis. 
 
 
-### *Clustering Analysis for Walkability*
+### Clustering Analysis for Walkability
 
 #### Understanding the terms
 As mentioned, we want to find NYC census tracts that are statistically significant hot spots, cold spots, and spatial outliers. To start, it is crucial to understand the terms.
@@ -234,7 +231,7 @@ As mentioned, we want to find NYC census tracts that are statistically significa
 To find these clusters, we used local Moran's I. The local spatial statistic Moran's I is calculated for each zone based on the spatial weights object used. The values returned include a Z-value, and may be used as a diagnostic tool. The statistic is: 
 
 <center>
-<img src="images/moranI.jpg" style="width:70%">
+<img src="images/moranI.jpg" style="width:60%">
 <br>
 </center>
 
@@ -274,49 +271,58 @@ library(tmap)
 library(tidyverse)
 library(leaflet)
 
-# Read-in shapefile
+# Read-in files
 cluster_map <- st_read("./data/cluster_analysis/map_with_everything.shp", quiet = TRUE)
 
 # Clean up and filter
 cluster_map_clean = cluster_map %>% 
   janitor::clean_names() %>% 
   mutate(nat_walk_i = as.numeric(nat_walk_i),
-        nat_walk_i = round(nat_walk_i, digits = 1)) %>% 
+         nat_walk_i = round(nat_walk_i, digits = 1)) %>% 
   filter(stusps == "NY",
          namelsadco %in% c("Bronx County", "Kings County", "New York County", "Queens County", "Richmond County")) %>% 
-  rename(median_income = s1903_c03) %>% 
+    rename(sex_male = dp05_0002p,
+           sex_female = dp05_0003p,
+           age_18plus = dp05_0021p,
+           race_white = dp05_0037p,
+           race_black = dp05_0038p,
+           race_aian = dp05_0039p,
+           race_asian = dp05_0044p,
+           race_2_plus = dp05_0058p,
+           race_hispanic = dp05_0071p,
+           median_income = s1903_c03) %>% 
   mutate(median_income = as.numeric(median_income))
 
-cluster_map_NYC = cluster_map_clean[!is.na(cluster_map_clean$nat_walk_i),]
+cluster_map_walkability = cluster_map_clean[!is.na(cluster_map_clean$nat_walk_i),]
   
 # Queen 1st order weights matrix 
-queen_w <- queen_weights(cluster_map_NYC, order = 1)
+queen_w <- queen_weights(cluster_map_walkability, order = 1)
 
 # Local Moran's I
-lisa <- local_moran(queen_w, cluster_map_NYC["nat_walk_i"],
+lisa <- local_moran(queen_w, cluster_map_walkability["nat_walk_i"],
                     permutations = 9999)
 
 # Get cluster column and join it to shp
-cluster_map_NYC$cluster <- as.factor(lisa$GetClusterIndicators())
-str(cluster_map_NYC)
+cluster_map_walkability$cluster <- as.factor(lisa$GetClusterIndicators())
+str(cluster_map_walkability)
 
 # Add labels to clusters
-levels(cluster_map_NYC$cluster) <- lisa$GetLabels()
+levels(cluster_map_walkability$cluster) <- lisa$GetLabels()
 
 # We want the GeoDa colors
 lisa_colors <- lisa_colors(lisa)
 
 # Recode clusters using tidyverse (dyplr)
-cluster_map_NYC %>% 
+cluster_map_walkability %>% 
   mutate(cluster = recode_factor(.x = cluster,
                                   `Undefined` = "Not significant",
-                                  `Isolated` = "Not significant")) -> cluster_map_NYC
+                                  `Isolated` = "Not significant")) -> cluster_map_walkability
 
 # Map the clusters with a basemap
 tmap_mode("view")
 
 tm_basemap("CartoDB.Positron") +
-  tm_shape(cluster_map_NYC) +
+  tm_shape(cluster_map_walkability) +
   tm_polygons(col = "cluster", 
               palette =  c("#eeeeee", 
                       "#FF0000",
@@ -336,7 +342,7 @@ tm_basemap("CartoDB.Positron") +
 tmap_mode("view")
 
 tm_basemap("CartoDB.Positron") +
-  tm_shape(cluster_map_NYC) +
+  tm_shape(cluster_map_walkability) +
   tm_polygons(col = "cluster", 
               palette =  c("#eeeeee", 
                       "#FF0000",
@@ -367,10 +373,4 @@ You can get more information about local Moran's I [here](http://ceadserv1.nku.e
 
 We referenced [this page](https://rpubs.com/corey_sparks/105700) when defining Queen's first order. 
 
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
 </br>
