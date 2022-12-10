@@ -6,7 +6,6 @@ output:
     orientation: rows
     navbar:
       - { title: "Home", href: "index.html", align: right }
-
 ---
 
 ```{r setup, include=FALSE}
@@ -41,7 +40,7 @@ walkability_tidy = walkability_clean %>%
 
 
 
-Row {data-height=500}
+Row {data-height=850}
 -----------------------------------------------------------------------
 
 ### Health outcome
