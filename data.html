@@ -13,7 +13,7 @@
 
 <title>Data Sources</title>
 
-<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
@@ -180,8 +180,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "\e259";
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -189,9 +189,16 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "\e258";
-  font-family: 'Glyphicons Halflings';
+  content: "&#xe258;";
   border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -251,22 +258,12 @@ $(document).ready(function () {
     Home
   </a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    <span class="fa fa-file"></span>
+<li>
+  <a href="data.html">
+    <span class="fa fa-home"></span>
      
-    About
-     
-    <span class="caret"></span>
+    Data Sources
   </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="data.html">Data Sources</a>
-    </li>
-    <li>
-      <a href="desc.html">Project Description</a>
-    </li>
-  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -281,43 +278,49 @@ $(document).ready(function () {
       <a href="map.html">Walkability Map</a>
     </li>
     <li>
+      <a href="dashboard.html">Dashboard</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-file"></span>
+     
+    Data Analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Testing.html">Data Cleaning</a>
+    </li>
+    <li>
       <a href="explore.html">Exploratory Analysis</a>
     </li>
     <li>
       <a href="regression.html">Statistical Analysis</a>
     </li>
-    <li>
-      <a href="dashboard.html">Bivariate plots</a>
-    </li>
   </ul>
 </li>
-<li>
-  <a href="newscore.html">
-    <span class="fa fa-magnifying-glass"></span>
-     
-    New Walkability Index
-  </a>
-</li>
-<li>
-  <a href="results.html">
-    <span class="fa fa-pen"></span>
-     
-    Findings
-  </a>
-</li>
-<li>
-  <a href="report.html">
-    <span class="fa fa-map"></span>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-file"></span>
      
     Report
-  </a>
-</li>
-<li>
-  <a href="limitations.html">
-    <span class="fa fa-thought-bubble"></span>
      
-    Limitations
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="results.html">Findings</a>
+    </li>
+    <li>
+      <a href="limitations.html">Limitations</a>
+    </li>
+    <li>
+      <a href="report.html">Report</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="team.html">
@@ -470,8 +473,8 @@ world.</li>
 <li>Mental health</li>
 </ul>
 <em>Note: Cholesterol and blood pressure status is based on physician
-diagnosis, physical health, physical inactivity and mental health are
-based on self-report</em></li>
+diagnosis, while physical health, physical inactivity and mental health
+are based on self-report</em></li>
 </ul>
 <p><br></p>
 </div>
@@ -497,9 +500,8 @@ for consistency with geographic data for other variables.</li>
 <ul>
 <li>Walkability dataset is from 2021, Demographic and health outcome
 datasets are from 2020</li>
-<li>We recognize that there is a discrepancy in timing across datasets,
-so we are choosing to interpret with caution and avoid discussing
-causality</li>
+<li>We assumed that walkability in 2021 is the same as in 2020, since
+the last time the walkability index was updated was in 2014</li>
 </ul>
 <p></br></p>
 </div>
