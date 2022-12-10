@@ -2,8 +2,20 @@
 title: "Data Cleaning"
 output: github_document
 ---
+
+### Walkability
+
+* Data: [Environmental Protection Agency's information on Walkability Index, 2021](http://edg.epa.gov/metadata/catalog/search/resource/details.page?uuid=%7B251AFDD9-23A7-4068-9B27-A3048A7E6012%7D)
+* Cleaning steps:
+  + Added leading zeros for all Federal Information Processing Standard (FIPS) codes (numbers which uniquely identify geographic areas)
+  + Combined state, county and tract FIPS into an 11-digit code
+  + Selected relevant variables
+* Variables of interest:
+  + FIPS code
+  + National Walkability Index 
+
 <details>
-  <summary>Click to show all code chunks</summary>
+  <summary>Click to show code</summary>
   
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -12,8 +24,10 @@ library(plotly)
 
 ```
 
-## Walkability Data
+
 ```{r}
+#Added leading zeros for all Federal Information Processing Standard (FIPS) codes
+#Combined state, county and tract FIPS into an 11-digit code 
 walkability_raw = read_csv("./data/EPA_SmartLocationDatabase_V3_Jan_2021_Final.csv")
 
 walkability_new = walkability_raw %>% 
@@ -23,12 +37,78 @@ walkability_new = walkability_raw %>%
          tractce = str_pad(tractce, width = 6, pad = "0"),
          fips = str_c(statefp, countyfp, tractce, blkgrpce, sep = "")) %>% 
   select(fips, everything(), -objectid)
-  
+
+#Selected relevant variables
 walkability_clean = walkability_new %>% 
   select(fips, statefp, countyfp, tractce, blkgrpce, nat_walk_ind, csa_name) %>% 
   mutate(location_name = str_c(statefp, countyfp, tractce, sep = ""))
   
 ```
+</details>
+
+### Demographics
+* Data: [US Census American Community Survey, 2020](https://data.census.gov/table?tid=ACSDP1Y2021.DP05)
+* Cleaning steps:
+  + removed second row with detailed column names
+  + removed columns for annotations and margins of error
+  + created a census tract column derived from the geo_id column (removed the "1400000US" at the beginning of each entry) to match with other data sets
+* Variables of interest:
+  + Age
+  + Sex
+  + Race/ethnicity
+  + Median household income
+
+<details>
+  <summary>Click to show code</summary>
+  
+## Demographic Data - ACS 2020
+### Age, Gender, and Race
+```{r}
+demo_raw = read_csv("./data/ACSDP5Y2020.DP05-Data.csv")
+
+#removed second row with detailed column names
+#removed columns for annotations and margins of error
+#created a census tract column derived from the geo_id column (removed the "1400000US" at the beginning of each entry) to match with other data sets
+demo_clean = demo_raw %>% 
+  slice(-1) %>% 
+  janitor::clean_names() %>%
+  select(-ends_with(c("ea", "m", "ma"))) %>% 
+  mutate(geo_clean = geo_id, 
+         geo_clean = str_replace(geo_clean, "^1400000US", "")) %>% 
+  select(geo_clean, dp05_0002pe, dp05_0003pe, dp05_0021pe, dp05_0037pe, dp05_0038pe, dp05_0039pe, dp05_0044pe, dp05_0058pe, dp05_0071pe)
+
+```
+
+### Median household income 
+```{r}
+income_raw = read_csv("./data/ACSST5Y2020.S1903-Data.csv")
+
+income_clean = income_raw %>% 
+  janitor::clean_names() %>%
+  select(geo_id, name, s1903_c03_001e) %>% 
+  slice(-1) %>% 
+  mutate(geo_clean = geo_id, 
+         geo_clean = str_replace(geo_clean, "^1400000US", "")) %>% 
+  select(geo_clean, everything())
+
+```
+</details>
+
+
+### Health outcomes
+* Data: [Behavioral Risk Factor Surveillance System (BRFSS), 2020](https://chronicdata.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh/data)
+* Cleaning steps:
+  + Removed footnote variables
+  + Filtered for relevant health outcomes
+* Variables of interest:
+  + High cholesterol
+  + Physical health
+  + Blood pressure
+  + Physical inactivity
+  + Mental health
+  
+<details>
+  <summary>Click to show code</summary>
 
 ## Health Outcome Data - BRFSS
 
@@ -46,44 +126,23 @@ health_new = health_df %>%
   
 ```
 
-## Demographic Data - ACS 2020
-### Age and Race
-```{r}
-demo_raw = read_csv("./data/ACSDP5Y2020.DP05-Data.csv")
-
-demo_clean = demo_raw %>% 
-  slice(-1) %>% 
-  janitor::clean_names() %>%
-  select(-ends_with(c("ea", "m", "ma"))) %>% 
-  mutate(geo_clean = geo_id, 
-         geo_clean = str_replace(geo_clean, "^1400000US", "")) %>% 
-  select(geo_clean, dp05_0002pe, dp05_0003pe, dp05_0021pe, dp05_0037pe, dp05_0038pe, dp05_0039pe, dp05_0044pe, dp05_0058pe, dp05_0071pe)
-```
-
-### Median household income 
-```{r}
-income_raw = read_csv("./data/ACSST5Y2020.S1903-Data.csv")
-
-income_clean = income_raw %>% 
-  janitor::clean_names() %>%
-  select(geo_id, name, s1903_c03_001e) %>% 
-  slice(-1) %>% 
-  mutate(geo_clean = geo_id, 
-         geo_clean = str_replace(geo_clean, "^1400000US", "")) %>% 
-  select(geo_clean, everything())
-```
-
-
 ## Further cleaning
 ```{r}
-# for health outcome, we are focusing on 5 outcomes that are likely to be related to walkability 
 
+# for health outcome, we are focusing on 5 outcomes that are likely to be related to walkability 
 health_clean = health_new %>% 
   filter(measure_id == c("BPHIGH", "PHLTH", "LPA", "MHLTH", "HIGHCHOL")) %>% 
   select(location_name, lat, long, measure, data_value, data_value_type, data_value_unit, measure_id)
 ```
+</details>
 
 
+### Cleaned Dataset for analysis use
+After cleaning all three data sources, we merged the dataset by geographical locations. 
+
+<details>
+  <summary>Click to show code</summary>
+  
 ##Merge
 ```{r}
 # merging walkability and health outcomes
@@ -118,6 +177,9 @@ merge_final = merge_final %>%
 write_csv(merge_final, "./data/merge_final.csv")
 
 ```
+
+</details>
+
 
 ## Plot try
 ```{r}
