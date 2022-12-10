@@ -216,27 +216,27 @@ As mentioned, we want to find NYC census tracts that are statistically significa
   * **High-Low**: census tracts with high walkability that are surrounded by census tracts with a low walkability index
   * **Low-High**: census tracts with low walkability are surrounded by census tracts with high walkability index
 
-                                          High-high    Low-low               High-low           Low-high
------------------------------------    ------------   --------       ----------------    --------------- 
-Census tract walkability                       High        Low                   High                Low
-Neighboring census tract walkability           High        Low                    Low               High
-Category                                   Hot spot  Cold spot 1      Spatial outlier    Spatial outlier      
 
 #### Local Moran's I
 
-To find these clusters, we will be using local Moran's I. The local spatial statistic Moran's I is calculated for each zone based on the spatial weights object used. The values returned include a Z-value, and may be used as a diagnostic tool. The statistic is: 
+To find these clusters, we used local Moran's I. The local spatial statistic Moran's I is calculated for each zone based on the spatial weights object used. The values returned include a Z-value, and may be used as a diagnostic tool. The statistic is: 
 
 <center>
 <img src="images/moranI.jpg" style="width:90%">
 <br>
+</center>
 
-Essentially, the local Moran's I tells us the local indicator of spatial association or LISA statistic. We will use these LISA cluster indicators to map different walkability clusters in the NYC.
+$$
+I_i = \frac{(x_i-\bar{x})}{{\sum_{k=1}^{n}(x_k-\bar{x})^2}/(n-1)}{\sum_{j=1}^{n}w_{ij}(x_j-\bar{x})}
+$$
+
+Essentially, the local Moran's I tells us the local indicator of spatial association or LISA statistic, which is used as a cluster indicator to map different walkability clusters in the NYC.
 
 #### Defining Neighborhood for Spatial Weights
 
-For local Moran's I, we also need to specify the spatial weights by defining neighborhood connectivity. The goal of this step is to identify nearest census tract around a specific census tract. We used the Queen's first order contiguity to establish neighborhood connectivity in the following analysis. 
+For local Moran's I, we also need to specify the spatial weights by defining neighborhood connectivity (what is considered a neighborhood). The goal of this step is to identify nearest census tract around a specific census tract. We used the Queen's first order contiguity to establish neighborhood connectivity in the following analysis. 
 
-If a census tract is within the threshold distance of the selected census tract, a 1 is given, otherwise a 0 is given. Neighborhoods are created based on which observations are judged “contiguous”.
+If a census tract is within the threshold distance of the selected census tract, a 1 is given, otherwise a 0 is given. Neighborhoods are created based on which observations are judged to be contiguous.
 
 **Queen's first order contiguity** suggests that, if a census tract share a vertex or a line segment with the selected census tract, they are given a weight of 1 (adjacent and are treated as a neighbor), else they are given a value 0 (nonadjacent and are not treated as a neighbor). 
 
@@ -245,8 +245,9 @@ Visually, it looks like this:
 <center>
 <img src="images/queens_order.jpg" style="width:60%">
 <br>
+</center>
 
-Clearly defining the contiguity is needed to conduct the cluster analysis since we want to know what is considered as a neighboring census tract! 
+Clearly defining contiguity is needed to conduct cluster analysis since we want to know what is considered as a neighboring census tract.
 
 
 #### Clustering Map
@@ -342,9 +343,9 @@ tm_basemap("CartoDB.Positron") +
 
 #### Highlights & Importance
 
-Look at Manhattan, we can see that there are several High-High clusterings (i.e., census tracts that are high in walkability are surround by census tracts with high walkability index) in the Midtown and SOHO area. Some parts of Queens, such as Flushing and Forest Hills, also indicates a High-High clustering. 
+Looking at Manhattan, we can see that there are several High-High clusterings (i.e., census tracts that with walkability that are surrounded by census tracts with a high walkability index) in the Midtown and SOHO area. Some parts of Queens, such as Flushing and Forest Hills, also indicates a High-High clustering. 
 
-However, part of the Bronx shows the Low-Low clustering, where census tracts that are low in walkability are surround by census tracts with low walkability index. The Low-Low clustering in Brooklyn, on the other hand, might be due to the location of the JFK airport. 
+However, parts of the Bronx shows the Low-Low clustering, where census tracts that are low in walkability are surrounded by census tracts with low walkability index. The Low-Low clustering in Brooklyn, on the other hand, might be due to the location of the JFK airport. 
 
 You might be wondering, what is the importance of finding these statistically significant hot spots and cold spots of walkability in the census tract level?
 
