@@ -36,6 +36,17 @@ walkability_tidy = walkability_clean %>%
 
 ```
 
+Column {.sidebar}
+-----------------------------------------------------------------------
+```{r}
+state = walkability_clean %>% distinct(state) %>% drop_na() %>% pull()
+
+selectInput(
+  inputId = "state_choice",
+  label = h3("State"), #h3: header size 3
+  choices = state
+) 
+```
 
 
 
