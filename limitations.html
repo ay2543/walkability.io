@@ -13,7 +13,7 @@
 
 <title>Limitations</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
@@ -180,8 +180,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -189,16 +189,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -355,28 +348,50 @@ $(document).ready(function () {
 </div>
 
 
-<p>As detailed as our analyses are, they are not without
-limitations.</p>
-<div id="temporality" class="section level2">
-<h2>1. Temporality</h2>
+<style>
+div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
+</style>
+<div
+id="as-detailed-as-our-analyses-are-they-are-not-without-limitations."
+class="section level5 blue">
+<h5>As detailed as our analyses are, they are not without
+limitations.</h5>
+</div>
+<p><br></p>
+<div id="temporality" class="section level3">
+<h3>1. Temporality</h3>
+<p>We used the latest National Walkability Index data from 2021 (our
+exposure dataset), and ACS demographics and BRFSS health outcomes
+(outcome) datasets from 2020. Though our outcome data precede our
+exposure data – meaning we are not able to infer temporality and hence
+causality – we believe that this is acceptable given the specific
+circumstances surrounding our data:</p>
 <ul>
-<li>Our walkability dataset is from 2021, but the health outcomes
-dataset is from a 2020 survey</li>
-<li>Technically our exposure data comes after our outcome data, so we
-should not be able to infer temporality and hence causality</li>
-<li>As data on walkability was last updated in 2014, we assumed that
-walkability did not change from 2020 to 2021
+<li>The EPA National Walkability Index is updated infrequently
 <ul>
-<li>But some may argue that since employment is a factor in obtaining
-the walkability index, the pandemic may have restructured the
-employment, so the walkability index cannot be considered the same</li>
-<li>The only thing we can do is wait for the most recent survey report
-to be released for fair and update it accordingly.</li>
+<li>the last major update before 2021 was <a
+href="https://www.epa.gov/sites/default/files/2021-06/documents/epa_sld_3.0_technicaldocumentationuserguide_may2021.pdf">in
+2014</a></li>
+<li>Since physical neighborhood attributes related to walkability (such
+as street density and transit accessibility) change slowly – often over
+a span of many years – we argue that walkability data from 2021 will
+better capture the physical walking conditions of neighborhoods in 2020
+compared to using an older 2014 version of the walkability index
+dataset</li>
+</ul></li>
+<li>Additionally, some may argue that since employment is a factor in
+obtaining the walkability index, the pandemic may have restructured the
+employment, so the walkability index cannot be considered the same
+<ul>
+<li>To address this, we can wait for the most recent 2022 BRFSS survey
+report to be released and update our analyses accordingly</li>
 </ul></li>
 </ul>
 </div>
-<div id="missing-data" class="section level2">
-<h2>2. Missing data</h2>
+<div id="missing-data" class="section level3">
+<h3>2. Missing data</h3>
+<p>There was also quite a large percentage of missing data in the
+Walkability Index dataset we used.</p>
 <ul>
 <li>The raw walkability data had 220,740 entries</li>
 <li>The health outcome data (filtered for our variables of interest) had

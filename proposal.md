@@ -1,7 +1,6 @@
 Proposal
 ================
 
-## 
 
 #### Tentative project title:
 
