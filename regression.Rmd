@@ -16,14 +16,15 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 
 
 ```{r setup, include=FALSE}
-#install.packages("betareg")
-
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(plotly)
 library(modelr)
 library(betareg)
 library(mgcv)
+library(purrr)
+library(broom)
+library(mfx)
 
 dataset = read_csv("./data/merge_final.csv")
 ```
@@ -35,13 +36,7 @@ regress_df = dataset %>%
   pivot_wider(names_from = "measure_id",
               values_from = "data_value") %>% 
   janitor::clean_names() %>% 
-  select(tractce, nat_walk_ind, csa_name, lat, long, sex_male, sex_female, age_18plus, median_income, white, black, aian, asian, x2_plus, hispanic, highchol, mhlth, lpa, phlth, bphigh)
-```
-
-
-```{r beta-test-code}
-test = regress_df %>% 
-  filter(grepl('UT', csa_name)) %>% 
+  select(tractce, nat_walk_ind, csa_name, lat, long, sex_male, sex_female, age_18plus, median_income, white, black, aian, asian, x2_plus, hispanic, highchol, mhlth, lpa, phlth, bphigh) %>% 
   mutate(
     sex_male = as.numeric(sex_male)/100,
     age_18plus = as.numeric(age_18plus)/100,
@@ -78,41 +73,89 @@ test = regress_df %>%
     lat = lat,
     long = long
     ) %>% 
-  distinct(.keep_all = TRUE)
+  unique()
+```
 
-mod_ut <- gam(highchol ~ nat_walk_tract + sex_male + age_18plus + black + median_income + s(lat, long, bs="gp", m=2), 
-           family = betar(link='logit'), 
-           data = test)
 
-summary(mod_ut)
+```{r beta-test-code}
+test = regress_df %>% 
+  dplyr::select(!c("lat", "long")) %>% 
+  mutate(walkable = ifelse(nat_walk_tract<10.5, "Less Walkable", "More Walkable")) %>% 
+  unique()
 
-mod_utbeta <- betareg(highchol ~ nat_walk_tract + sex_male + age_18plus + black + median_income, data = test)
+# mod <- gam(highchol ~ nat_walk_tract + sex_male + age_18plus + black + median_income + s(lat, long, bs="gp", m=2),
+#            family = betar(link='logit'),
+#            data = regress_df)
+# 
+# summary(mod)
+# 
+# residual1_plot =
+#     regress_df %>%
+#     add_predictions(mod) %>%
+#     add_residuals(mod) %>%
+#     ggplot(aes(x = nat_walk_tract, y = resid)) +
+#     geom_point(alpha = 0.3, size = 0.3) +
+#     geom_smooth(se = FALSE, method = "lm")
+# 
+# residual1_plot
 
-summary(mod_utbeta)
+# mod_beta = betareg(mhlth ~ nat_walk_tract + sex_male + age_18plus + black, data = test)
+# 
+# summary(mod_beta)
+# 
+# residual_plot =
+#     test %>%
+#     add_predictions(mod_beta) %>%
+#     add_residuals(mod_beta) %>%
+#     ggplot(aes(x = nat_walk_tract, y = resid)) +
+#     geom_point(alpha = 0.3) +
+#     geom_smooth(se = FALSE, method = "lm")
+# 
+# residual_plot
 
-residual1_plot =
-    test %>%
-    add_predictions(mod_utbeta) %>%
-    add_residuals(mod_utbeta) %>%
-    ggplot(aes(x = nat_walk_ind, y = resid)) +
-    geom_point(alpha = 0.3, size = 0.3) +
-    geom_smooth(se = FALSE, method = "lm")
+# Beta regression model
+chol = betareg(highchol ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
+mental = betareg(mhlth ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
+lpa = betareg(lpa ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
+physical = betareg(phlth ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
+bloodpres = betareg(bphigh ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
 
-residual1_plot
+# Margins
+chol_margin = betamfx(highchol ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
+mental_margin = betamfx(mhlth ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
+lpa_margin = betamfx(lpa ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
+physical_margin = betamfx(phlth ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
+bloodpres_margin = betamfx(bphigh ~ walkable + sex_male + age_18plus + black, data = test) %>% broom::tidy(conf.int=TRUE)
 
-residual_plot =
-    test %>%
-    add_predictions(mod_ut) %>%
-    add_residuals(mod_ut) %>%
-    ggplot(aes(x = nat_walk_ind, y = resid)) +
-    geom_point(alpha = 0.3, size = 0.3) +
-    geom_smooth(se = FALSE, method = "lm")
+# Collate estimates into one data frame
+modeldata = 
+  chol %>% 
+  filter(grepl('walk', term)) %>% 
+  rbind(mental[2,]) %>% 
+  rbind(lpa[2,]) %>% 
+  rbind(physical[2,]) %>% 
+  rbind(bloodpres[2,]) %>% 
+  mutate(
+    outcome = c("High Cholesterol", "Mental Health", "Physical Activity", "Physical Health", "High Blood Pressure"),
+    OR = exp(estimate),
+    lowlim = exp(conf.low),
+    highlim = exp(conf.high)
+  )
 
-residual_plot
+marginsdata = 
+  chol_margin %>% 
+  filter(grepl('walk', term)) %>% 
+  rbind(mental_margin[1,]) %>% 
+  rbind(lpa_margin[1,]) %>% 
+  rbind(physical_margin[1,]) %>% 
+  rbind(bloodpres_margin[1,]) %>% 
+  mutate(
+    outcome = c("High Cholesterol", "Mental Health", "Physical Activity", "Physical Health", "High Blood Pressure")
+  )
 ```
 
 ```{r reference-code}
-#baltimore_glm =
+# baltimore_glm =
 #  baltimore_df %>%
 #  glm(solved ~ victim_age + victim_sex + victim_race,
 #    data = .,
@@ -122,7 +165,17 @@ residual_plot
 #  mutate(OR = exp(estimate),
 #         CI_lower = exp(estimate - 1.96*std_error),
 #         CI_upper = exp(estimate + 1.96*std_error))
-#baltimore_glm
+# baltimore_glm
+# 
+# unsolved_all = homicide_city_state %>% 
+#   mutate(
+#     prop_test = map2(.x = unsolved, .y = total, ~prop.test(x = .x, n = .y)),
+#     prop_est = map(.x = prop_test, ~broom::tidy(.x))
+#   ) %>% 
+#   select(-prop_test) %>% 
+#   unnest(prop_est) %>% 
+#   select(city_state, estimate, conf.low, conf.high) %>% 
+#   mutate(across(where(is.numeric), function(x) x*100))
 ```
 
 
