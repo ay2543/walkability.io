@@ -30,15 +30,15 @@ Our health outcomes of interest are:
 * Physical Health: Physical health not good for >=14 days among adults aged >=18 years
 * High Blood Pressure: High blood pressure among adults aged >=18 years
 
-According to the the [EPA](https://www.epa.gov/sites/default/files/2021-06/documents/national_walkability_index_methodology_and_user_guide_june2021.pdf), National Walkability Index scores on a scale of 1 to 20 are categorized as follows: 
+According to the [EPA Methodology and User Guide](https://www.epa.gov/sites/default/files/2021-06/documents/national_walkability_index_methodology_and_user_guide_june2021.pdf), National Walkability Index scores on a scale of 1 to 20 are categorized as follows: 
 
 
 National Walkability Index            Level
 ---------------------------         -----------------------------------
-1 - 5.75                              Least walkable
-5.76 - 10.5                           Below average walkable
-10.51 - 15.25                         Above average walkable 
-15.26 - 20                            Most walkable 
+  1 - 5.75                              Least walkable
+  5.76 - 10.5                           Below average walkable
+  10.51 - 15.25                         Above average walkable 
+  15.26 - 20                            Most walkable 
 
 <details>
   <summary>Click to show code</summary>
@@ -211,7 +211,8 @@ tm_basemap("CartoDB.Positron") +
 
 
 From this choropleth map, we can see that New York City is walkable overall. However, we want to further identify census tracts that are statistically significant hot spots, cold spots, and spatial outliers using clustering analysis. 
-
+<br>
+</br>
 
 ### Clustering Analysis for Walkability
 
@@ -365,7 +366,8 @@ However, parts of the Bronx shows the Low-Low clustering, where census tracts th
 You might be wondering, what is the importance of finding these statistically significant hot spots and cold spots of walkability in the census tract level?
 
 Reflecting back to the primary goal of the project, which is to highlight the connections between walkability, the built environment, and community-level health, identifying these clusters can help policy makers to put there attentions on those **Low-Low** areas. The **High-High** neighborhoods are doing a good job in building a walkable environment and the **Low-Low** areas will benefit a lot by improving built environment infrastructure to make the community more walkable for all. 
-
+<br>
+</br>
 
 #### Extra Resources
 
