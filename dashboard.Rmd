@@ -40,7 +40,7 @@ walkability_tidy = walkability_clean %>%
 
 
 
-Row {data-height=850}
+Row {data-height=800}
 -----------------------------------------------------------------------
 
 ### Health outcome
@@ -74,7 +74,7 @@ filter(!is.na(state) &
              type = 'scatter',  mode = 'lines+markers', name = 'Walkability index', 
              yaxis = "y2", color = I('black')
              ) %>% 
-   layout(#legend = list(x = 0.1, y = 0.9),
+   layout(legend = list(x = 0.1, y = 200),
           yaxis = list(title = '% with health outcome'),
           yaxis2=list(side="right",overlaying="y", title = "Average walkability index"),
           xaxis = list(title = 'Health outcome'),
@@ -142,7 +142,7 @@ filter(!is.na(state) &
 
 ```
 
-Row {data-height=500}
+Row {data-height=200}
 -----------------------------------------------------------------------
 ```{r}
 walkability_clean %>%
@@ -168,7 +168,7 @@ walkability_clean %>%
   plot_ly(x = ~fct_reorder(county, percent_race), 
           y = ~percent_race, color = ~race,
           type = "bar") %>% 
-   layout(legend = list(x = 0.1, y = 0.9),
+   layout(legend = list(x = 0.1, y = 200, xanchor = "left"),
           yaxis = list(title = '% of each race category'),
           xaxis = list(title = 'Health outcome'),
           barmode = 'stack'
