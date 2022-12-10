@@ -13,7 +13,7 @@
 
 <title>Data Sources</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
@@ -180,8 +180,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -189,16 +189,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -260,14 +253,14 @@ $(document).ready(function () {
 </li>
 <li>
   <a href="data.html">
-    <span class="fa fa-home"></span>
+    <span class="fa fa-book"></span>
      
     Data Sources
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    <span class="fa fa-file"></span>
+    <span class="fa fa-eye"></span>
      
     Visualizations
      
@@ -284,7 +277,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    <span class="fa fa-file"></span>
+    <span class="fa fa-bar-chart-o"></span>
      
     Data Analysis
      
@@ -304,7 +297,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    <span class="fa fa-file"></span>
+    <span class="fa fa-folder-open"></span>
      
     Report
      
@@ -312,21 +305,28 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="results.html">Findings</a>
+      <a href="results.html">Key Findings</a>
     </li>
     <li>
       <a href="limitations.html">Limitations</a>
     </li>
     <li>
-      <a href="report.html">Report</a>
+      <a href="report.html">Project Report</a>
     </li>
   </ul>
 </li>
 <li>
   <a href="team.html">
-    <span class="fa fa-people-group"></span>
+    <span class="fa fa-group"></span>
      
     Who We Are
+  </a>
+</li>
+<li>
+  <a href="fun.html">
+    <span class="fa fa-smile-o"></span>
+     
+    Fun Facts
   </a>
 </li>
       </ul>
@@ -355,9 +355,9 @@ $(document).ready(function () {
 div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 </style>
 <div class="blue">
-<div id="this-is-a-description-of-our-data-sources-and-cleaning-steps."
+<div id="this-is-a-description-of-our-data-sources."
 class="section level5">
-<h5>This is a description of our data sources and cleaning steps.</h5>
+<h5>This is a description of our data sources.</h5>
 </div>
 <div id="we-wish-to-identify-associations-between-walkability-and"
 class="section level5">
@@ -368,11 +368,12 @@ class="section level5">
 </ul>
 </div>
 <div
-id="we-also-wish-to-create-our-own-updated-walkability-index-and-see-how-well-it-can-estimate-health-outcomes-compared-to-the-original-walkability-index."
+id="due-to-the-size-of-the-original-data-files-please-download-the-datasets-according-to-the-links-below-and-save-the-.csv-files-locally-in-its-original-name.-and-save-all-.csv-file-in-a-new-folder-called-data-in-order-to-run-the-code."
 class="section level5">
-<h5>We also wish to create our own updated walkability index and see how
-well it can estimate health outcomes compared to the original
-walkability index.</h5>
+<h5><strong>Due to the size of the original data files, please download
+the datasets according to the links below and save the .csv files
+locally in its original name. And save all .csv file in a new folder
+called “Data” in order to run the code.</strong></h5>
 </div>
 </div>
 <p><br></p>
@@ -392,17 +393,10 @@ dataset ranks each block group relative to all other block groups in the
 United States on a scale from 0-20; and data can be aggregated to larger
 spatial units using Federal Information Processing Standards (FIPS)
 codes.</li>
-</ul></li>
 <li><a
 href="https://www.epa.gov/sites/default/files/2021-06/documents/national_walkability_index_methodology_and_user_guide_june2021.pdf">Methodology
 &amp; User Guide</a>, <a
 href="https://www.epa.gov/sites/default/files/2021-06/documents/epa_sld_3.0_technicaldocumentationuserguide_may2021.pdf">Codebook</a></li>
-<li>Cleaning steps:
-<ul>
-<li>Added leading zeros for all Federal Information Processing Standard
-(FIPS) codes (numbers which uniquely identify geographic areas)</li>
-<li>Combined state, county and tract FIPS into an 11-digit code</li>
-<li>Selected relevant variables</li>
 </ul></li>
 <li>Variables of interest:
 <ul>
@@ -423,14 +417,6 @@ conducted by the U.S. Census Bureau and produces information on social,
 economic, housing, and demographic characteristics about our nation’s
 population every year. This information is a vital tool that communities
 can use to see how they are changing across the years.</li>
-</ul></li>
-<li>Cleaning steps:
-<ul>
-<li>removed second row with detailed column names</li>
-<li>removed columns for annotations and margins of error</li>
-<li>created a census tract column derived from the geo_id column
-(removed the “1400000US” at the beginning of each entry) to match with
-other data sets</li>
 </ul></li>
 <li>Variables of interest:
 <ul>
@@ -458,11 +444,6 @@ states as well as the District of Columbia and three U.S. territories.
 BRFSS completes more than 400,000 adult interviews each year, making it
 the largest continuously conducted health survey system in the
 world.</li>
-</ul></li>
-<li>Cleaning steps:
-<ul>
-<li>Removed footnote variables</li>
-<li>Filtered for relevant health outcomes</li>
 </ul></li>
 <li>Variables of interest:
 <ul>

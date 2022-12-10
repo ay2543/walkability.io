@@ -14,35 +14,35 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 <br>
 
 
-### [Amy Yeung (she/her)](https://ay2543.github.io/amyyeung.github.io) <a href="mailto:ay2543@cumc.columbia.edu" class="fa fa-envelope"></a> <a href="https://linkedin.com/in/amy715" class="fa fa-linkedin"></a> <a href="https://github.com/ay2543" class="fa fa-github"></a>
+#### [Amy Yeung (she/her)](https://ay2543.github.io/amyyeung.github.io) <a href="mailto:ay2543@cumc.columbia.edu" class="fa fa-envelope"></a> <a href="https://linkedin.com/in/amy715" class="fa fa-linkedin"></a> <a href="https://github.com/ay2543" class="fa fa-github"></a>
 
 * Favorite place to walk in NYC: From Ktown to Chinatown
 * Favorite part about walking: Watching the change in architecture, scoping out restaurants for future meals, and people-watching!
 
 <br>
 
-### [Winston Luhur (they/them)](https://fuyukaidesu8.github.io/wel2105) <a href="mailto:wel2105@cumc.columbia.edu" class="fa fa-envelope"></a> <a href="https://linkedin.com/in/winstonluhur/" class="fa fa-linkedin"></a> <a href="https://fuyukaidesu8.github.io/wel2105/" class="fa fa-github"></a>
+#### [Winston Luhur (they/them)](https://fuyukaidesu8.github.io/wel2105) <a href="mailto:wel2105@cumc.columbia.edu" class="fa fa-envelope"></a> <a href="https://linkedin.com/in/winstonluhur/" class="fa fa-linkedin"></a> <a href="https://fuyukaidesu8.github.io/wel2105/" class="fa fa-github"></a>
 
 * Favorite place to walk in NYC: Prospect Park
 * Favorite part about walking: People-watching and observing any happenings. Or neat sceneries to take photos of.
 
 <br>
 
-### [Sophie Zhang (they/them)](https://sophyee.github.io/)  <a href="mailto:sjz2120@cumc.columbia.edu" class="fa fa-envelope"></a> <a href="https://www.linkedin.com/in/sophiejhzhang/" class="fa fa-linkedin"></a> <a href="https://github.com/sophyee" class="fa fa-github"></a>
+#### [Sophie Zhang (they/them)](https://sophyee.github.io/)  <a href="mailto:sjz2120@cumc.columbia.edu" class="fa fa-envelope"></a> <a href="https://www.linkedin.com/in/sophiejhzhang/" class="fa fa-linkedin"></a> <a href="https://github.com/sophyee" class="fa fa-github"></a>
 
 * Favorite place to walk in NYC: Across the Manhattan Bridge 🌇
 * Favorite part about walking: Listen to good music and enjoy the crowds & scenery!
 
 <br>
 
-### [Shirley Liang (she/her)](https://Shirley-zl3118.github.io/Shirley-zl3118.github.io) <a href="mailto:zl3118@cumc.columbia.edu" class="fa fa-envelope"></a> <a href="https://www.linkedin.com/in/zipei-“shirley”-liang-pharmd-rph-819616a7/" class="fa fa-linkedin"></a> <a href="https://github.com/Shirley-zl3118" class="fa fa-github"></a>
+#### [Shirley Liang (she/her)](https://Shirley-zl3118.github.io/Shirley-zl3118.github.io) <a href="mailto:zl3118@cumc.columbia.edu" class="fa fa-envelope"></a> <a href="https://www.linkedin.com/in/zipei-“shirley”-liang-pharmd-rph-819616a7/" class="fa fa-linkedin"></a> <a href="https://github.com/Shirley-zl3118" class="fa fa-github"></a>
 
 * Favorite place to walk in NYC: The High Line
 * Favorite part about walking: Zone out by the view and get exercise done without noticing.
 
 <br>
 
-### [Wenyan Ma (she/her)](https://mawenyan1219.github.io/p8105_hw4_wm2460.github.io) <a href="mailto:wm2460@cumc.columbia.edu" class="fa fa-envelope"></a> <a href="https://www.linkedin.com/in/wenyanma/" class="fa fa-linkedin"></a> <a href="https://github.com/mawenyan1219/" class="fa fa-github"></a>
+#### [Wenyan Ma (she/her)](https://mawenyan1219.github.io/p8105_hw4_wm2460.github.io) <a href="mailto:wm2460@cumc.columbia.edu" class="fa fa-envelope"></a> <a href="https://www.linkedin.com/in/wenyanma/" class="fa fa-linkedin"></a> <a href="https://github.com/mawenyan1219/" class="fa fa-github"></a>
 
 * Favorite place to walk in NYC: Riverside park 
 * Favorite part about walking: Enjoy the nature and stay active!

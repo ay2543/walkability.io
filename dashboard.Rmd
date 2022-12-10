@@ -1,12 +1,11 @@
- ---
-title: "Dashboard"
+---
+title: "NYC Walkability and Health Outcomes Dashboard"
 output: 
   flexdashboard::flex_dashboard:
     vertical_layout: fill
-    orientation: columns
+    orientation: rows
     navbar:
       - { title: "Home", href: "index.html", align: right }
-runtime: shiny
 
 ---
 
@@ -39,27 +38,10 @@ walkability_tidy = walkability_clean %>%
 
 ```
 
-Column {.sidebar}
------------------------------------------------------------------------
-```{r}
-state = walkability_clean %>% distinct(state) %>% drop_na() %>% pull()
-
-selectInput(
-  inputId = "state_choice",
-  label = h3("State"), #h3: header size 3
-  choices = state
-) 
-```
-
-Column {.sidebar}
------------------------------------------------------------------------
-```{r}
-
-```
 
 
 
-Column {data-width=650}
+Row {data-height=500}
 -----------------------------------------------------------------------
 
 ### Health outcome
@@ -161,7 +143,78 @@ filter(!is.na(state) &
 
 ```
 
+Row {data-height=500}
+-----------------------------------------------------------------------
 ```{r}
+walkability_clean %>%
+  mutate(percent_race = as.numeric(percent_race)) %>% 
+  filter(!is.na(state) &
+         state == "New York" &
+         !is.na(nat_walk_ind) &
+         !is.na(percent_race)
+         ) %>% 
+  group_by(county, race) %>% 
+  summarise(walk = mean(nat_walk_ind),
+            percent_race = mean(percent_race)) %>% 
+  mutate(
+    race = replace(race, race == "white", "White"),
+    race = replace(race, race == "black", "Black"),
+    race = replace(race, race == "aian", "American Indian/Alaska Native"),
+    race = replace(race, race == "asian", "Asian"),
+    race = replace(race, race == "2_plus", "≥2 races"),
+    race = replace(race, race == "hispanic", "Hispanic/Latin American"),
+    race = factor(race, levels = c("White", "Black", "Asian", "Hispanic/Latin American", 
+                                   "American Indian/Alaska Native", "≥2 races"), ordered = TRUE)
+  ) %>% 
+  plot_ly(x = ~fct_reorder(county, percent_race), 
+          y = ~percent_race, color = ~race,
+          type = "bar") %>% 
+   layout(legend = list(x = 0.1, y = 0.9),
+          yaxis = list(title = '% of each race category'),
+          xaxis = list(title = 'Health outcome'),
+          barmode = 'stack'
+          )
 
+```
+
+```{r}
+walkability_clean %>%
+  mutate(median_income = as.numeric(median_income)) %>% 
+  filter(!is.na(state) &
+         state == "New York" &
+         !is.na(nat_walk_ind) &
+         !is.na(median_income)
+         ) %>% 
+  group_by(county) %>% 
+  summarise(walk = mean(nat_walk_ind),
+            median_income = mean(median_income)) %>% 
+  mutate(
+    income = NA,
+    income = replace(income, median_income <5000, "≤$5000"),
+    income = replace(income, median_income >= 5000 & median_income < 10000, "$5000 - $9999"),
+    income = replace(income, median_income >= 10000 & median_income < 15000, "$10000 - $14999"),
+    income = replace(income, median_income >= 15000 & median_income < 20000, "$15000 - $19999"),
+    income = replace(income, median_income >= 20000 & median_income < 25000, "$20000 - $24999"),
+    income = replace(income, median_income >= 25000 & median_income < 35000, "$25000 - $34999"),
+    income = replace(income, median_income >= 35000 & median_income < 45000, "$35000 - $44999"),
+    income = replace(income, median_income >= 45000 & median_income < 55000, "$45000 - $54999"),
+    income = replace(income, median_income >= 55000 & median_income < 65000, "$55000 - $64999"),
+    income = replace(income, median_income >= 65000 & median_income < 75000, "$65000 - $74999"),
+    income = replace(income, median_income >= 75000 & median_income < 100000, "$75000 - $99999"),
+    income = replace(income, median_income >= 100000, "≥$100000"),
+    income = factor(income, levels = c("≤$5000", "$5000 - $9999", "$10000 - $14999", "$15000 - $19999",
+                                       "$20000 - $24999", "$25000 - $34999", "$35000 - $44999",
+                                       "$45000 - $54999", "$55000 - $64999", "$65000 - $74999",
+                                       "$75000 - $99999", "≥$100000"), ordered = TRUE),
+    county = fct_reorder(county, median_income)
+  ) %>% 
+  plot_ly(x = ~county, 
+          y = ~median_income, color = ~income,
+          type = "bar") %>% 
+   layout(legend = list(x = 0.1, y = 0.9),
+          yaxis = list(title = 'Median household income'),
+          xaxis = list(title = 'Health outcome'),
+          barmode = 'stack'
+          )
 ```
 
