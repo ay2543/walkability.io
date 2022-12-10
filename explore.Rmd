@@ -454,7 +454,7 @@ datatable(health_df_merge2,
 
 gender_walk_plot = county_demographics_merge %>% ggplot(mapping = aes(x = sex_female, y = nat_walk_ind)) +
   geom_point(shape = "diamond", color = "steelblue", size = 2, alpha = 0.5) + labs(         
-    x = "Percentage of Femlae",
+    x = "Percentage of Female",
     y = "Walkability Score",
     title = "Figure 2. Percentage of Female vs. Walkability Score by County") + 
   geom_smooth(                  
