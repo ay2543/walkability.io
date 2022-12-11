@@ -40,5 +40,5 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 * Shirley Liang: 200
 <br>
 
-###### **Total numbers of commits on Dec 10th: **
+###### **Total numbers of commits on Dec 10th: 228**
 

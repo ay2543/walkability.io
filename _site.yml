@@ -40,7 +40,7 @@ navbar:
       href: team.html
     - text: "Fun Facts"
       icon: fa-smile-o
-      href: fun.html
+      href: Fun.html
        
   right:
     - icon: fa-github fa-lg

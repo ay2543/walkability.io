@@ -120,7 +120,7 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 
 ##### Key upon hover
 
-* Walkability score
+* National Walkability Index (by county) [1,20)
 <br>
 </br>
 * National Walkability Index (by county) [1,20)
