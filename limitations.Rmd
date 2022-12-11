@@ -20,10 +20,10 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 ### Strengths
 
 #### 1. Reliable and updated data sources
-The data sources were downloaded from reliable sources, such as Environmental Protection Agency, US Census American Community Survey, and Behavioral Risk Factor Surveillance System. The latested data from 2020 is used in the project for the most updated information.
+The data sources were downloaded from reliable sources, such as Environmental Protection Agency, US Census American Community Survey, and Behavioral Risk Factor Surveillance System. The latest data from 2020 is used in the project for the most updated information.
 
-#### 2. Comprehensive of quatitative data analysis
-The project provided a comprehensive data analysis including explortoey analysis, regression analysis, and spatial analysis to gain a wholistic understanding of national, state, and county walkability with health outcomes. 
+#### 2. Comprehensive of quantitative data analysis
+The project provided a comprehensive data analysis including exploratory analysis, regression analysis, and spatial analysis to gain a holistic understanding of national, state, and county walkability with health outcomes. 
 
 #### 3. Look at nation wide walkability data
 The project provided a extensive understand of national walkability data, as well as demographics and health outcomes associated with each area. The project did not focus on a specific region, rather explored nationwide data on state and county level. 

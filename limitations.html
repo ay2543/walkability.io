@@ -13,7 +13,7 @@
 
 <title>Strengths and Limitations</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
@@ -183,8 +183,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -192,16 +192,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -388,13 +381,16 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="report.html">Full Project Report</a>
+    </li>
+    <li>
       <a href="results.html">Key Findings</a>
     </li>
     <li>
-      <a href="limitations.html">Strengths and Limitation</a>
+      <a href="limitations.html">Strengths and Limitations</a>
     </li>
     <li>
-      <a href="report.html">Project Report</a>
+      <a href="nextstep.html">Next Steps</a>
     </li>
   </ul>
 </li>
@@ -406,7 +402,7 @@ div.tocify {
   </a>
 </li>
 <li>
-  <a href="Fun.html">
+  <a href="fun.html">
     <span class="fa fa-smile-o"></span>
      
     Fun Facts
@@ -450,15 +446,15 @@ project.</h5>
 <h4>1. Reliable and updated data sources</h4>
 <p>The data sources were downloaded from reliable sources, such as
 Environmental Protection Agency, US Census American Community Survey,
-and Behavioral Risk Factor Surveillance System. The latested data from
+and Behavioral Risk Factor Surveillance System. The latest data from
 2020 is used in the project for the most updated information.</p>
 </div>
-<div id="comprehensive-of-quatitative-data-analysis"
+<div id="comprehensive-of-quantitative-data-analysis"
 class="section level4">
-<h4>2. Comprehensive of quatitative data analysis</h4>
+<h4>2. Comprehensive of quantitative data analysis</h4>
 <p>The project provided a comprehensive data analysis including
-explortoey analysis, regression analysis, and spatial analysis to gain a
-wholistic understanding of national, state, and county walkability with
+exploratory analysis, regression analysis, and spatial analysis to gain
+a holistic understanding of national, state, and county walkability with
 health outcomes.</p>
 </div>
 <div id="look-at-nation-wide-walkability-data" class="section level4">
