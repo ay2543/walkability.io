@@ -33,6 +33,8 @@ navbar:
           href: results.html    
         - text: "Strengths and Limitations"
           href: limitations.html 
+        - text: "Next Steps"
+          href: nextstep.html
     - text: "Who We Are"
       icon: fa-group
       href: team.html

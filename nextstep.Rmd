@@ -1,0 +1,32 @@
+---
+title: "Next Steps"
+output: 
+  html_document
+---
+
+<br>
+
+<style>
+div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
+</style>
+<div class = "blue">
+
+##### This page includes purposed next steps for our project!
+
+</div>
+
+<br>
+
+#### **Update to include most recent data**
+
+* This exploration into walkability in the US was ultimately just that -- exploratory, initial analyses, as we were constrained by incomplete datasets alongside issues with temporality. With the recent release of ACS 2021 estimates and the imminent one for BRFSS 2022, we may be able to utilize them to more concretely control for issues with temporality. 
+
+<br>
+
+#### **Use individual-level data**
+* We were unable to utilize the individual-level data from ACS and BRFSS due to their complex survey weighting regimens, and difficulties in corresponding them with spatial analyses we were trying to conduct. Tackling these would go beyond the scope of this class and may go beyond the time frame provided.
+
+<br>
+
+#### **Explore intra-state county walkability**
+* Unfortunately, due to issues with Shiny, we were only able to look at a dashboard of health outcomes and demographics for counties in New York State only. It would be more meaningful if we could look at the distributions of health outcomes and demographic indicators for counties within each state to look for patterns among regions.
