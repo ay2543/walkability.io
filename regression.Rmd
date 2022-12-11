@@ -1,6 +1,8 @@
 ---
 title: "Statistical Analysis"
-output: github_document
+output:
+  github_document:
+    code_folding: hide
 ---
 
 <style>
@@ -245,3 +247,55 @@ Here, we see that more walkable places have the following change in prevalence f
 * 4.367% decrease in poor blood pressure
 
 Therefore, increase in walkability is associated with decreased prevalence of poor health outcomes, which is expected. However, an increase in walkability is associated with an increase for prevalence of poor mental health, but this could be due to unaccounted for confounding from density of space and urbanicity that comes with more walkable spaces.
+
+### Forest Plot
+Below, we create a forest plot to more visually display the difference in prevalence for our various health outcomes compared to less walkable places:
+```{r forestplot-packages}
+devtools::install_github("rdboyes/forester")
+
+library(grid)
+library(forester)
+```
+
+```{r forest-plot-df}
+forestplot_df = 
+  chol_margin %>% 
+  filter(grepl('walk', term)) %>% 
+  rbind(mental_margin[1,]) %>% 
+  rbind(lpa_margin[1,]) %>% 
+  rbind(physical_margin[1,]) %>% 
+  rbind(bloodpres_margin[1,]) %>% 
+  mutate(
+    outcome = c("High Cholesterol", "Mental Health", "Physical Activity", "Physical Health", "High Blood Pressure"),
+    pct = estimate*100,
+    pct.conf.low = conf.low*100,
+    pct.conf.high = conf.high*100
+  ) %>% 
+  dplyr::select(outcome, pct, pct.conf.low, pct.conf.high, p.value) %>% 
+  arrange(desc(pct)) %>%
+  janitor::clean_names() %>%
+  rename("Health Outcome" = outcome )
+
+forestplot_df
+```
+
+```{r forest-plot-test, fig.width = 10,fig.height=15}
+forest_plot =
+  forester(left_side_data = forestplot_df["Health Outcome"],
+           estimate = forestplot_df$pct,
+           ci_low = forestplot_df$pct_conf_low,
+           ci_high = forestplot_df$pct_conf_high,
+           xlim = c(-5, 5),
+           estimate_col_name = "Estimated % change (95% CI)",
+           font_family = "sans",
+           display = FALSE,
+           null_line_at = 0,
+           xbreaks = c(-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5),
+           file_path = here::here("./images/forest_plot.png"))
+```
+
+<br>
+
+![](./images/forest_plot.png)
+
+

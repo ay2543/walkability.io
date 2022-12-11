@@ -268,7 +268,7 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Testing.html">Data Cleaning</a>
+      <a href="cleaning.html">Data Cleaning</a>
     </li>
     <li>
       <a href="explore.html">Exploratory Analysis</a>
@@ -323,7 +323,7 @@ $(document).ready(function () {
   </a>
 </li>
 <li>
-  <a href="fun.html">
+  <a href="Fun.html">
     <span class="fa fa-smile-o"></span>
      
     Fun Facts
@@ -997,6 +997,58 @@ increase in walkability is associated with an increase for prevalence of
 poor mental health, but this could be due to unaccounted for confounding
 from density of space and urbanicity that comes with more walkable
 spaces.</p>
+</div>
+<div id="forest-plot" class="section level3">
+<h3>Forest Plot</h3>
+<p>Below, we create a forest plot to more visually display the
+difference in prevalence for our various health outcomes compared to
+less walkable places:</p>
+<pre class="r"><code>devtools::install_github(&quot;rdboyes/forester&quot;)</code></pre>
+<pre><code>## Skipping install of &#39;forester&#39; from a github remote, the SHA1 (a9ad7c45) has not changed since last install.
+##   Use `force = TRUE` to force installation</code></pre>
+<pre class="r"><code>library(grid)
+library(forester)</code></pre>
+<pre class="r"><code>forestplot_df = 
+  chol_margin %&gt;% 
+  filter(grepl(&#39;walk&#39;, term)) %&gt;% 
+  rbind(mental_margin[1,]) %&gt;% 
+  rbind(lpa_margin[1,]) %&gt;% 
+  rbind(physical_margin[1,]) %&gt;% 
+  rbind(bloodpres_margin[1,]) %&gt;% 
+  mutate(
+    outcome = c(&quot;High Cholesterol&quot;, &quot;Mental Health&quot;, &quot;Physical Activity&quot;, &quot;Physical Health&quot;, &quot;High Blood Pressure&quot;),
+    pct = estimate*100,
+    pct.conf.low = conf.low*100,
+    pct.conf.high = conf.high*100
+  ) %&gt;% 
+  dplyr::select(outcome, pct, pct.conf.low, pct.conf.high, p.value) %&gt;% 
+  arrange(desc(pct)) %&gt;%
+  janitor::clean_names() %&gt;%
+  rename(&quot;Health Outcome&quot; = outcome )
+
+forestplot_df</code></pre>
+<pre><code>## # A tibble: 5 × 5
+##   `Health Outcome`       pct pct_conf_low pct_conf_high   p_value
+##   &lt;chr&gt;                &lt;dbl&gt;        &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;
+## 1 Mental Health        0.127       0.0869         0.167 4.66e- 10
+## 2 Physical Activity   -0.206      -0.300         -0.112 1.75e-  5
+## 3 Physical Health     -0.627      -0.667         -0.587 6.51e-209
+## 4 High Cholesterol    -3.23       -3.32          -3.13  0        
+## 5 High Blood Pressure -4.37       -4.48          -4.25  0</code></pre>
+<pre class="r"><code>forest_plot =
+  forester(left_side_data = forestplot_df[&quot;Health Outcome&quot;],
+           estimate = forestplot_df$pct,
+           ci_low = forestplot_df$pct_conf_low,
+           ci_high = forestplot_df$pct_conf_high,
+           xlim = c(-5, 5),
+           estimate_col_name = &quot;Estimated % change (95% CI)&quot;,
+           font_family = &quot;sans&quot;,
+           display = FALSE,
+           null_line_at = 0,
+           xbreaks = c(-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5),
+           file_path = here::here(&quot;./images/forest_plot.png&quot;))</code></pre>
+<p><br></p>
+<p><img src="images/forest_plot.png" /></p>
 </div>
 
 
