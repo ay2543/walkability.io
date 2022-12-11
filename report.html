@@ -456,6 +456,7 @@ Ma</h5>
 <p><br></p>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
+<p><br></p>
 <div id="our-motivation" class="section level3">
 <h3>Our Motivation</h3>
 <p>Urban planning around the US is increasingly <a
@@ -555,7 +556,7 @@ href="https://github.com/ay2543/walkability.io">here</a> .</p>
 <p><br></p>
 </div>
 <div id="project-proposal" class="section level3">
-<h3><a href="proposal.html">Project Proposal</a></h3>
+<h3>Project Proposal</h3>
 <p>Our initial proposal is linked <a href="proposal.html">here</a> for
 reference.</p>
 <p><br> <br></p>
@@ -563,6 +564,7 @@ reference.</p>
 </div>
 <div id="data-sources-and-cleaning" class="section level2">
 <h2>Data Sources and Cleaning</h2>
+<p><br></p>
 <div id="data-sources" class="section level3">
 <h3>Data Sources</h3>
 <div
@@ -585,11 +587,13 @@ using Federal Information Processing Standards (FIPS) codes.</p>
 href="https://www.epa.gov/sites/default/files/2021-06/documents/national_walkability_index_methodology_and_user_guide_june2021.pdf">Methodology</a></p></li>
 <li><p><a
 href="https://www.epa.gov/sites/default/files/2021-06/documents/epa_sld_3.0_technicaldocumentationuserguide_may2021.pdf">Codebook</a></p></li>
-<li><p>Variables of interest:</p></li>
-<li><p><code>FIPS code</code>: a unique identifier for geographic
-areas</p></li>
-<li><p><code>National Walkability Index</code>: a relative scale of
-walkability, ranging from 0-20</p></li>
+<li><p>Variables of interest:</p>
+<ul>
+<li><code>FIPS code</code>: a unique identifier for geographic
+areas</li>
+<li><code>National Walkability Index</code>: a relative scale of
+walkability, ranging from 0-20</li>
+</ul></li>
 </ul>
 <p><br></p>
 </div>
@@ -609,17 +613,24 @@ href="https://www.census.gov/content/dam/Census/library/publications/2020/acs/ac
 <li><p><a
 href="https://www.census.gov/programs-surveys/acs/technical-documentation/code-lists.2020.html#list-tab-NZBIUOT6KFYGCOIOAE">Codebook</a></p></li>
 <li><p>Variables of interest (in percentage expect median household
-income):</p></li>
-<li><p><code>Age</code>: Age &gt;= 18 years</p></li>
-<li><p><code>Sex</code>: Male or female</p></li>
-<li><p><code>Race/ethnicity</code>: White, Black or African American,
+income):</p>
+<ul>
+<li><code>Age</code>: Age &gt;= 18 years</li>
+<li><code>Sex</code>: Male or female</li>
+<li><code>Race/ethnicity</code>: White, Black or African American,
 Latino or Hispanic, Asian, American Indian or American Native, 2+
-races</p></li>
-<li><p><code>Median household income</code>: Median household income (in
-dollars)</p></li>
+races</li>
+<li><code>Median household income</code>: Median household income (in
+dollars)</li>
+</ul></li>
 </ul>
-<p><br> #### 2020 Behavioral Risk Factor Surveillance System (BRFSS),
-Centers for Disease Control and Prevention</p>
+<p><br></p>
+</div>
+<div
+id="behavioral-risk-factor-surveillance-system-brfss-centers-for-disease-control-and-prevention"
+class="section level4">
+<h4>2020 Behavioral Risk Factor Surveillance System (BRFSS), Centers for
+Disease Control and Prevention</h4>
 <p><a
 href="https://chronicdata.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh/data">The
 Behavioral Risk Factor Surveillance System (BRFSS)</a> is an annual,
@@ -633,30 +644,35 @@ BRFSS completes more than 400,000 adult interviews each year, making it
 the largest continuously conducted health survey system in the
 world.</p>
 <ul>
-<li><p><a
-href="https://www.cdc.gov/pcd/issues/2022/21_0459.htm">Methodology</a></p></li>
-<li><p>Codebooks</p></li>
-<li><p><a
+<li><p>Methodology: <a
+href="https://www.cdc.gov/pcd/issues/2022/21_0459.htm">Click
+here</a></p></li>
+<li><p>Codebooks</p>
+<ul>
+<li><a
 href="https://www.cdc.gov/places/measure-definitions/health-status/index.html">Codebook
-1</a></p></li>
-<li><p><a
+1</a></li>
+<li><a
 href="https://www.cdc.gov/places/measure-definitions/unhealthy-behaviors/index.html">Codebook
-2</a></p></li>
-<li><p><a
+2</a></li>
+<li><a
 href="https://www.cdc.gov/places/measure-definitions/health-outcomes/index.html">Codebook
-3</a></p></li>
-<li><p>Variables of interest:</p></li>
-<li><p><code>High Cholesterol</code>: Prevalence of high cholesterol
-among adults aged &gt;=18 years who have been screened in the past 5
-years</p></li>
-<li><p><code>Physical Inactivity</code>: Prevalence of no leisure-time
-physical activity among adults aged &gt;=18 years</p></li>
-<li><p><code>Mental Health</code>: Prevalence of mental health not good
-for &gt;=14 days among adults aged &gt;=18 years</p></li>
-<li><p><code>Physical Health</code>: Prevalence of physical health not
-good for &gt;=14 days among adults aged &gt;=18 years</p></li>
-<li><p><code>High Blood Pressure</code>: Prevalence of high blood
-pressure among adults aged &gt;=18 years</p></li>
+3</a></li>
+</ul></li>
+<li><p>Variables of interest:</p>
+<ul>
+<li><code>High Cholesterol</code>: Prevalence of high cholesterol among
+adults aged &gt;=18 years who have been screened in the past 5
+years</li>
+<li><code>Physical Inactivity</code>: Prevalence of no leisure-time
+physical activity among adults aged &gt;=18 years</li>
+<li><code>Mental Health</code>: Prevalence of mental health not good for
+&gt;=14 days among adults aged &gt;=18 years</li>
+<li><code>Physical Health</code>: Prevalence of physical health not good
+for &gt;=14 days among adults aged &gt;=18 years</li>
+<li><code>High Blood Pressure</code>: Prevalence of high blood pressure
+among adults aged &gt;=18 years</li>
+</ul></li>
 </ul>
 <p><em>Note: Cholesterol and blood pressure status is based on physician
 diagnosis, physical health, physical inactivity and mental health are
@@ -666,6 +682,7 @@ based on self-report</em></p>
 </div>
 <div id="additional-data-considerations" class="section level3">
 <h3>Additional Data Considerations</h3>
+<p><br></p>
 <div id="spatial-units" class="section level4">
 <h4>Spatial units</h4>
 <p>For our variables of interest, we selected datasets that contained
@@ -679,11 +696,10 @@ consistency with geographic data for other variables.</p>
 <p>In order to create a <a href="map.html">choropleth map of walkability
 scores across the US</a>, we additionally aggregated census tract-level
 walkability to the county-level.</p>
-<div class="figure">
+<center>
 <img src="images/geo_level.png" id="id" class="class"
-style="width:80.0%;height:80.0%" alt="" />
-<p class="caption">Spatial Unit Graph</p>
-</div>
+style="width:50.0%;height:50.0%" />
+</center>
 <p><br></p>
 </div>
 <div id="temporality" class="section level4">
@@ -693,12 +709,12 @@ demographics and BRFSS health outcomes datasets from 2020.</p>
 <p>Though our outcome data precede our exposure data, we believe that
 this is acceptable given the specific circumstances surrounding our
 data. For one, the EPA National Walkability Index is updated
-infrequently; the last major update before 2021 was <a
-href="https://www.epa.gov/sites/default/files/2021-06/documents/epa_sld_3.0_technicaldocumentationuserguide_may2021.pdf">in
-2014</a>. Since physical neighborhood attributes related to walkability
-(such as street density and transit accessibility) change slowly — often
-over a span of many years — we argue that walkability data from a nearer
-year like 2021 will better capture the physical walking conditions of
+infrequently; the last major update before 2021 was in <a
+href="https://www.epa.gov/sites/default/files/2021-06/documents/epa_sld_3.0_technicaldocumentationuserguide_may2021.pdf">2014</a>.
+Since physical neighborhood attributes related to walkability (such as
+street density and transit accessibility) change slowly — often over a
+span of many years — we argue that walkability data from a nearer year
+like 2021 will better capture the physical walking conditions of
 neighborhoods in 2020 compared to using an older 2014 version of the
 walkability index dataset.</p>
 <p>However, we recognize that there is a discrepancy in timing across
@@ -708,7 +724,10 @@ and will interpret our findings with caution.</p>
 </div>
 </div>
 <div id="data-cleaning" class="section level3">
-<h3><a href="cleaning.html">Data Cleaning</a></h3>
+<h3>Data Cleaning</h3>
+<p><a href="cleaning.html">Click here</a> to access data cleaning
+page</p>
+<p><br></p>
 <div id="walkability-data" class="section level4">
 <h4>Walkability Data</h4>
 <p>We explored the original dataset from Environmental Protection
@@ -721,16 +740,9 @@ variables (FIPS code and National Walkability Index) used in this
 project.</p>
 <pre class="r"><code>#Added leading zeros for all Federal Information Processing Standard (FIPS) codes
 #Combined state, county and tract FIPS into an 11-digit code 
-walkability_raw = read_csv(&quot;./data/EPA_SmartLocationDatabase_V3_Jan_2021_Final.csv&quot;)</code></pre>
-<pre><code>## Rows: 220740 Columns: 117
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## chr   (2): CSA_Name, CBSA_Name
-## dbl (115): OBJECTID, GEOID10, GEOID20, STATEFP, COUNTYFP, TRACTCE, BLKGRPCE,...
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>walkability_new = walkability_raw %&gt;% 
+walkability_raw = read_csv(&quot;./data/EPA_SmartLocationDatabase_V3_Jan_2021_Final.csv&quot;)
+
+walkability_new = walkability_raw %&gt;% 
   janitor::clean_names() %&gt;% 
   mutate(statefp = str_pad(statefp, width = 2, pad = &quot;0&quot;),
          countyfp = str_pad(countyfp, width = 3, pad = &quot;0&quot;),
@@ -750,24 +762,11 @@ Community Survey (ACS) for 2020. We created a census tract column
 derived from the geo_id column to match with walkability dataset. Then,
 we selected the five demographic variables of interest: age, sex,
 race/ethnicity, and median household income.</p>
-</div>
-</div>
-</div>
-<div id="demographic-data---acs-2020" class="section level2">
-<h2>Demographic Data - ACS 2020</h2>
-<div id="age-gender-and-race" class="section level3">
-<h3>Age, Gender, and Race</h3>
-<pre class="r"><code>demo_raw = read_csv(&quot;./data/ACSDP5Y2020.DP05-Data.csv&quot;)</code></pre>
-<pre><code>## New names:
-## Rows: 85396 Columns: 715
-## ── Column specification
-## ──────────────────────────────────────────────────────── Delimiter: &quot;,&quot; chr
-## (714): GEO_ID, NAME, DP05_0001E, DP05_0001M, DP05_0001MA, DP05_0001EA, D... lgl
-## (1): ...715
-## ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
-## Specify the column types or set `show_col_types = FALSE` to quiet this message.
-## • `` -&gt; `...715`</code></pre>
-<pre class="r"><code>#removed second row with detailed column names
+<pre class="r"><code>## Demographic Data - ACS 2020
+### Age, Gender, and Race
+demo_raw = read_csv(&quot;./data/ACSDP5Y2020.DP05-Data.csv&quot;)
+
+#removed second row with detailed column names
 #removed columns for annotations and margins of error
 #created a census tract column derived from the geo_id column (removed the &quot;1400000US&quot; at the beginning of each entry) to match with other data sets
 demo_clean = demo_raw %&gt;% 
@@ -776,20 +775,12 @@ demo_clean = demo_raw %&gt;%
   select(-ends_with(c(&quot;ea&quot;, &quot;m&quot;, &quot;ma&quot;))) %&gt;% 
   mutate(geo_clean = geo_id, 
          geo_clean = str_replace(geo_clean, &quot;^1400000US&quot;, &quot;&quot;)) %&gt;% 
-  select(geo_clean, dp05_0002pe, dp05_0003pe, dp05_0021pe, dp05_0037pe, dp05_0038pe, dp05_0039pe, dp05_0044pe, dp05_0058pe, dp05_0071pe)</code></pre>
-<div id="median-household-income" class="section level4">
-<h4>Median household income</h4>
-<pre class="r"><code>income_raw = read_csv(&quot;./data/ACSST5Y2020.S1903-Data.csv&quot;)</code></pre>
-<pre><code>## New names:
-## Rows: 85396 Columns: 483
-## ── Column specification
-## ──────────────────────────────────────────────────────── Delimiter: &quot;,&quot; chr
-## (482): GEO_ID, NAME, S1903_C01_001E, S1903_C01_001EA, S1903_C01_001M, S1... lgl
-## (1): ...483
-## ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
-## Specify the column types or set `show_col_types = FALSE` to quiet this message.
-## • `` -&gt; `...483`</code></pre>
-<pre class="r"><code>income_clean = income_raw %&gt;% 
+  select(geo_clean, dp05_0002pe, dp05_0003pe, dp05_0021pe, dp05_0037pe, dp05_0038pe, dp05_0039pe, dp05_0044pe, dp05_0058pe, dp05_0071pe)
+
+#### Median household income 
+income_raw = read_csv(&quot;./data/ACSST5Y2020.S1903-Data.csv&quot;)
+
+income_clean = income_raw %&gt;% 
   janitor::clean_names() %&gt;%
   select(geo_id, name, s1903_c03_001e) %&gt;% 
   slice(-1) %&gt;% 
@@ -805,45 +796,31 @@ a census tract column derived from the geolocation column to match with
 walkability dataset. After removed footnote variables, we filtered to
 relevant health outcomes: high cholesterol, physical health, blood
 pressure, physical inactivity, and mental health.</p>
-</div>
-</div>
-</div>
-<div id="health-outcome-data---brfss" class="section level2">
-<h2>Health Outcome Data - BRFSS</h2>
-<pre class="r"><code># raw data with all health outcomes
-health_df = read_csv(&quot;./data/PLACES__Local_Data_for_Better_Health__Census_Tract_Data_2022_release.csv&quot;)</code></pre>
-<pre><code>## Rows: 2161543 Columns: 23
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## chr (16): StateAbbr, StateDesc, CountyName, CountyFIPS, LocationName, DataSo...
-## dbl  (4): Year, Data_Value, Low_Confidence_Limit, High_Confidence_Limit
-## num  (1): TotalPopulation
-## lgl  (2): Data_Value_Footnote_Symbol, Data_Value_Footnote
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>health_new = health_df %&gt;% 
+<pre class="r"><code>## Health Outcome Data - BRFSS
+# raw data with all health outcomes
+health_df = read_csv(&quot;./data/PLACES__Local_Data_for_Better_Health__Census_Tract_Data_2022_release.csv&quot;)
+
+health_new = health_df %&gt;% 
   janitor::clean_names() %&gt;%
   mutate(location_name = str_pad(location_name, width = 11, pad = &quot;0&quot;),
          geolocation = str_replace(geolocation, &quot;^POINT &quot;, &quot;&quot;),
          geolocation = str_replace(geolocation, &quot;^\\(&quot;, &quot;&quot;),
          geolocation = str_replace(geolocation, &quot;\\)$&quot;, &quot;&quot;)) %&gt;% 
-  separate(geolocation, into = c(&quot;lat&quot;, &quot;long&quot;), sep = &quot; &quot;)</code></pre>
-<div id="further-cleaning" class="section level4">
-<h4>Further cleaning</h4>
-<pre class="r"><code>#For health outcome, we are focusing on 5 outcomes that are likely to be related to walkability 
+  separate(geolocation, into = c(&quot;lat&quot;, &quot;long&quot;), sep = &quot; &quot;)
+  
+#### Further cleaning
+#For health outcome, we are focusing on 5 outcomes that are likely to be related to walkability 
 health_clean = health_new %&gt;% 
   filter(measure_id == c(&quot;BPHIGH&quot;, &quot;PHLTH&quot;, &quot;LPA&quot;, &quot;MHLTH&quot;, &quot;HIGHCHOL&quot;)) %&gt;% 
   select(location_name, lat, long, measure, data_value, data_value_type, data_value_unit, measure_id)</code></pre>
-<pre><code>## Warning in measure_id == c(&quot;BPHIGH&quot;, &quot;PHLTH&quot;, &quot;LPA&quot;, &quot;MHLTH&quot;, &quot;HIGHCHOL&quot;):
-## longer object length is not a multiple of shorter object length</code></pre>
-<div id="cleaned-dataset-for-analysis-use" class="section level5">
-<h5>Cleaned Dataset for Analysis Use</h5>
+</div>
+<div id="cleaned-dataset-for-analysis-use" class="section level4">
+<h4>Cleaned Dataset for Analysis Use</h4>
 <p>After cleaning all three data sources, we merged the dataset by
-geographical locations. Then we outputed the cleaned data as csv. To be
+geographical locations. Then we outputed the cleaned data as .csv to be
 used for data analysis.</p>
-<p>##Merge</p>
-<pre class="r"><code># merging walkability and health outcomes
+<pre class="r"><code>##Merge
+# merging walkability and health outcomes
 merge1 = full_join(x = walkability_clean, y = health_clean, by = &quot;location_name&quot;)
 
 #mergeing demographic into one df - age&amp;race + median household income
@@ -878,7 +855,9 @@ write_csv(merge_final, &quot;./data/merge_final.csv&quot;)</code></pre>
 </div>
 </div>
 <div id="exploratory-analysis" class="section level2">
-<h2><a href="explore.html">Exploratory analysis</a></h2>
+<h2>Exploratory analysis</h2>
+<p><a href="explore.html">Click here</a> to access exploratory analysis
+page(explore.html)</p>
 <p>To begin, we explored the associations between various social
 demographics, walkability, and health outcomes across the United
 States.</p>
@@ -902,11 +881,10 @@ Native, and 4.95% who have more than 2 races. We also plotted the
 walkability score for each state in figure 1. The highest walkability
 score is from the District of Columbia and the lowest walkability score
 is from Puerto Rico.</p>
-<div class="figure">
+<Center>
 <img src="explore_files/figure-html/unnamed-chunk-5-1.png" id="id"
-class="class" style="width:60.0%;height:60.0%" alt="" />
-<p class="caption">Figure 1</p>
-</div>
+class="class" style="width:70.0%;height:70.0%" />
+</Center>
 <pre class="r"><code>#Load library
 library(tidyverse)
 library(DT)
@@ -922,8 +900,9 @@ explore_df = read_csv(&quot;./data/merge_final.csv&quot;)
 explore_df = explore_df %&gt;% mutate(sex_female = as.numeric(sex_female), sex_male = as.numeric(sex_male), age_18plus = as.numeric(age_18plus), median_income = as.numeric(median_income), percent_race = as.numeric(percent_race)) %&gt;% separate(name, c(&quot;census_track&quot;,&quot;county&quot;, &quot;state&quot;), &quot;,&quot;)
 
 #Filter out variables needed for demographics
-demographics_df = explore_df %&gt;% select(sex_female, sex_male, age_18plus, median_income, race, percent_race, county, state, nat_walk_ind)</code></pre>
-<pre class="r"><code>#Get overall demographics statistics
+demographics_df = explore_df %&gt;% select(sex_female, sex_male, age_18plus, median_income, race, percent_race, county, state, nat_walk_ind)
+
+#Get overall demographics statistics
 overall_demographics = data.frame(
   Variables = c(&quot;Average Walkability Score&quot;, &quot;Percentage of Female&quot;, &quot;Percentage of Male&quot;, &quot;Percentage of Adults&quot;, &quot;Average of Median Income ($)&quot;, &quot;Percentage of White&quot;, &quot;Percentage of Hispanic&quot;, &quot;Percentage of Black&quot;, &quot;Percentage of Asian&quot;, &quot;Percentage of American Indian and Alaska Native&quot;, &quot;Percentage of 2+ Races&quot;),
   Results = c((mean(demographics_df$nat_walk_ind, na.rm = TRUE)),
@@ -938,14 +917,18 @@ overall_demographics = data.frame(
               (mean((demographics_df %&gt;% filter(race == &quot;aian&quot;))$percent_race, na.rm = TRUE)),
               (mean((demographics_df %&gt;% filter(race == &quot;2_plus&quot;))$percent_race, na.rm = TRUE)))
 )
-overall_demographics = overall_demographics %&gt;% mutate(across(where(is.numeric), ~ round(., 2)))</code></pre>
-<pre class="r"><code>#Print table
+overall_demographics = overall_demographics %&gt;% mutate(across(where(is.numeric), ~ round(., 2)))
+
+
+#Print table
 datatable(overall_demographics, 
           rownames = FALSE, 
           caption = htmltools::tags$caption(style = &#39;caption-side: top; text-align: left;&#39;, 
                     &#39;Table 1: &#39;, htmltools::em(&#39;Overall demographics and walkability statistics of the dataset.&#39;)), 
-          options = list(dom = &#39;t&#39;, pageLength = 11, columnDefs = list(list(className = &#39;dt-center&#39;, targets = &quot;_all&quot;))))</code></pre>
-<pre class="r"><code>#Filter out state and walkability score
+          options = list(dom = &#39;t&#39;, pageLength = 11, columnDefs = list(list(className = &#39;dt-center&#39;, targets = &quot;_all&quot;))))
+          
+
+#Filter out state and walkability score
 walkability_df = explore_df %&gt;% select(state, nat_walk_ind) %&gt;% group_by(state) %&gt;% summarise_each(funs(mean(., na.rm = TRUE))) 
 
 #Delete NA from states 
@@ -959,8 +942,10 @@ walkability_plot = walkability_df  %&gt;% mutate(state = fct_reorder(state, desc
     y = &quot;Walkability Score&quot;,
     title = &quot;Figure 1. Distribution of walkability score by state&quot;,
     caption = &quot;Dashline represents national average.&quot;) + theme(axis.text.x = element_text(angle = 90, vjust = 0.1, hjust=0.9, size = 7), axis.ticks = element_blank()) + 
-  geom_hline(yintercept=9.54, linetype=&quot;dashed&quot;, color = &quot;Navy&quot;)</code></pre>
-<pre class="r"><code>#Avg of demographics by state
+  geom_hline(yintercept=9.54, linetype=&quot;dashed&quot;, color = &quot;Navy&quot;)
+
+
+#Avg of demographics by state
 state_demographics = demographics_df %&gt;% 
   group_by(state) %&gt;% 
   summarise_each(funs(mean(., na.rm = TRUE))) %&gt;% 
@@ -980,15 +965,19 @@ state_demographics_merge = inner_join(state_demographics, state_demographics_rac
   relocate(state, nat_walk_ind, sex_female, sex_male, age_18plus, median_income, white, hispanic, black, asian, aian)
 
 #Delete the row with NA
-state_demographics_merge = state_demographics_merge[-53,]</code></pre>
-<pre class="r"><code>#Print table
+state_demographics_merge = state_demographics_merge[-53,]
+
+
+#Print table
 datatable(state_demographics_merge, 
           rownames = FALSE, 
           colnames = c(&#39;State&#39;, &#39;Average Walkability Score&#39;, &#39;Percentage of Female&#39;, &#39;Percentage of Male&#39;, &#39;Percentage of Adults&#39;, &#39;Average of Median Income ($)&#39;, &#39;Percentage of White&#39;, &#39;Percentage of Hispanic&#39;, &#39;Percentage of Black&#39;, &#39;Percentage of Asian&#39;, &#39;Percentage of American Indian and Alaska Native&#39;, &#39;Percentage of more than 2 Races&#39;),
           caption = htmltools::tags$caption(style = &#39;caption-side: top; text-align: left;&#39;, 
                     &#39;Table 2: &#39;, htmltools::em(&#39;Demographics and walkability statistics of the dataset by state.&#39;)), 
-          options = list(order = list(list(2, &#39;desc&#39;)), columnDefs = list(list(className = &#39;dt-center&#39;, targets = &quot;_all&quot;))))</code></pre>
-<pre class="r"><code>#Avg of demographics by county
+          options = list(order = list(list(2, &#39;desc&#39;)), columnDefs = list(list(className = &#39;dt-center&#39;, targets = &quot;_all&quot;))))
+
+
+#Avg of demographics by county
 county_demographics = demographics_df %&gt;% 
   group_by(county) %&gt;% 
   summarise_each(funs(mean(., na.rm = TRUE))) %&gt;% 
@@ -1011,8 +1000,10 @@ county_demographics_merge = inner_join(county_demographics, county_demographics_
 
 #Add state name into dataframe
 county_demographics_merge = left_join(county_demographics_merge, state_name,by = &quot;county&quot;, all.x = TRUE) %&gt;%
-  relocate(county, state, nat_walk_ind, sex_female, sex_male, age_18plus, median_income, white, hispanic, black, asian, aian) %&gt;% drop_na()</code></pre>
-<pre class="r"><code>#Print table
+  relocate(county, state, nat_walk_ind, sex_female, sex_male, age_18plus, median_income, white, hispanic, black, asian, aian) %&gt;% drop_na()
+
+
+#Print table
 datatable(county_demographics_merge, 
           rownames = FALSE, 
           colnames = c(&#39;County&#39;, &#39;State&#39;,&#39;Average Walkability Score&#39;, &#39;Percentage of Female&#39;, &#39;Percentage of Male&#39;, &#39;Percentage of Adults&#39;, &#39;Average of Median Income ($)&#39;, &#39;Percentage of White&#39;, &#39;Percentage of Hispanic&#39;, &#39;Percentage of Black&#39;, &#39;Percentage of Asian&#39;, &#39;Percentage of American Indian and Alaska Native&#39;, &#39;Percentage of more than 2 Races&#39;),
@@ -1047,7 +1038,7 @@ each of the five health outcomes are also similar to the national
 average.</p>
 <div class="figure">
 <img src="images/explore_table.png" id="id" class="class"
-style="width:80.0%;height:80.0%" alt="" />
+style="width:100.0%;height:100.0%" alt="" />
 <p class="caption">Health outcomes prevalence on state and county
 level</p>
 </div>
@@ -1078,8 +1069,9 @@ health_df = t(health_df)
 rownames(health_df) &lt;- c(&quot;Health Outcome Measurments&quot;,&quot;Prevalence of Health Outcome (%)&quot;,&quot;Average Walkability Score&quot;,&quot;Percentage of Female&quot;, &quot;Percentage of Male&quot;, &quot;Percentage of Adults&quot;, &quot;Average of Median Income ($)&quot;, &quot;Percentage of White&quot;, &quot;Percentage of Hispanic&quot;, &quot;Percentage of Black&quot;, &quot;Percentage of Asian&quot;, &quot;Percentage of American Indian and Alaska Native&quot;, &quot;Percentage of 2+ Races&quot;)
 
 #Dataframe for making the table only
-health_df_table = health_df[-1,]</code></pre>
-<pre class="r"><code>#Print table
+health_df_table = health_df[-1,]
+
+#Print table
 datatable(health_df_table, 
           rownames = TRUE, 
           colnames = c(&#39;High blood pressure&#39;, &#39;High cholesterol who have been screened in the past 5 years&#39;,&#39;Mental health not good for over 14 days&#39;, &#39;No leisure-time physical activity&#39;, &#39;Physical health not good for over 14 days&#39;),
@@ -1087,8 +1079,9 @@ datatable(health_df_table,
                     &#39;Table 4: &#39;, htmltools::em(&#39;Overall Health Outcome statistics of the dataset&#39;)), 
           options = list(
             dom = &#39;t&#39;, pageLength = 12,
-            columnDefs = list(list(className = &#39;dt-center&#39;, targets = &quot;_all&quot;))))</code></pre>
-<pre class="r"><code>#Filter out state level health outcome data
+            columnDefs = list(list(className = &#39;dt-center&#39;, targets = &quot;_all&quot;))))
+
+#Filter out state level health outcome data
 health_df_state = explore_df %&gt;% select(sex_female, sex_male, age_18plus, median_income, race, percent_race, county, state, nat_walk_ind, measure, data_value) %&gt;% 
   group_by(state, measure) %&gt;% 
   summarise_each(funs(mean(., na.rm = TRUE))) %&gt;% 
@@ -1113,15 +1106,18 @@ health_df_state_race$state_measure &lt;- paste(health_df_state_race$state, &quot
 health_df_merge = inner_join(health_df_state, health_df_state_race, by = &quot;state_measure&quot;) %&gt;% 
   mutate(across(where(is.numeric), ~ round(., 2))) %&gt;% 
   select(-c(state.x, state.y, measure.x, measure.y)) %&gt;% 
-  relocate(state_measure, data_value, nat_walk_ind, sex_female, sex_male, age_18plus, median_income, white, hispanic, black, asian, aian)</code></pre>
-<pre class="r"><code>#Print table
+  relocate(state_measure, data_value, nat_walk_ind, sex_female, sex_male, age_18plus, median_income, white, hispanic, black, asian, aian)
+
+#Print table
 datatable(health_df_merge, 
           rownames = FALSE, 
           colnames = c(&#39;State/Health Outcome&#39;, &#39;Prevalence of Health Outcome (%)&#39;, &#39;Average Walkability Score&#39;, &#39;Percentage of Female&#39;, &#39;Percentage of Male&#39;, &#39;Percentage of Adults&#39;, &#39;Average of Median Income ($)&#39;, &#39;Percentage of White&#39;, &#39;Percentage of Hispanic&#39;, &#39;Percentage of Black&#39;, &#39;Percentage of Asian&#39;, &#39;Percentage of American Indian and Alaska Native&#39;, &#39;Percentage of more than 2 Races&#39;),
           caption = htmltools::tags$caption(style = &#39;caption-side: top; text-align: left;&#39;, 
                     &#39;Table 2: &#39;, htmltools::em(&#39;Demographics and walkability statistics of the dataset by state.&#39;)), 
-          options = list(order = list(list(0, &#39;asc&#39;)), columnDefs = list(list(className = &#39;dt-center&#39;, targets = &quot;_all&quot;))))</code></pre>
-<pre class="r"><code>#Filter out county level health outcome data
+          options = list(order = list(list(0, &#39;asc&#39;)), columnDefs = list(list(className = &#39;dt-center&#39;, targets = &quot;_all&quot;))))
+
+
+#Filter out county level health outcome data
 health_df_county = explore_df %&gt;% select(sex_female, sex_male, age_18plus, median_income, county, state, nat_walk_ind, measure, data_value) %&gt;% 
   group_by(state, county, measure) %&gt;% 
   summarise_each(funs(mean(., na.rm = TRUE)))
@@ -1145,8 +1141,10 @@ health_df_county_race$state_measure &lt;- paste(health_df_county_race$county, &q
 health_df_merge2 = inner_join(health_df_county, health_df_county_race, by = &quot;state_measure&quot;) %&gt;% 
   mutate(across(where(is.numeric), ~ round(., 2))) %&gt;% 
   select(-c(state.x, state.y, measure.x, measure.y, county.x, county.y)) %&gt;% 
-  relocate(state_measure, data_value, nat_walk_ind, sex_female, sex_male, age_18plus, median_income, white, hispanic, black, asian, aian)</code></pre>
-<pre class="r"><code>#Print table
+  relocate(state_measure, data_value, nat_walk_ind, sex_female, sex_male, age_18plus, median_income, white, hispanic, black, asian, aian)
+
+
+#Print table
 datatable(health_df_merge2, 
           rownames = FALSE, 
           colnames = c(&#39;County/State/Health Outcome&#39;, &#39;Prevalence of Health Outcome (%)&#39;, &#39;Average Walkability Score&#39;, &#39;Percentage of Female&#39;, &#39;Percentage of Male&#39;, &#39;Percentage of Adults&#39;, &#39;Average of Median Income ($)&#39;, &#39;Percentage of White&#39;, &#39;Percentage of Hispanic&#39;, &#39;Percentage of Black&#39;, &#39;Percentage of Asian&#39;, &#39;Percentage of American Indian and Alaska Native&#39;, &#39;Percentage of more than 2 Races&#39;),
@@ -1160,16 +1158,17 @@ datatable(health_df_merge2,
 <p>We also created exploratory plots between demographics and
 walkability, as well as between health outcomes and walkability, to help
 guide our future analysis.</p>
-<p><img src="explore_files/figure-html/unnamed-chunk-17-1.png" id="id"
-class="class" style="width:60.0%;height:60.0%" alt="Figure 2" /> <img
-src="explore_files/figure-html/unnamed-chunk-19-1.png" id="id"
-class="class" style="width:60.0%;height:60.0%" alt="Figure 3" /> <img
-src="explore_files/figure-html/unnamed-chunk-21-1.png" id="id"
-class="class" style="width:60.0%;height:60.0%" alt="Figure 4" /> <img
-src="explore_files/figure-html/unnamed-chunk-23-1.png" id="id"
-class="class" style="width:60.0%;height:60.0%" alt="Figure 5" /> <img
-src="explore_files/figure-html/unnamed-chunk-25-1.png" id="id"
-class="class" style="width:60.0%;height:60.0%" alt="Figure 6" /></p>
+<pre class="r"><code>library(png)
+library(grid)
+library(gridExtra)
+img1 &lt;-  rasterGrob(as.raster(readPNG(&quot;explore_files/figure-html/unnamed-chunk-17-1.png&quot;)), interpolate = FALSE)
+img2 &lt;-  rasterGrob(as.raster(readPNG(&quot;explore_files/figure-html/unnamed-chunk-19-1.png&quot;)), interpolate = FALSE)
+img3 &lt;-  rasterGrob(as.raster(readPNG(&quot;explore_files/figure-html/unnamed-chunk-21-1.png&quot;)), interpolate = FALSE)
+img4 &lt;-  rasterGrob(as.raster(readPNG(&quot;explore_files/figure-html/unnamed-chunk-23-1.png&quot;)), interpolate = FALSE)
+grid.arrange(img1, img2, img3, img4, ncol = 2, nrow = 2)</code></pre>
+<p><img src="report_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="explore_files/figure-html/unnamed-chunk-25-1.png" id="id"
+class="class" style="width:85.0%;height:85.0%" /></p>
 <pre class="r"><code>gender_walk_plot = county_demographics_merge %&gt;% ggplot(mapping = aes(x = sex_female, y = nat_walk_ind)) +
   geom_point(shape = &quot;diamond&quot;, color = &quot;steelblue&quot;, size = 2, alpha = 0.5) + labs(         
     x = &quot;Percentage of Female&quot;,
@@ -1179,8 +1178,10 @@ class="class" style="width:60.0%;height:60.0%" alt="Figure 6" /></p>
     formula = y ~ x,              
     method = &quot;lm&quot;,        
     size = 1, color = &quot;beige&quot;, alpha = 0.5) + 
-  stat_cor(p.accuracy = 0.001, r.accuracy = 0.01)</code></pre>
-<pre class="r"><code>age_walk_plot = county_demographics_merge %&gt;% ggplot(mapping = aes(x = age_18plus, y = nat_walk_ind))+
+  stat_cor(p.accuracy = 0.001, r.accuracy = 0.01)
+
+
+age_walk_plot = county_demographics_merge %&gt;% ggplot(mapping = aes(x = age_18plus, y = nat_walk_ind))+
   geom_point(shape = &quot;diamond&quot;, color = &quot;steelblue&quot;, size = 2, alpha = 0.5) + labs(         
     x = &quot;Percentage of Adults&quot;,
     y = &quot;Walkability Score&quot;,
@@ -1189,8 +1190,10 @@ class="class" style="width:60.0%;height:60.0%" alt="Figure 6" /></p>
     formula = y ~ x,
     method = &quot;lm&quot;,        
     size = 1, color = &quot;beige&quot;, alpha = 0.5) + 
-  stat_cor(p.accuracy = 0.001, r.accuracy = 0.01)</code></pre>
-<pre class="r"><code>income_walk_plot = county_demographics_merge %&gt;% ggplot(mapping = aes(x = median_income, y = nat_walk_ind))+
+  stat_cor(p.accuracy = 0.001, r.accuracy = 0.01)
+
+
+income_walk_plot = county_demographics_merge %&gt;% ggplot(mapping = aes(x = median_income, y = nat_walk_ind))+
   geom_point(shape = &quot;diamond&quot;, color = &quot;steelblue&quot;, size = 2, alpha = 0.5) + labs(         
     x = &quot;Average of Median Income ($)&quot;,
     y = &quot;Walkability Score&quot;,
@@ -1199,8 +1202,10 @@ class="class" style="width:60.0%;height:60.0%" alt="Figure 6" /></p>
     formula = y ~ x,              
     method = &quot;lm&quot;,        
     size = 1, color = &quot;beige&quot;, alpha = 0.5) + 
-  stat_cor(p.accuracy = 0.001, r.accuracy = 0.01)</code></pre>
-<pre class="r"><code>race_walk_plot = county_demographics_merge %&gt;% ggplot(mapping = aes(x = white, y = nat_walk_ind))+
+  stat_cor(p.accuracy = 0.001, r.accuracy = 0.01)
+
+
+race_walk_plot = county_demographics_merge %&gt;% ggplot(mapping = aes(x = white, y = nat_walk_ind))+
   geom_point(shape = &quot;diamond&quot;, color = &quot;steelblue&quot;, size = 2, alpha = 0.5) + labs(         
     x = &quot;Percentage of White&quot;,
     y = &quot;Walkability Score&quot;,
@@ -1209,8 +1214,10 @@ class="class" style="width:60.0%;height:60.0%" alt="Figure 6" /></p>
     formula = y ~ x,          
     method = &quot;lm&quot;,        
     size = 1, color = &quot;beige&quot;, alpha = 0.5) + 
-  stat_cor(p.accuracy = 0.001, r.accuracy = 0.01)</code></pre>
-<pre class="r"><code>health_walk_plot = health_df_county %&gt;% ggplot(mapping = aes(x = data_value, y = nat_walk_ind, color = measure)) + geom_point(shape = &quot;diamond&quot;, size = 2, alpha = 0.5, show.legend = FALSE) + labs(         
+  stat_cor(p.accuracy = 0.001, r.accuracy = 0.01)
+
+
+health_walk_plot = health_df_county %&gt;% ggplot(mapping = aes(x = data_value, y = nat_walk_ind, color = measure)) + geom_point(shape = &quot;diamond&quot;, size = 2, alpha = 0.5, show.legend = FALSE) + labs(         
     x = &quot;Prevalence of Health Outcome (%)&quot;,
     y = &quot;Walkability Score&quot;,
     title = &quot;Figure 6. Prevalence of Health Outcome vs. Walkability Score&quot;) + scale_color_brewer(palette = &quot;Spectral&quot;) + 
@@ -1220,26 +1227,26 @@ class="class" style="width:60.0%;height:60.0%" alt="Figure 6" /></p>
 </div>
 <div id="mapping-walkability" class="section level2">
 <h2>Mapping Walkability</h2>
+<p><br></p>
 <div id="interactive-map-with-national-walkability-index"
 class="section level3">
-<h3><a href="map.html">Interactive Map with National Walkability
-Index</a></h3>
+<h3>Interactive Map with National Walkability Index</h3>
+<p><a href="map.html">Click here</a> to access Interactive Map with
+National Walkability Index</p>
+<p><br></p>
 <div id="map-overview" class="section level4">
 <h4>Map Overview</h4>
 <p>For the National Walkability Index, we wanted to go beyond the <a
 href="https://www.arcgis.com/home/webmap/viewer.html?url=https%3A%2F%2Fgeodata.epa.gov%2Farcgis%2Frest%2Fservices%2FOA%2FWalkabilityIndex%2FMapServer&amp;source=sd">EPA’s
 current Walkability Map</a> and created an interactive spatial
-visualization — <a href="map.html">a choropleth map</a> that
+visualization — a <a href="map.html">choropleth map</a> that
 demonstrates county-level walkability scores and the health outcomes
 prevalence. We utilized many geographic information systems (GIS)
 concepts and synthesized skills learned from both the Data Science I
 (BIOST P8105) and Public Health GIS (EHSC P8371) courses that we’re
 taking in the creation of this spatial visualization.</p>
-<div class="figure">
-<img src="images/overall_map.png" id="id" class="class"
-style="width:65.0%;height:65.0%" alt="" />
-<p class="caption">National Walkability Index in the US</p>
-</div>
+<p><img src="images/overall_map.png" id="id" class="class"
+style="width:65.0%;height:65.0%" /></p>
 <p>To create our interactive choropleth map, we first obtained a US-wide
 county-level .json file from this <a
 href="https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json">website</a>
@@ -1363,29 +1370,29 @@ with darker colors representing a higher walkability index and lighter
 colors representing a lower walkability index. Visually, most of the
 cities in the US have a relatively lower walkability index while most
 major metropolitan areas have a higher walkability index.</p>
-<p>Compared to the [EPA’s National Walkability Map]((<a
-href="https://www.arcgis.com/home/webmap/viewer.html?url=https%3A%2F%2Fgeodata.epa.gov%2Farcgis%2Frest%2Fservices%2FOA%2FWalkabilityIndex%2FMapServer&amp;source=sd"
-class="uri">https://www.arcgis.com/home/webmap/viewer.html?url=https%3A%2F%2Fgeodata.epa.gov%2Farcgis%2Frest%2Fservices%2FOA%2FWalkabilityIndex%2FMapServer&amp;source=sd</a>),
-our interactive map provides additional information about the percentage
-of selective health outcomes. This interactive display of both
-walkability scores and various health outcomes across the US can be
-helpful for various audiences who might want to look at the spatial
-distribution of both simultaneously.</p>
-<p>We hope you enjoy this map as much as we do!</p>
+<p>Compared to the <a
+href="https://www.arcgis.com/home/webmap/viewer.html?url=https%3A%2F%2Fgeodata.epa.gov%2Farcgis%2Frest%2Fservices%2FOA%2FWalkabilityIndex%2FMapServer&amp;source=sd">EPA’s
+National Walkability Map</a>, our interactive map provides additional
+information about the percentage of selective health outcomes. This
+interactive display of both walkability scores and various health
+outcomes across the US can be helpful for various audiences who might
+want to look at the spatial distribution of both simultaneously.</p>
 <p><br> <br></p>
 </div>
 </div>
 </div>
 <div id="regression-analysis" class="section level2">
 <h2>Regression analysis</h2>
+<p><br></p>
 <div id="variable-preparation" class="section level3">
-<h3>Variable preparation</h3>
+<h3>Variable Preparation</h3>
 <p>To ease interpretation, the walkability score was dichotomized
 according to <a
 href="https://www.epa.gov/sites/default/files/2021-06/documents/national_walkability_index_methodology_and_user_guide_june2021.pdf">cutoff
 values</a> provided by EPA, where values above 10.5 are classified as
 “More Walkable”, and those below as “Less Walkable”. Sociodemographic
 variables</p>
+<p><br></p>
 </div>
 <div id="methodology" class="section level3">
 <h3>Methodology</h3>
@@ -1404,7 +1411,8 @@ probabilities for its more direct relevance to the real world.</p>
 </div>
 <div id="results" class="section level3">
 <h3>Results</h3>
-<p>PASTE PLOTS</p>
+<p><img src="images/forest.png" id="id" class="class"
+style="width:85.0%;height:85.0%" /></p>
 <p>Here, we see that more walkable places have the following change in
 prevalence for a health outcome compared to less walkable places:</p>
 <ul>
@@ -1423,15 +1431,15 @@ walkable spaces.</p>
 <p><br> <br></p>
 </div>
 </div>
-<div id="nyc-spatial-clustering-analysis" class="section level2">
-<h2><a href="map.html">NYC Spatial Clustering Analysis</a></h2>
-<p>To further understand the National Walkability Index in a smaller
-spatial unit, we narrowed our exploration down to New York City, where
-us five walkaholics reside.</p>
-<p>To gain a general understanding of the walkability index in NYC, we
-started by creating a descriptive choropleth map on the census tract
-level. We focused on the Bronx, Kings (Brooklyn), New York, Queens, and
-Richmond (Staten Island) Counties in New York.</p>
+<div id="spatial-clustering-analysis" class="section level2">
+<h2>Spatial Clustering Analysis</h2>
+<p>[Click here] to access NYC spatial clustering analysis(map.html) To
+further understand the National Walkability Index in a smaller spatial
+unit, we narrowed our exploration down to New York City, where us five
+walkaholics reside. To gain a general understanding of the walkability
+index in NYC, we started by creating a descriptive choropleth map on the
+census tract level. We focused on the Bronx, Kings (Brooklyn), New York,
+Queens, and Richmond (Staten Island) Counties in New York.</p>
 <p><br></p>
 <div id="new-york-city-descriptive-choropleth-map-for-walkability"
 class="section level3">
@@ -1444,9 +1452,10 @@ outcomes prevalence, demographics prevalence, the geographic identifier
 is available from the <a
 href="https://www2.census.gov/geo/tiger/GENZ2020/shp/">US Census
 Bureau</a>, and we made use of open-source spatial mapping software, <a
-href="https://qgis.org/en/site/">QGIS</a>, to merge the cleaned dataset
-with the US map shapefile. After exporting this new combined shapefile
-from QGIS, we used functions from <a
+href="https://qgis.org/en/site/">QGIS</a>, to merge the <a
+href="cleaning.html">cleaned dataset</a> with the US map shapefile.
+After exporting this new combined shapefile from QGIS, we used functions
+from <a
 href="https://cran.r-project.org/web/packages/sf/index.html"><code>sf</code></a>
 package to read in the shapefile and turned it into a dataframe in our
 RProject. After that, we tidied this new dataset by including the five
@@ -1527,7 +1536,7 @@ more on the Queen’s first order contiguity matrix that we used). The
 test follows Z distribution, and may be used as a diagnostic tool to
 identify where spatial clustering is present. The test status is:</p>
 <p><img src="images/cluster.png" id="id" class="class"
-style="width:60.0%;height:60.0%" /></p>
+style="width:65.0%;height:65.0%" /></p>
 <p>Essentially, the local Moran’s I tells us about the local indicator
 of spatial association (LISA) statistic. We will use these LISA cluster
 indicators to map different walkability clusters in NYC.</p>
@@ -1672,7 +1681,10 @@ the right) for each county, as well as the EPA’s categorization of
 walkability indices.</p>
 <p>At the bottom, there are plots showing the prevalence of demographic
 indicators for each county along with the walkability scores for
-reference. #### Steps</p>
+reference.</p>
+<p><br></p>
+<div id="steps" class="section level4">
+<h4>Steps</h4>
 <p>We split the name variable into separate census tract, county and
 state variables on the complete walkability dataset, and then filtered
 the state variable to only look at New York State.</p>
@@ -1680,6 +1692,8 @@ the state variable to only look at New York State.</p>
 relevant variable and got the mean values of each variable by county,
 and plotted bars on plotly. We then added the county average walkability
 index as points for reference.</p>
+<p><br></p>
+</div>
 <div id="dashboard-highlights" class="section level4">
 <h4>Dashboard Highlights</h4>
 <p>From the plot with health outcomes, there doesn’t seem to be any
@@ -1697,26 +1711,120 @@ compositions seem to have higher walkability indices.</p>
 <p>From the plot with median household income, while the distribution of
 lower income values is scattered rather evenly across irrespective of
 walkability index, one interesting finding is that counties with median
-household income exceeding $100,000 have higher walkability indices.
-This could indicate that more walkable counties are more desirable,
-leading to higher property prices, thus only those with higher incomes
-can afford to live there.</p>
+household income exceeding $100,000 have higher walkability indices. One
+explanation is that it could indicate that more walkable counties are
+more desirable, leading to higher property prices, thus only those with
+higher incomes can afford to live there.</p>
 <p>From the plots showing sex and age, it can be seen that the
 distribution of sex and adults is uniform across New York state
 counties, and does not vary with walkability index.</p>
+<p><br> <br></p>
 </div>
 </div>
 </div>
 <div id="discussion" class="section level2">
 <h2>Discussion</h2>
+<p><br></p>
 <div id="findings" class="section level3">
 <h3>Findings</h3>
+<p>The main purpose of EDA is to explore the overall demographics,
+walkability and health outcome across geographical regions in the United
+States.</p>
+<ul>
+<li>The US mean walkability score is 9.54, which is below average
+walkable according to the National Walkability Index score ranging from
+1 to 20.</li>
+<li>The highest average walkability score is from the District of
+Columbia and the lowest average walkability score is from Puerto
+Rico.</li>
+<li>Here is a table showing the health outcome prevalence on the
+state-level and county-level.</li>
+</ul>
+<p><img src="images/explore_table.png" id="id" class="class"
+style="width:90.0%;height:90.0%" /></p>
+<p>In the statistical analysis, we explored how walkability is
+correlated with health outcomes at the national level. We utilized beta
+regression to model the relationship between health outcomes with the
+dichotomized walkability variable, controlling for sociodemographic
+variables of prevalence of age 18+, males, Black individuals, and median
+income. We found that, more walkable places have the following
+difference in prevalence for a particular health outcome compared to
+less walkable places:</p>
+<ul>
+<li>1.690% increase in physical activity</li>
+<li>0.568% increase in good mental health</li>
+<li>0.396% increase in good physical health</li>
+<li>2.133% decrease in high cholesterol</li>
+<li>2.359% decrease in high blood pressure</li>
+</ul>
+<p>Therefore, we concluded that:</p>
+<ul>
+<li>Increase in walkability is associated with decreased prevalence of
+poor health outcomes, which is expected.</li>
+<li>However, an increase in walkability is associated with an increase
+for prevalence of poor mental health, but this could be due to
+unaccounted for confounding from density of space and urbanicity that
+comes with more walkable spaces.</li>
+</ul>
+<p><br></p>
+<p>In the choropleth walkability map and clustering analysis, we
+explored the National Walkability Index at the county-level across the
+United States. Also, we will take a closer look at the walkability in
+New York City and conduct exploratory spatial data analysis. In our
+interactive map, we observed that most of the cities in the US have a
+relatively lower walkability index while most major metropolitan areas
+have a higher walkability index. Compared to the <a
+href="https://www.arcgis.com/home/webmap/viewer.html?url=https%3A%2F%2Fgeodata.epa.gov%2Farcgis%2Frest%2Fservices%2FOA%2FWalkabilityIndex%2FMapServer&amp;source=sd">EPA’s
+National Walkability Map</a>, our interactive map provides additional
+information about the percentage of selective health outcomes. This
+interactive display of both walkability scores and various health
+outcomes across the US can be helpful for various audiences who might
+want to look at the spatial distribution of both simultaneously.</p>
+<p><br></p>
+<p>In the NYC cluster spatial analysis, we map the different clustering
+of walkability in NYC using Queen’s first order contiguity and local
+Moran’s I. Considerting the hot spots (i.e., High-High) and the cold
+spots (i.e., Low-Low), we found that:</p>
+<ul>
+<li>In Manhattan, there are several High-High clusterings (i.e., census
+tracts that with walkability that are surrounded by census tracts with a
+high walkability index) in the Midtown and SOHO area.</li>
+<li>Some parts of Queens, such as Flushing and Forest Hills, also
+indicates a High-High clustering.</li>
+<li>Parts of the Bronx shows the Low-Low clustering, where census tracts
+that are low in walkability are surrounded by census tracts with low
+walkability index.</li>
+<li>The Low-Low clustering in Brooklyn, on the other hand, might be due
+to the location of the JFK airport.</li>
+</ul>
+<p>This suggests that, the High-High neighborhoods are doing a good job
+in building a walkable environment and the Low-Low areas will benefit a
+lot by improving built environment infrastructure to make the community
+more walkable for all.</p>
+<p><br></p>
+<p>In the dashboard, to get a better understanding of the walkability,
+demographics and health outcomes, we created a dashboard looking at our
+variables of interest within counties of New York State.</p>
+<p>Here are some highlights:</p>
+<ul>
+<li>All health outcomes (poor physical health, poor mental health, no
+leisure physical activity, high cholesterol and high blood pressure) are
+rather equally distributed across New York State counties,and are not
+related to walkability index.</li>
+<li>Counties with median household income exceeding $100,000 have higher
+walkability indices.
+<ul>
+<li>One expalanation is that it could indicate that more walkable
+counties are more desirable, leading to higher property prices, thus
+only those with higher incomes can afford to live there.</li>
+</ul></li>
+</ul>
 <p><br></p>
 </div>
 <div id="project-obstacles" class="section level3">
 <h3>Project Obstacles</h3>
-<div id="big-dataset-and-data-pre-processing" class="section level4">
-<h4>1. Big dataset and data pre-processing</h4>
+<div id="big-dataset-and-data-pre-processing" class="section level5">
+<h5>1. Big dataset and data pre-processing</h5>
 <p>All the raw dataset we retrieved from the website were large
 (measuring in hundreds of megabytes) and it was hard to find the piece
 of information we needed for the project. We had to spend some time
@@ -1725,8 +1833,8 @@ were measured in the same geographical unit was challenging.
 Fortunately, we were able to find all the information we needed and
 proceed with the analysis.</p>
 </div>
-<div id="population-level-data" class="section level4">
-<h4>2. Population-level data</h4>
+<div id="population-level-data" class="section level5">
+<h5>2. Population-level data</h5>
 <p>The health outcome and demographic data we utilized were on the
 population level and were reported as prevalences. Since we don’t have
 any individual data, it was difficult to find the most appropriate
@@ -1735,8 +1843,8 @@ outcomes. After some searching, we found that beta regression is able to
 model outcome in proportion, i.e. a continuous outcome between 0 and
 1.</p>
 </div>
-<div id="deciding-the-geographic-unit" class="section level4">
-<h4>3. Deciding the geographic unit</h4>
+<div id="deciding-the-geographic-unit" class="section level5">
+<h5>3. Deciding the geographic unit</h5>
 <p>As mentioned, the geographic unit is inconsistent across different
 parts of this project, due to the availability of data and the
 comprehensibility of the visual presentation. Here are the spatial units
@@ -1752,7 +1860,10 @@ counties in NY State</p>
 </div>
 </div>
 <div id="strengths-and-limitations" class="section level3">
-<h3><a href="limitations.html">Strengths and Limitations</a></h3>
+<h3>Strengths and Limitations</h3>
+<p><a href="limitations.html">Click here</a> to access the strengths and
+limitations page</p>
+<p><br></p>
 <div id="strengths" class="section level4">
 <h4>Strengths</h4>
 <div id="reliable-and-updated-data-sources" class="section level5">
@@ -1798,7 +1909,7 @@ walkability.</p>
 </div>
 <div id="limitations" class="section level4">
 <h4>Limitations</h4>
-<p>As detailed as our analyses are, they are not without
+<p>As detailed as our analyses were, they are not without
 limitations.</p>
 <div id="temporality-1" class="section level5">
 <h5>1. Temporality</h5>
@@ -1859,6 +1970,37 @@ health outcomes data for New York City (alongside other urban areas) and
 were unable to conduct this additional spatial clustering analyses.</p>
 <p><br></p>
 </div>
+</div>
+</div>
+<div id="next-steps" class="section level3">
+<h3>Next Steps</h3>
+<div id="update-to-include-most-recent-data" class="section level4">
+<h4>Update to include most recent data</h4>
+<p>This exploration into walkability in the US was ultimately just that
+– exploratory, initial analyses, as we were constrained by incomplete
+datasets alongside issues with temporality. With the recent release of
+ACS 2021 estimates and the imminent one for BRFSS 2022, we may be able
+to utilize them to more concretely control for issues with
+temporality.</p>
+</div>
+<div id="use-individual-level-data" class="section level4">
+<h4>Use individual-level data</h4>
+<p>We were unable to utilize the individual-level data from ACS and
+BRFSS due to their complex survey weighting regimens, and difficulties
+in corresponding them with spatial analyses we were trying to conduct.
+Tackling these would go beyond the scope of this class and may go beyond
+the time frame provided.</p>
+</div>
+<div id="explore-intra-state-county-walkability" class="section level4">
+<h4>Explore intra-state county walkability</h4>
+<p>Unfortunately, due to issues with Shiny, we were only able to look at
+a dashboard of health outcomes and demographics for counties in New York
+State only. It would be more meaningful if we could look at the
+distributions of health outcomes and demographic indicators for counties
+within each state to look for patterns among regions.</p>
+<p><br> <br></p>
+<p><font size="+2">We hope you enjoy this project as much as we
+do!</font></p>
 </div>
 </div>
 </div>
