@@ -82,8 +82,8 @@ Considerting the hot spots (i.e., High-High) and the cold spots (i.e., Low-Low),
 * The Low-Low clustering in Brooklyn, on the other hand, might be due to the location of the JFK airport.
 
 This suggests that, the High-High neighborhoods are doing a good job in building a walkable environment and the Low-Low areas will benefit a lot by improving built environment infrastructure to make the community more walkable for all.
+
 <br>
-</br>
 
 ## [Dashboard](dashboard.html)
 
@@ -96,6 +96,5 @@ Here are some highlights:
   * One expalanation is that it could indicate that more walkable counties are more desirable, leading to higher property prices, thus only those with higher incomes can afford to live there. 
 
 <br>
-</br>
 
 #### You can learn more about the detailed process of doing this project on the [Project Report page](report.html).
