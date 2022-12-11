@@ -30,6 +30,7 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
@@ -218,6 +219,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -343,6 +347,14 @@ $(document).ready(function () {
 </div><!--/.navbar -->
 
 <div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
 
 
 
@@ -998,12 +1010,12 @@ spaces.</p>
 <p>Below, we create a forest plot to more visually display the
 difference in prevalence for our various health outcomes compared to
 less walkable places:</p>
-<pre class="r"><code>devtools::install_github(&quot;rdboyes/forester&quot;)</code></pre>
-<pre><code>## Skipping install of &#39;forester&#39; from a github remote, the SHA1 (a9ad7c45) has not changed since last install.
-##   Use `force = TRUE` to force installation</code></pre>
-<pre class="r"><code>library(grid)
-library(forester)</code></pre>
-<pre class="r"><code>forestplot_df = 
+<pre class="r"><code>devtools::install_github(&quot;rdboyes/forester&quot;)
+
+library(grid)
+library(forester)
+
+forestplot_df = 
   chol_margin %&gt;% 
   filter(grepl(&#39;walk&#39;, term)) %&gt;% 
   rbind(mental_margin[1,]) %&gt;% 
@@ -1020,16 +1032,7 @@ library(forester)</code></pre>
   arrange(desc(pct)) %&gt;%
   janitor::clean_names()
 
-forestplot_df</code></pre>
-<pre><code>## # A tibble: 5 × 5
-##   outcome                pct pct_conf_low pct_conf_high   p_value
-##   &lt;chr&gt;                &lt;dbl&gt;        &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;
-## 1 Mental Health        0.127       0.0869         0.167 4.66e- 10
-## 2 Physical Activity   -0.206      -0.300         -0.112 1.75e-  5
-## 3 Physical Health     -0.627      -0.667         -0.587 6.51e-209
-## 4 High Cholesterol    -3.23       -3.32          -3.13  0        
-## 5 High Blood Pressure -4.37       -4.48          -4.25  0</code></pre>
-<pre class="r"><code>forest_plot = forestplot_df %&gt;%
+forest_plot = forestplot_df %&gt;%
   ggplot(aes(y = fct_rev(outcome))) + 
   theme_classic() +
   geom_point(aes(x = pct),
@@ -1052,10 +1055,9 @@ forestplot_df</code></pre>
   xlim(-5, 2) +
   annotate(&quot;text&quot;, x = -1, y = 5, label = &quot;Decrease&quot;, size = 3) +
   annotate(&quot;text&quot;, x = 1, y = 5, label = &quot;Increase&quot;, size = 3) +
-  coord_cartesian(xlim = c(-4.5, 1.5))
-
-forest_plot</code></pre>
-<p><img src="regression_files/figure-html/plot-1.png" width="672" /></p>
+  coord_cartesian(xlim = c(-4.5, 1.5))</code></pre>
+<pre class="r"><code>forest_plot</code></pre>
+<p><img src="regression_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
 
 
@@ -1091,6 +1093,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

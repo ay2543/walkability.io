@@ -1,7 +1,7 @@
 ---
 title: "Statistical Analysis"
 output:
-  github_document:
+  html_document:
     code_folding: hide
 ---
 
@@ -247,14 +247,12 @@ Therefore, increase in walkability is associated with decreased prevalence of po
 
 ### Forest Plot
 Below, we create a forest plot to more visually display the difference in prevalence for our various health outcomes compared to less walkable places:
-```{r forestplot-packages}
+```{r forestplot-packages, message=FALSE}
 devtools::install_github("rdboyes/forester")
 
 library(grid)
 library(forester)
-```
 
-```{r forest-plot-df}
 forestplot_df = 
   chol_margin %>% 
   filter(grepl('walk', term)) %>% 
@@ -272,11 +270,6 @@ forestplot_df =
   arrange(desc(pct)) %>%
   janitor::clean_names()
 
-forestplot_df
-```
-
-
-```{r plot}
 forest_plot = forestplot_df %>%
   ggplot(aes(y = fct_rev(outcome))) + 
   theme_classic() +
@@ -302,8 +295,10 @@ forest_plot = forestplot_df %>%
   annotate("text", x = 1, y = 5, label = "Increase", size = 3) +
   coord_cartesian(xlim = c(-4.5, 1.5))
 
-forest_plot
 ```
 
+```{r}
+forest_plot
+```
 
 
