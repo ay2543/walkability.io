@@ -13,7 +13,7 @@
 
 <title>Who We Are</title>
 
-<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
@@ -180,8 +180,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "\e259";
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -189,9 +189,16 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "\e258";
-  font-family: 'Glyphicons Halflings';
+  content: "&#xe258;";
   border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -305,13 +312,13 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="report.html">Full Project Report</a>
+    </li>
+    <li>
       <a href="results.html">Key Findings</a>
     </li>
     <li>
-      <a href="limitations.html">Strengths and Limitation</a>
-    </li>
-    <li>
-      <a href="report.html">Project Report</a>
+      <a href="limitations.html">Strengths and Limitations</a>
     </li>
   </ul>
 </li>
@@ -323,7 +330,7 @@ $(document).ready(function () {
   </a>
 </li>
 <li>
-  <a href="Fun.html">
+  <a href="fun.html">
     <span class="fa fa-smile-o"></span>
      
     Fun Facts
@@ -360,7 +367,35 @@ class="section level5 blue">
 <h5>This wonderful walkability project was brought to you by 5 NYC
 walkaholics!</h5>
 </div>
-<p><br></p>
+<br> <br />
+<center>
+<table style="table-layout: fixed; width: 100%">
+</center>
+<tr>
+<td>
+<img src="images/group_pic_power.JPG" style="width:100%">
+</td>
+<td>
+<img src="images/group_pic_walking.JPG" style="width:100%">
+</td>
+<td>
+<img src="images/group_pic_stop.JPG" style="width:100%">
+</td>
+</tr>
+<tr>
+<td>
+<img src="images/power_ranger_pose1.jpg" style="width:100%">
+</td>
+<td>
+<img src="images/power_ranger_logo.jpg" style="width:100%">
+</td>
+<td>
+<img src="images/power_ranger_pose2.jpg" style="width:100%">
+</td>
+</tr>
+</table>
+</br>
+</center>
 <div id="amy-yeung-sheher" class="section level4">
 <h4><a href="https://ay2543.github.io/amyyeung.github.io">Amy Yeung
 (she/her)</a>
@@ -420,34 +455,6 @@ Ma (she/her)</a>
 <li>Favorite place to walk in NYC: Riverside park</li>
 <li>Favorite part about walking: Enjoy the nature and stay active!</li>
 </ul>
-<br />
-<center>
-<table style="table-layout: fixed; width: 75%">
-</center>
-<tr>
-<td>
-<img src="images/group_pic_power.JPG" style="width:100%">
-</td>
-<td>
-<img src="images/group_pic_walking.JPG" style="width:100%">
-</td>
-<td>
-<img src="images/group_pic_stop.JPG" style="width:100%">
-</td>
-</tr>
-<tr>
-<td>
-<img src="images/power_ranger_pose1.jpg" style="width:100%">
-</td>
-<td>
-<img src="images/power_ranger_logo.jpg" style="width:100%">
-</td>
-<td>
-<img src="images/power_ranger_pose2.jpg" style="width:100%">
-</td>
-</tr>
-</table>
-<p></br></p>
 </div>
 
 

@@ -11,13 +11,13 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 </style>
 <div class = "blue">
 
-##### This is a description on the strengths and limitations of our project. 
+##### This is a description of the strengths and limitations of our project. 
 
 </div>
 
 <br>
 
-### Strenghts
+### Strengths
 
 #### 1. Reliable and updated data sources
 The data sources were downloaded from reliable sources, such as Environmental Protection Agency, US Census American Community Survey, and Behavioral Risk Factor Surveillance System. The latested data from 2020 is used in the project for the most updated information.
@@ -37,19 +37,20 @@ The project inspected multiple health outcomes that showed associated with walka
 <br>
 <br>
 
-### Limitaiotns
+### Limitations
 As detailed as our analyses are, they are not without limitations.
 
 #### 1. Temporality
 
-We used the latest National Walkability Index data from 2021 (our exposure dataset), and ACS demographics and BRFSS health outcomes (outcome) datasets from 2020. Though our outcome data precede our exposure data -- meaning we are not able to infer temporality and hence causality -- we believe that this is acceptable given the specific circumstances surrounding our data:
+We used the latest National Walkability Index data from 2021 (our exposure dataset), and ACS demographics and BRFSS health prevalences (outcome) datasets from 2020. Thus, our outcome data precede our exposure data -- meaning we are not able to infer temporality and hence causality -- we believe that this is acceptable given the specific circumstances surrounding our data:
 
 * The EPA National Walkability Index is updated infrequently
-  * the last major update before 2021 was [in 2014](https://www.epa.gov/sites/default/files/2021-06/documents/epa_sld_3.0_technicaldocumentationuserguide_may2021.pdf)
-  * Since physical neighborhood attributes related to walkability (such as street density and transit accessibility) change slowly -- often over a span of many years -- we argue that walkability data from 2021 will better capture the physical walking conditions of neighborhoods in 2020 compared to using an older 2014 version of the walkability index dataset
++ the last major update before 2021 was [in 2014](https://www.epa.gov/sites/default/files/2021-06/documents/epa_sld_3.0_technicaldocumentationuserguide_may2021.pdf)
++ Since physical neighborhood attributes related to walkability (such as street density and transit accessibility) change slowly -- often over a span of many years -- we argue that walkability data from 2021 will better capture the physical walking conditions of neighborhoods in 2020 compared to using an older 2014 version of the walkability index dataset
 * Additionally, some may argue that since employment is a factor in obtaining the walkability index, the pandemic may have restructured the employment, so the walkability index cannot be considered the same
-  * To address this, we can wait for the most recent 2022 BRFSS survey report to be released and update our analyses accordingly
-  
++ To address this, we can wait for the most recent 2022 BRFSS survey report to be released and update our analyses accordingly
+
+
 #### 2. Missing data
 
 There was also quite a large percentage of missing data in the Walkability Index dataset we used.
@@ -57,30 +58,11 @@ There was also quite a large percentage of missing data in the Walkability Index
 * The raw walkability data had 220,740 entries
 * The health outcome data (filtered for our variables of interest) had 71,335 entries (in the long format)
 * There were 85,395 entries on age, sex, race and income
-* In the final merged dataframe, there are 116,311 distinct FIPS codes containing at least 1 health outcome variable of interest (* is there a way to see how many entries with all outcomes of interest? this doesn't seem right bc of the way health outcomes were pivoted; need to check again)
-* This means that we lost 47.3% of our walkability entries
+* We lost over 100,000 entries due to insufficient data on health outcomes and demographics
 
-<details>
-  <summary>Click to show code</summary>
-  
-```{r}
-# merge_final = read_csv("./data/merge_final.csv")
-# merge_final %>% 
-#   separate(name, c("census_tract", "county", "state"), sep = ", ") %>% 
-#   drop_na(state) %>% 
-#   select(fips, nat_walk_ind,sex_male, sex_female, age_18plus, median_income, percent_race, measure_id, data_value, county) %>% 
-#   group_by(county) %>% 
-#   drop_na(measure_id) %>% 
-#   summarize(n = length(unique(measure_id))) %>% 
-#   filter(n>=5)
-#   drop_na() %>% 
-#   View()
-#   distinct(county)
-```
 
-</details>
-<br>
 
 #### 3. Lack of city-specific analyses
 
-We had initially hoped to look at the spatial clustering of our various health outcomes at a New York City census-tract level, and to compare the geographic clustering of health outcomes to that of walkability scores. However, we found that there was a lack of BRFSS health outcomes data for New York City and were unable to conduct this additional spatial clustering analyses.
+* We had initially hoped to look at the spatial clustering of our various health outcomes at a New York City census-tract level, and to compare the geographic clustering of health outcomes to that of walkability scores. 
+* However, we found that there was a lack of BRFSS health outcomes data for New York City (alongside other urban areas) and were unable to conduct this additional spatial clustering analyses.

@@ -12,6 +12,20 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 </div>
 
 <br>
+<br />
+<center><table style="table-layout: fixed; width: 100%"></center>
+  <tr>
+    <td><img src="images/group_pic_power.jpg" style="width:100%"></td>
+    <td><img src="images/group_pic_walking.jpg" style="width:100%"></td>
+    <td><img src="images/group_pic_stop.jpg" style="width:100%"></td>
+  </tr>
+  <tr>
+    <td><img src="images/power_ranger_pose1.jpg" style="width:100%"></td>
+    <td><img src="images/power_ranger_logo.jpg" style="width:100%"></td>
+    <td><img src="images/power_ranger_pose2.jpg" style="width:100%"></td>
+  </tr>
+</table>
+</br> </center>
 
 
 #### [Amy Yeung (she/her)](https://ay2543.github.io/amyyeung.github.io) <a href="mailto:ay2543@cumc.columbia.edu" class="fa fa-envelope"></a> <a href="https://linkedin.com/in/amy715" class="fa fa-linkedin"></a> <a href="https://github.com/ay2543" class="fa fa-github"></a>
@@ -44,17 +58,4 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 * Favorite part about walking: Enjoy the nature and stay active!
 
 
-<br />
-<center><table style="table-layout: fixed; width: 75%"></center>
-  <tr>
-    <td><img src="images/group_pic_power.jpg" style="width:100%"></td>
-    <td><img src="images/group_pic_walking.jpg" style="width:100%"></td>
-    <td><img src="images/group_pic_stop.jpg" style="width:100%"></td>
-  </tr>
-  <tr>
-    <td><img src="images/power_ranger_pose1.jpg" style="width:100%"></td>
-    <td><img src="images/power_ranger_logo.jpg" style="width:100%"></td>
-    <td><img src="images/power_ranger_pose2.jpg" style="width:100%"></td>
-  </tr>
-</table>
-</br>
+
