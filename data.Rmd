@@ -36,6 +36,7 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 ### Confounders: Demographics
 * Data: [US Census American Community Survey, 2020](https://data.census.gov/table?tid=ACSDP1Y2021.DP05)
   * The American Community Survey (ACS) is an annual, nationwide survey conducted by the U.S. Census Bureau and produces information on social, economic, housing, and demographic characteristics about our nation's population every year. This information is a vital tool that communities can use to see how they are changing across the years.
+  * [Methodology](https://www.census.gov/content/dam/Census/library/publications/2020/acs/acs_general_handbook_2020.pdf), [Codebook](https://www.census.gov/programs-surveys/acs/technical-documentation/code-lists.2020.html#list-tab-NZBIUOT6KFYGCOIOAE)
 * Variables of interest:
   * Age
   * Sex
@@ -45,6 +46,7 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 ### Outcome: Health Outcomes
 * Data: [Behavioral Risk Factor Surveillance System (BRFSS), 2020](https://chronicdata.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh/data)
   * The Behavioral Risk Factor Surveillance System (BRFSS) is an annual, nationwide system of health-related telephone surveys conducted by the Centers for Disease Control and Prevention (CDC) which collects information about U.S. residents regarding their health-related risk behaviors, chronic health conditions, and use of preventive services. Established in 1984 with 15 states, BRFSS now collects data in all 50 states as well as the District of Columbia and three U.S. territories. BRFSS completes more than 400,000 adult interviews each year, making it the largest continuously conducted health survey system in the world.
+  * [Methodology](https://www.cdc.gov/pcd/issues/2022/21_0459.htm), [Codebook 1](https://www.cdc.gov/places/measure-definitions/health-status/index.html), [Codebook 2](https://www.cdc.gov/places/measure-definitions/unhealthy-behaviors/index.html), [Codebook 3](https://www.cdc.gov/places/measure-definitions/health-outcomes/index.html)
 * Variables of interest:
   * High cholesterol
   * Physical health
