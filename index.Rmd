@@ -3,6 +3,7 @@ title: ""
 output: html_document
 ---
 
+<br>
 
 <center>
 ## **Walk the walk: The effect of neighborhood walkability on health**
@@ -20,9 +21,19 @@ output: html_document
   </tr>
 </table>
 </br>
-
+<br>
 
 ### Motivation
 
 Urban planning of most US cities was designed around cars and not walking, and not everywhere in the US is walkable for its residents. The recent pandemic has further emphasized the important role that accessible green space and walkable neighborhoods play in our individual and collective physical activity and mental wellbeing. We want to learn about the National Walkability Index published by the EPA, and how the index relates to health outcomes. We also would like to explore ways to improve the index to make it more comprehensive. As five passionate walkaholics🚶🏻‍️, we want to promote walking and hope more people will enjoy walking.
 
+<br>
+<br>
+
+### Screencast
+
+<center>
+<iframe width="840" height="472.5" src="https://www.youtube.com/embed/QbPegpn8rK4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</center>
+
+<br>
