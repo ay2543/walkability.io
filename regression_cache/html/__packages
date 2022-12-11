@@ -18,3 +18,16 @@ zoo
 lmtest
 MASS
 mfx
+flexdashboard
+shiny
+DT
+ggpp
+ggpmisc
+ggpubr
+rjson
+leaflet
+sf
+tmap
+shinyjs
+digest
+rgeoda
