@@ -1,7 +1,8 @@
 ---
 title: "Exploratory Analysis"
-output: 
+output:
   html_document:
+    code_folding: hide
     toc: true
     toc_float: true
 ---
@@ -25,10 +26,8 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 
 #### Overall Demographics
 
-<details>
-  <summary>Click to show code</summary>
-  
-```{r, warning=FALSE}
+From the table below, the mean walkability score is 9.54, which is below average walkable according to the National Walkability Index score ranging from 1 to 20. The percentage of female and male is balance around 50%. The percentage of adults, which is older than 18 years old, is 78.23%. The average median income in this dataset is $68,387.44. Regarding race, there are 70.49% White, 17.37% Hispanic, 13.58% Black, 4.91% Asian, 0.9% American Indian and Alaska Native, and 4.95% who have more than 2 races.
+```{r, warning=FALSE, message=FALSE}
 #Load library
 library(tidyverse)
 library(DT)
@@ -45,10 +44,6 @@ explore_df = explore_df %>% mutate(sex_female = as.numeric(sex_female), sex_male
 
 #Filter out variables needed for demographics
 demographics_df = explore_df %>% select(sex_female, sex_male, age_18plus, median_income, race, percent_race, county, state, nat_walk_ind)
-
-```
-
-```{r, warning=FALSE}
 
 #Get overall demographics statistics
 overall_demographics = data.frame(
@@ -68,10 +63,6 @@ overall_demographics = data.frame(
 overall_demographics = overall_demographics %>% mutate(across(where(is.numeric), ~ round(., 2)))
 
 ```
-</details>
-
-<br>
-From the table below, the mean walkability score is 9.54, which is below average walkable according to the National Walkability Index score ranging from 1 to 20. The percentage of female and male is balance around 50%. The percentage of adults, which is older than 18 years old, is 78.23%. The average median income in this dataset is $68,387.44. Regarding race, there are 70.49% White, 17.37% Hispanic, 13.58% Black, 4.91% Asian, 0.9% American Indian and Alaska Native, and 4.95% who have more than 2 races.
 
 ```{r, warning=FALSE, echo=FALSE}
 
@@ -89,10 +80,9 @@ datatable(overall_demographics,
 
 #### Overall Walkability
 
-<details>
-  <summary>Click to show code</summary>
+The highest average walkability score is from the District of Columbia and the lowest average walkability score is from Puerto Rico. 
   
-```{r, warning=FALSE}
+```{r, warning=FALSE, message=FALSE}
 
 #Filter out state and walkability score
 walkability_df = explore_df %>% select(state, nat_walk_ind) %>% group_by(state) %>% summarise_each(funs(mean(., na.rm = TRUE))) 
@@ -112,11 +102,6 @@ walkability_plot = walkability_df  %>% mutate(state = fct_reorder(state, desc(na
 
 ```
 
-</details>
- 
-<br>
-The highest average walkability score is from the District of Columbia and the lowest average walkability score is from Puerto Rico. 
-
 ```{r, warning=FALSE, echo=FALSE}
 
 #Print plot
@@ -129,10 +114,8 @@ walkability_plot
 
 #### Demographics and Walkability by State
 
-<details>
-  <summary>Click to show code</summary>
   
-```{r, warning=FALSE}
+```{r, warning=FALSE, message=FALSE}
 
 #Avg of demographics by state
 state_demographics = demographics_df %>% 
@@ -156,11 +139,6 @@ state_demographics_merge = inner_join(state_demographics, state_demographics_rac
 #Delete the row with NA
 state_demographics_merge = state_demographics_merge[-53,]
 
-```
-</details>
- 
-```{r, warning=FALSE, echo=FALSE}
-
 #Print table
 datatable(state_demographics_merge, 
           rownames = FALSE, 
@@ -176,10 +154,8 @@ datatable(state_demographics_merge,
 
 #### Demographics and Walkability by County
 
-<details>
-  <summary>Click to show code</summary>
   
-```{r, warning=FALSE}
+```{r, warning=FALSE, message=FALSE}
 
 #Avg of demographics by county
 county_demographics = demographics_df %>% 
@@ -206,11 +182,6 @@ county_demographics_merge = inner_join(county_demographics, county_demographics_
 county_demographics_merge = left_join(county_demographics_merge, state_name,by = "county", all.x = TRUE) %>%
   relocate(county, state, nat_walk_ind, sex_female, sex_male, age_18plus, median_income, white, hispanic, black, asian, aian) %>% drop_na()
 
-```
-</details>
- 
-```{r, warning=FALSE, echo=FALSE}
-
 #Print table
 datatable(county_demographics_merge, 
           rownames = FALSE, 
@@ -230,10 +201,17 @@ datatable(county_demographics_merge,
 
 #### Overall Health Outcome
 
-<details>
-  <summary>Click to show code</summary>
+Form this dataset, we explored the prevalence of health outcomes in the United States. 
 
-```{r, warning=FALSE}
+* The prevalence of high blood pressure is 32.65%
+* The prevalence of high cholesterol who have been screened in the past 5 years is 31.98%
+* The prevalence of mental health not good for over 14 days is 15.09%
+* The prevalence of no leisure-time physical activity is 24.68%
+* The prevalence of physical health not good for over 14 days is 10.80%
+
+The walkability score across health outcomes are similar around 9.5, below average walkable. Other demographics of each health outcome is also similar to the national average.
+
+```{r, warning=FALSE, message=FALSE}
 
 #Filter out variables needed for health outcome analysis
 health_df = explore_df %>% select(sex_female, sex_male, age_18plus, median_income, race, percent_race, county, state, nat_walk_ind, measure, data_value) %>% 
@@ -266,19 +244,6 @@ health_df_table = health_df[-1,]
 
 ```
 
-</details>
-
-<br>
-Form this dataset, we explored the prevalence of health outcomes in the United States. 
-
-* The prevalence of high blood pressure is 32.65%
-* The prevalence of high cholesterol who have been screened in the past 5 years is 31.98%
-* The prevalence of mental health not good for over 14 days is 15.09%
-* The prevalence of no leisure-time physical activity is 24.68%
-* The prevalence of physical health not good for over 14 days is 10.80%
-
-The walkability score across health outcomes are similar around 9.5, below average walkable. Other demographics of each health outcome is also similar to the national average.
-
 ```{r, warning=FALSE, echo=FALSE}
 
 #Print table
@@ -298,10 +263,27 @@ datatable(health_df_table,
 
 #### Health Outcome by State
 
-<details>
-  <summary>Click to show code</summary>
+**High blood pressure**:
+Mississippi state has the highest prevalence of 45.86%;
+Colorado state has the lowest prevalence of 25.24%
 
-```{r, warning=FALSE}
+**High cholesterol who have been screened in the past 5 years**:
+West Virginia state has the highest prevalence of 37.35%;
+Wyoming state has the lowest prevalence of 27.15%
+
+**Mental health not good for over 14 days**:
+West Virginia state has the highest prevalence of 18.9%;
+South Dakota state has the lowest prevalence of 11.12%
+
+**No leisure-time physical activity**:
+Mississippi state has the highest prevalence of 33.14%;
+Utah state has the lowest prevalence of 17.35%;
+
+**Physical health not good for over 14 days**:
+Mississippi state has the highest prevalence of 33.14%;
+District of Columbia has the lowest prevalence of 7.73%
+
+```{r, warning=FALSE, message=FALSE}
 
 #Filter out state level health outcome data
 health_df_state = explore_df %>% select(sex_female, sex_male, age_18plus, median_income, race, percent_race, county, state, nat_walk_ind, measure, data_value) %>% 
@@ -332,28 +314,7 @@ health_df_merge = inner_join(health_df_state, health_df_state_race, by = "state_
 
 ```
 
-</details>
 <br>
-**High blood pressure**:
-Mississippi state has the highest prevalence of 45.86%;
-Colorado state has the lowest prevalence of 25.24%
-
-**High cholesterol who have been screened in the past 5 years**:
-West Virginia state has the highest prevalence of 37.35%;
-Wyoming state has the lowest prevalence of 27.15%
-
-**Mental health not good for over 14 days**:
-West Virginia state has the highest prevalence of 18.9%;
-South Dakota state has the lowest prevalence of 11.12%
-
-**No leisure-time physical activity**:
-Mississippi state has the highest prevalence of 33.14%;
-Utah state has the lowest prevalence of 17.35%;
-
-**Physical health not good for over 14 days**:
-Mississippi state has the highest prevalence of 33.14%;
-District of Columbia has the lowest prevalence of 7.73%
-
 
 ```{r, warning=FALSE, echo=FALSE}
 
@@ -372,10 +333,27 @@ datatable(health_df_merge,
 
 #### Health Outcome by County
 
-<details>
-  <summary>Click to show code</summary>
+**High blood pressure**:
+Monroe County in Alabama has the highest prevalence of 56.7%;
+Lincoln County in South Dakota has the lowest prevalence of 5.34%
 
-```{r, warning=FALSE}
+**High cholesterol who have been screened in the past 5 years**:
+Llano County in Texas has the highest prevalence of 45.44%;
+Lynchburg city in Virginia has the lowest prevalence of 8.9%
+
+**Mental health not good for over 14 days**:
+Socorro County in New Mexico has the highest prevalence of 27.3%;
+Collier County in Florida  has the lowest prevalence of 8.96%
+
+**No leisure-time physical activity**:
+Val Verde County in Texas has the highest prevalence of 52%;
+Eagle County in Colorado has the lowest prevalence of 10.85%
+
+**Physical health not good for over 14 days**:
+Val Verde County in Texas  has the highest prevalence of 52%;
+Lincoln County - South Dakota has the lowest prevalence of 5.34%
+
+```{r, warning=FALSE, message=FALSE}
 
 #Filter out county level health outcome data
 health_df_county = explore_df %>% select(sex_female, sex_male, age_18plus, median_income, county, state, nat_walk_ind, measure, data_value) %>% 
@@ -405,27 +383,7 @@ health_df_merge2 = inner_join(health_df_county, health_df_county_race, by = "sta
 
 ```
 
-</details>
 <br>
-**High blood pressure**:
-Monroe County in Alabama has the highest prevalence of 56.7%;
-Lincoln County in South Dakota has the lowest prevalence of 5.34%
-
-**High cholesterol who have been screened in the past 5 years**:
-Llano County in Texas has the highest prevalence of 45.44%;
-Lynchburg city in Virginia has the lowest prevalence of 8.9%
-
-**Mental health not good for over 14 days**:
-Socorro County in New Mexico has the highest prevalence of 27.3%;
-Collier County in Florida  has the lowest prevalence of 8.96%
-
-**No leisure-time physical activity**:
-Val Verde County in Texas has the highest prevalence of 52%;
-Eagle County in Colorado has the lowest prevalence of 10.85%
-
-**Physical health not good for over 14 days**:
-Val Verde County in Texas  has the highest prevalence of 52%;
-Lincoln County - South Dakota has the lowest prevalence of 5.34%
 
 ```{r, warning=FALSE, echo=FALSE}
 
@@ -447,10 +405,8 @@ datatable(health_df_merge2,
 
 #### Gender vs. Walkability
 
-<details>
-  <summary>Click to show code</summary>
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, message=FALSE}
 
 gender_walk_plot = county_demographics_merge %>% ggplot(mapping = aes(x = sex_female, y = nat_walk_ind)) +
   geom_point(shape = "diamond", color = "steelblue", size = 2, alpha = 0.5) + labs(         
@@ -465,7 +421,6 @@ gender_walk_plot = county_demographics_merge %>% ggplot(mapping = aes(x = sex_fe
 
 ```
 
-</details>
 
 ```{r, warning=FALSE, echo=FALSE}
 
@@ -475,10 +430,8 @@ gender_walk_plot
 
 #### Age vs. Walkability
 
-<details>
-  <summary>Click to show code</summary>
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, message=FALSE}
 
 age_walk_plot = county_demographics_merge %>% ggplot(mapping = aes(x = age_18plus, y = nat_walk_ind))+
   geom_point(shape = "diamond", color = "steelblue", size = 2, alpha = 0.5) + labs(         
@@ -493,7 +446,6 @@ age_walk_plot = county_demographics_merge %>% ggplot(mapping = aes(x = age_18plu
 
 ```
 
-</details>
 
 ```{r, warning=FALSE, echo=FALSE}
 
@@ -503,10 +455,8 @@ age_walk_plot
 
 #### Income vs. Walkability
 
-<details>
-  <summary>Click to show code</summary>
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, message=FALSE}
 
 income_walk_plot = county_demographics_merge %>% ggplot(mapping = aes(x = median_income, y = nat_walk_ind))+
   geom_point(shape = "diamond", color = "steelblue", size = 2, alpha = 0.5) + labs(         
@@ -521,7 +471,7 @@ income_walk_plot = county_demographics_merge %>% ggplot(mapping = aes(x = median
 
 ```
 
-</details>
+
 
 ```{r, warning=FALSE, echo=FALSE}
 
@@ -531,10 +481,9 @@ income_walk_plot
 
 #### Race vs. Walkability
 
-<details>
-  <summary>Click to show code</summary>
 
-```{r, warning=FALSE}
+
+```{r, warning=FALSE, message=FALSE}
 
 race_walk_plot = county_demographics_merge %>% ggplot(mapping = aes(x = white, y = nat_walk_ind))+
   geom_point(shape = "diamond", color = "steelblue", size = 2, alpha = 0.5) + labs(         
@@ -549,7 +498,7 @@ race_walk_plot = county_demographics_merge %>% ggplot(mapping = aes(x = white, y
 
 ```
 
-</details>
+
 
 ```{r, warning=FALSE, echo=FALSE}
 
@@ -559,10 +508,8 @@ race_walk_plot
 
 #### Health Outcome vs. Walkability
 
-<details>
-  <summary>Click to show code</summary>
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, message=FALSE}
 
 health_walk_plot = health_df_county %>% ggplot(mapping = aes(x = data_value, y = nat_walk_ind, color = measure)) + geom_point(shape = "diamond", size = 2, alpha = 0.5, show.legend = FALSE) + labs(         
     x = "Prevalence of Health Outcome (%)",
@@ -572,7 +519,6 @@ health_walk_plot = health_df_county %>% ggplot(mapping = aes(x = data_value, y =
 
 ```
 
-</details>
 
 ```{r, warning=FALSE, echo=FALSE}
 
