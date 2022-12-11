@@ -579,7 +579,7 @@ grid.arrange(img1, img2, img3, img4, ncol = 2, nrow = 2)
 
 ```
 
-![](explore_files/figure-html/unnamed-chunk-25-1.png){#id .class width=85% height=85%}
+![](explore_files/figure-html/unnamed-chunk-25-1.png){#id .class width=75% height=75%}
 
 ```{r, warning=FALSE, eval=FALSE}
 
@@ -654,7 +654,9 @@ health_walk_plot = health_df_county %>% ggplot(mapping = aes(x = data_value, y =
 #### Map Overview
 For the National Walkability Index, we wanted to go beyond the [EPA’s current Walkability Map](https://www.arcgis.com/home/webmap/viewer.html?url=https%3A%2F%2Fgeodata.epa.gov%2Farcgis%2Frest%2Fservices%2FOA%2FWalkabilityIndex%2FMapServer&source=sd) and created an interactive spatial visualization — a [choropleth map](map.html) that demonstrates county-level walkability scores and the health outcomes prevalence. We utilized many geographic information systems (GIS) concepts and synthesized skills learned from both the Data Science I (BIOST P8105) and Public Health GIS (EHSC P8371) courses that we’re taking in the creation of this spatial visualization. 
 
+<center>
 ![](images/overall_map.png){#id .class width=65% height=65%}
+</center>
 
 To create our interactive choropleth map, we first obtained a US-wide county-level .json file from this [website](https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json) and assigned the .json file to an R object for future use. This base map allows us to fill a layer with a variable to demonstrate the walkability index across the US. We then used the [`sf` package](https://cran.r-project.org/web/packages/sf/index.html) to set up the geographic projection of the map — transforming the spatial data from 3D to 2D — using the Albers map projection, which is a commonly used map projection in GIS. 
 
@@ -738,7 +740,9 @@ Finally, we mapped the walkability index with information about the percentage o
 
 As you place the mouse over a county on the map, the hovering textbox displays the walkability index and the five health outcome percentages. We tried adding the county name into the hovering textbox but the .html file became too large to push to GitHub. Regardless, we hope this map is informative in showing the geographic variability of the National Walkability Index and various health outcomes across the US.
 
+<center>
 ![](images/hover.png){#id .class width=65% height=65%}
+</center>
 
 <br>
 
@@ -769,7 +773,9 @@ We chose this regression method as the outcome variable is in proportions, and t
 <br>
 
 ### Results
+<center>
 ![](images/forest.png){#id .class width=85% height=85%}
+</center>
 
 Here, we see that more walkable places have the following change in prevalence for a health outcome compared to less walkable places:
 
@@ -795,7 +801,9 @@ We created a choropleth map to visually observe the walkability index distributi
 
 Next, we used the functions from [`tmap`](https://cran.r-project.org/web/packages/tmap/vignettes/tmap-getstarted.html) to build our descriptive choropleth map, using a basemap for New York City and adding a map layer displaying 5 equal-interval levels of the National Walkability Index. 
 
+<center>
 ![](images/choropleth_map.png){#id .class width=60% height=60%}
+</center>
 
 From this choropleth map, we can see that New York City is very walkable overall. However, we wanted to further identify census tracts which are statistically significant hot spots, cold spots, and spatial outliers for walkability by using clustering analysis.
 
@@ -863,7 +871,9 @@ To find hot spots, cold spots, and spatial outliers of walkability index in NYC 
 
 To identify these clusters, we will be using a statistical test called [local Moran’s I](https://en.wikipedia.org/wiki/Moran%27s_I). The local spatial statistic Moran’s I is calculated for each census tract based on the spatial weights matrix used (see below for more on the Queen’s first order contiguity matrix that we used). The test follows Z distribution, and may be used as a diagnostic tool to identify where spatial clustering is present. The test status is:
 
+<center>
 ![](images/cluster.png){#id .class width=65% height=65%}
+</center>
 
 Essentially, the local Moran’s I tells us about the local indicator of spatial association (LISA) statistic. We will use these LISA cluster indicators to map different walkability clusters in NYC.
 
@@ -967,7 +977,9 @@ If a census tract is within the threshold distance of the selected census tract,
 
 Queen’s first order contiguity suggests that, if a census tract shares a vertex or a line segment with the selected census tract of interest, it is given a weight of 1 (i.e. adjacent census tracts are treated as neighbors); otherwise, the census tracts are given a value 0 (i.e. non-adjacent census tracts are not treated as neighbors).
 
+<center>
 ![](images/moranI.jpg){#id .class width=60% height=60%}
+</center>
 
 Clearly defining neighborhood connectivity is necessary for conducting the cluster analysis and defining groups of neighboring tracts which display similar walkability scores.
 
