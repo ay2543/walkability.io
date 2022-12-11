@@ -33,7 +33,7 @@ Urban planning of most US cities was designed around cars and not walking, and n
 ### Screencast
 
 <center>
-<iframe width="789" height="432" src="https://www.youtube.com/embed/wGBMINffV9g" title="Walkability and Health" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="789" height="431" src="https://www.youtube.com/embed/2abdgbuU0Ow" title="Walkability & Health" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </center>
 
 <br>
