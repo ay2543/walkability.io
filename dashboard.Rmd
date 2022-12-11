@@ -20,15 +20,16 @@ library(shiny)
 
 walkability = read_csv("./data/merge_final.csv") 
 
+# Filter
 walkability_clean = walkability %>% 
   separate(name, c("census_tract", "county", "state"), sep = ", ") %>% 
-  drop_na(state)
-
-walkability_tidy = walkability_clean %>% 
+  drop_na(state) %>% 
   filter(!is.na(state) &
          state == "New York" &
          !is.na(nat_walk_ind)
-         ) %>% 
+         ) 
+
+walkability_countyonly = walkability_clean %>% 
   group_by(county) %>% 
   summarise(walk = mean(nat_walk_ind))
   
@@ -46,16 +47,8 @@ Row {data-height=800}
 ### Health outcome
 
 ```{r}
-# renderPrint({
-#   input[["outcome_choice"]]
-# })
 
-#renderPlotly(
 walkability_clean %>% 
-filter(!is.na(state) &
-         state == "New York" &
-         !is.na(nat_walk_ind)
-         ) %>% 
   group_by(county, measure_id) %>% 
   summarise(walk = mean(nat_walk_ind),
             outcome = mean(data_value)) %>% 
@@ -70,8 +63,8 @@ filter(!is.na(state) &
   plot_ly(x = ~fct_reorder(county, walk), 
           y = ~outcome, color = ~measure_id,
           type = "bar") %>% 
-   add_trace(x = ~fct_reorder(walkability_tidy$county, walkability_tidy$walk), 
-             y = ~walkability_tidy$walk,  
+   add_trace(x = ~fct_reorder(walkability_countyonly$county, walkability_countyonly$walk), 
+             y = ~walkability_countyonly$walk,  
              type = 'scatter',  mode = 'markers', name = 'Walkability index', 
              yaxis = "y2", color = I('black')
              ) %>% 
@@ -139,7 +132,6 @@ filter(!is.na(state) &
                  showarrow = FALSE,
                textangle = 90))
           )
-#)
 
 ```
 
@@ -149,9 +141,7 @@ Row {.tabset  .tabset-fade}
 ```{r}
 walkability_clean %>%
   mutate(percent_race = as.numeric(percent_race)) %>% 
-  filter(!is.na(state) &
-         state == "New York" &
-         !is.na(nat_walk_ind) &
+  filter(
          !is.na(percent_race)
          ) %>% 
   group_by(county, race) %>% 
@@ -170,8 +160,8 @@ walkability_clean %>%
   plot_ly(x = ~fct_reorder(county, walk), 
           y = ~percent_race, color = ~race,
           type = "bar") %>% 
-     add_trace(x = ~fct_reorder(walkability_tidy$county, walkability_tidy$walk), 
-             y = ~walkability_tidy$walk,  
+     add_trace(x = ~fct_reorder(walkability_countyonly$county, walkability_countyonly$walk), 
+             y = ~walkability_countyonly$walk,  
              type = 'scatter',  mode = 'markers', name = 'Walkability index', 
              yaxis = "y2", color = I('grey')
              ) %>% 
@@ -185,49 +175,47 @@ walkability_clean %>%
 ```
 
 
-### Median income
+### Median Income
 ```{r}
 walkability_clean %>%
   mutate(median_income = as.numeric(median_income)) %>% 
-  filter(!is.na(state) &
-         state == "New York" &
-         !is.na(nat_walk_ind) &
-         !is.na(median_income)
+  filter(
+    !is.na(median_income)
          ) %>% 
   group_by(county) %>% 
   summarise(walk = mean(nat_walk_ind),
             median_income = mean(median_income)) %>% 
   mutate(
     income = NA,
-    income = replace(income, median_income <5000, "≤$5000"),
-    income = replace(income, median_income >= 5000 & median_income < 10000, "$5000 - $9999"),
-    income = replace(income, median_income >= 10000 & median_income < 15000, "$10000 - $14999"),
-    income = replace(income, median_income >= 15000 & median_income < 20000, "$15000 - $19999"),
-    income = replace(income, median_income >= 20000 & median_income < 25000, "$20000 - $24999"),
-    income = replace(income, median_income >= 25000 & median_income < 35000, "$25000 - $34999"),
-    income = replace(income, median_income >= 35000 & median_income < 45000, "$35000 - $44999"),
-    income = replace(income, median_income >= 45000 & median_income < 55000, "$45000 - $54999"),
-    income = replace(income, median_income >= 55000 & median_income < 65000, "$55000 - $64999"),
-    income = replace(income, median_income >= 65000 & median_income < 75000, "$65000 - $74999"),
-    income = replace(income, median_income >= 75000 & median_income < 100000, "$75000 - $99999"),
-    income = replace(income, median_income >= 100000, "≥$100000"),
-    income = factor(income, levels = c("≤$5000", "$5000 - $9999", "$10000 - $14999", "$15000 - $19999",
-                                       "$20000 - $24999", "$25000 - $34999", "$35000 - $44999",
-                                       "$45000 - $54999", "$55000 - $64999", "$65000 - $74999",
-                                       "$75000 - $99999", "≥$100000"), ordered = TRUE),
+    income = replace(income, median_income <5000, "≤5000"),
+    income = replace(income, median_income >= 5000 & median_income < 10000, "5000 - 9999"),
+    income = replace(income, median_income >= 10000 & median_income < 15000, "10000 - 14999"),
+    income = replace(income, median_income >= 15000 & median_income < 20000, "15000 - 19999"),
+    income = replace(income, median_income >= 20000 & median_income < 25000, "20000 - 24999"),
+    income = replace(income, median_income >= 25000 & median_income < 35000, "25000 - 34999"),
+    income = replace(income, median_income >= 35000 & median_income < 45000, "35000 - 44999"),
+    income = replace(income, median_income >= 45000 & median_income < 55000, "45000 - 54999"),
+    income = replace(income, median_income >= 55000 & median_income < 65000, "55000 - 64999"),
+    income = replace(income, median_income >= 65000 & median_income < 75000, "65000 - 74999"),
+    income = replace(income, median_income >= 75000 & median_income < 100000, "75000 - 99999"),
+    income = replace(income, median_income >= 100000, "≥100000"),
+    income = factor(income, levels = c("≤5000", "5000 - 9999", "10000 - 14999", "15000 - 19999",
+                                       "20000 - 24999", "25000 - 34999", "35000 - 44999",
+                                       "45000 - 54999", "55000 - 64999", "65000 - 74999",
+                                       "75000 - 99999", "≥100000"), ordered = TRUE),
     county = fct_reorder(county, walk)
   ) %>% 
   plot_ly(x = ~fct_reorder(county, walk), 
           y = ~median_income, color = ~income,
           type = "bar") %>% 
-  add_trace(x = ~fct_reorder(walkability_tidy$county, walkability_tidy$walk), 
-            y = ~walkability_tidy$walk,  
+  add_trace(x = ~fct_reorder(walkability_countyonly$county, walkability_countyonly$walk), 
+            y = ~walkability_countyonly$walk,  
             type = 'scatter',  mode = 'markers', name = 'Walkability index', 
             yaxis = "y2", color = I('grey')
             ) %>% 
    layout(legend = list(x = 0.1, y = 0.9, orientation = 'h'),
           yaxis2=list(side="right",overlaying="y", title = "Average walkability index", automargin = T),
-          yaxis = list(title = 'Median household income'),
+          yaxis = list(title = 'Median household income ($)'),
           xaxis = list(title = 'County'),
           barmode = 'stack'
           )
@@ -237,10 +225,8 @@ walkability_clean %>%
 ```{r}
 walkability_clean %>%
   mutate(sex_male = as.numeric(sex_male)) %>% 
-  filter(!is.na(state) &
-         state == "New York" &
-         !is.na(nat_walk_ind) &
-         !is.na(sex_male)
+  filter(
+    !is.na(sex_male)
          ) %>% 
   group_by(county) %>% 
   summarise(walk = mean(nat_walk_ind),
@@ -250,8 +236,8 @@ walkability_clean %>%
           y = ~sex_male, 
           name = '% Males',
           type = "bar") %>% 
-  add_trace(x = ~fct_reorder(walkability_tidy$county, walkability_tidy$walk), 
-            y = ~walkability_tidy$walk,  
+  add_trace(x = ~fct_reorder(walkability_countyonly$county, walkability_countyonly$walk), 
+            y = ~walkability_countyonly$walk,  
             type = 'scatter',  mode = 'markers', name = 'Walkability index', 
             yaxis = "y2", color = I('grey')
             ) %>% 
@@ -268,10 +254,8 @@ walkability_clean %>%
 ```{r}
 walkability_clean %>%
   mutate(age_18plus = as.numeric(age_18plus)) %>% 
-  filter(!is.na(state) &
-         state == "New York" &
-         !is.na(nat_walk_ind) &
-         !is.na(age_18plus)
+  filter(
+    !is.na(age_18plus)
          ) %>% 
   group_by(county) %>% 
   summarise(walk = mean(nat_walk_ind),
@@ -281,8 +265,8 @@ walkability_clean %>%
           y = ~age_18plus, 
           type = "bar",
           name = '% Adults') %>% 
-  add_trace(x = ~fct_reorder(walkability_tidy$county, walkability_tidy$walk), 
-            y = ~walkability_tidy$walk,  
+  add_trace(x = ~fct_reorder(walkability_countyonly$county, walkability_countyonly$walk), 
+            y = ~walkability_countyonly$walk,  
             type = 'scatter',  mode = 'markers', name = 'Walkability index', 
             yaxis = "y2", color = I('grey')
             ) %>% 
