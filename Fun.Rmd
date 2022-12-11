@@ -9,7 +9,7 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 </style>
 <div class = "blue">
 
-##### This page includes all the fun facts in the project!
+##### This page includes all the fun facts about our project!
 
 </div>
 
