@@ -12,7 +12,7 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 ##### This page includes all the fun facts about our project!
 
 </div>
-
+ 
 <br>
 
 #### Alternative topic names
