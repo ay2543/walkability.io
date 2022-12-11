@@ -1,6 +1,9 @@
 ---
 title: "Data Cleaning"
-output: github_document
+output: 
+  html_document:
+    toc: true
+    toc_float: true
 ---
 
 <style>
@@ -15,8 +18,11 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 </div>
 
 <br>
+</br>
 
-##### Walkability
+
+
+## Walkability
 
 * Data: [Environmental Protection Agency's information on Walkability Index, 2021](http://edg.epa.gov/metadata/catalog/search/resource/details.page?uuid=%7B251AFDD9-23A7-4068-9B27-A3048A7E6012%7D)
 * Cleaning steps:
@@ -60,7 +66,7 @@ walkability_clean = walkability_new %>%
 </details>
 <br>
 
-##### Demographics
+## Demographics
 * Data: [US Census American Community Survey, 2020](https://data.census.gov/table?tid=ACSDP1Y2021.DP05)
 * Cleaning steps:
   + removed second row with detailed column names
@@ -110,7 +116,7 @@ income_clean = income_raw %>%
 </details>
 <br>
 
-##### Health outcomes
+## Health outcomes
 * Data: [Behavioral Risk Factor Surveillance System (BRFSS), 2020](https://chronicdata.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh/data)
 * Cleaning steps:
   + Removed footnote variables
@@ -152,7 +158,8 @@ health_clean = health_new %>%
 </details>
 <br>
 
-##### Cleaned Dataset for Analysis Use
+
+## Cleaned Dataset for Analysis Use
 After cleaning all three data sources, we merged the dataset by geographical locations. 
 
 <details>

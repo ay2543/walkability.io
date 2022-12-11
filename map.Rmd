@@ -18,7 +18,7 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 
 ## Interactive Map with National Walkability Index
 
-#### Map Overview
+### Map Overview
 
 For the National Walkability Index, we wanted to go beyond the [EPA’s current Walkability Map](https://www.arcgis.com/home/webmap/viewer.html?url=https%3A%2F%2Fgeodata.epa.gov%2Farcgis%2Frest%2Fservices%2FOA%2FWalkabilityIndex%2FMapServer&source=sd) and created the following interactive spatial visualization that demonstrates county-level walkability scores and prevalence of health outcomes. We utilized many geographic information systems (GIS) concepts and synthesized skills learned from both the Data Science I (BIST P8105) and Public Health GIS (EHSC P8371) courses that we’re taking in the creation of this spatial visualization. 
 
@@ -134,13 +134,20 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 * % of the county population reporting poor mental health
 * % of the county population reporting poor physical health
 * % of the county population reporting high blood pressure
-Note: the county FIPS code is displayed on the right 
-</br>
+* Note: the county FIPS code is displayed on the right 
 </div>
 <br>
+</br>
+
+### Map Highlights
+
+In our interactive map, the walkability index ranges from 1 to 16, with darker colors representing a higher walkability index and lighter colors representing a lower walkability index. Visually, most of the cities in the US have a relatively lower walkability index while most major metropolitan areas have a higher walkability index.
+
+Compared to the [EPA’s National Walkability Map](https://www.arcgis.com/home/webmap/viewer.html?url=https%3A%2F%2Fgeodata.epa.gov%2Farcgis%2Frest%2Fservices%2FOA%2FWalkabilityIndex%2FMapServer&source=sd), our interactive map provides additional information about the percentage of selective health outcomes. This interactive display of both walkability scores and various health outcomes across the US can be helpful for various audiences who might want to look at the spatial distribution of both simultaneously.
+<br>
+</br>
 
 ## Exploratory Spatial Data Analysis for NYC
-
 
 To further understand the National Walkability Index in smaller spatial units, we narrowed the exploration to **New York City**, where us five walkaholics reside. 
 
@@ -152,6 +159,8 @@ The first step is to get a general understanding of the walkability index in the
 * Queens County
 * Richmond County
 
+<br>
+</br>
 
 ### Descriptive Choropleth Map for Walkability
 
@@ -232,7 +241,7 @@ As mentioned, we want to find NYC census tracts that are statistically significa
 To find these clusters, we used local Moran's I. The local spatial statistic Moran's I is calculated for each zone based on the spatial weights object used. The values returned include a Z-value, and may be used as a diagnostic tool. The statistic is: 
 
 <center>
-<img src="images/moranI.jpg" style="width:60%">
+<img src="images/moranI.jpg" style="width:50%">
 <br>
 </center>
 

@@ -29,6 +29,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -221,6 +224,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -228,6 +294,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -268,7 +344,7 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Testing.html">Data Cleaning</a>
+      <a href="cleaning.html">Data Cleaning</a>
     </li>
     <li>
       <a href="explore.html">Exploratory Analysis</a>
@@ -323,7 +399,7 @@ $(document).ready(function () {
   </a>
 </li>
 <li>
-  <a href="fun.html">
+  <a href="Fun.html">
     <span class="fa fa-smile-o"></span>
      
     Fun Facts
@@ -354,13 +430,141 @@ $(document).ready(function () {
 <style>
 div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 </style>
-<div id="findings" class="section level5 blue">
-<h5>Findings!</h5>
+<div
+id="here-are-the-foundings-from-exploratory-data-analysis-statistical-analysis-spatial-clustering-analysis-and-dashboard."
+class="section level5 blue">
+<h5>Here are the foundings from exploratory data analysis, statistical
+analysis, spatial clustering analysis, and dashboard.</h5>
 </div>
 <p><br></p>
+<div id="exploratory-data-analysis" class="section level2">
+<h2><a href="explore.html">Exploratory Data Analysis</a></h2>
+<p>The main purpose of EDA is to explore the overall demographics,
+walkability and health outcome across geographical regions in the United
+States.</p>
+<ul>
+<li>The US mean walkability score is 9.54, which is below average
+walkable according to the National Walkability Index score ranging from
+1 to 20.
+<ul>
+<li>The highest average walkability score is from the District of
+Columbia and the lowest average walkability score is from Puerto
+Rico.</li>
+</ul></li>
+<li>Here is a table showing the health outcome prevalence on the
+state-level and county-level.</li>
+</ul>
+<center>
+<img src="images/explore_table.png" id="id" class="class"
+style="width:90.0%;height:90.0%" />
+</center>
+<p><br> </br></p>
+</div>
+<div id="statistical-analysis" class="section level2">
+<h2><a href="regression.html">Statistical Analysis</a></h2>
+<p>Here, we explored how walkability is correlated with health outcomes
+at the national level.</p>
+<p>We utilized beta regression to model the relationship between health
+outcomes with the dichotomized walkability variable, controlling for
+sociodemographic variables of prevalence of age 18+, males, Black
+individuals, and median income.</p>
+<p>We found that, more walkable places have the following difference in
+prevalence for a particular health outcome compared to less walkable
+places:</p>
+<ul>
+<li>1.690% increase in physical activity</li>
+<li>0.568% increase in good mental health</li>
+<li>0.396% increase in good physical health</li>
+<li>2.133% decrease in high cholesterol</li>
+<li>2.359% decrease in high blood pressure</li>
+</ul>
+<p>Therefore, we concluded that:</p>
+<ul>
+<li>Increase in walkability is associated with decreased prevalence of
+poor health outcomes, which is expected.</li>
+<li>However, an increase in walkability is associated with an increase
+for prevalence of poor mental health, but this could be due to
+unaccounted for confounding from density of space and urbanicity that
+comes with more walkable spaces. <br> </br></li>
+</ul>
+</div>
+<div id="choropleth-walkability-map-and-clustering-analysis"
+class="section level2">
+<h2><a href="map.html">Choropleth Walkability Map and Clustering
+Analysis</a></h2>
+<p>In this section, we explored the National Walkability Index at the
+county-level across the United States. Also, we will take a closer look
+at the walkability in New York City and conduct exploratory spatial data
+analysis.</p>
+<div id="choropleth-walkability-map" class="section level3">
+<h3>Choropleth Walkability Map</h3>
+<p>In our interactive map, we observed that most of the cities in the US
+have a relatively lower walkability index while most major metropolitan
+areas have a higher walkability index.</p>
+<p>Compared to the <a
+href="https://www.arcgis.com/home/webmap/viewer.html?url=https%3A%2F%2Fgeodata.epa.gov%2Farcgis%2Frest%2Fservices%2FOA%2FWalkabilityIndex%2FMapServer&amp;source=sd">EPA’s
+National Walkability Map</a>, our interactive map provides additional
+information about the percentage of selective health outcomes. This
+interactive display of both walkability scores and various health
+outcomes across the US can be helpful for various audiences who might
+want to look at the spatial distribution of both simultaneously.</p>
+</div>
+<div id="nyc-cluster-spatial-analysis" class="section level3">
+<h3>NYC Cluster Spatial Analysis</h3>
+<p>We map the different clustering of walkability in NYC using Queen’s
+first order contiguity and local Moran’s I.</p>
+<p>Considerting the hot spots (i.e., High-High) and the cold spots
+(i.e., Low-Low), we found that:</p>
+<ul>
+<li>In Manhattan, there are several High-High clusterings (i.e., census
+tracts that with walkability that are surrounded by census tracts with a
+high walkability index) in the Midtown and SOHO area.</li>
+<li>Some parts of Queens, such as Flushing and Forest Hills, also
+indicates a High-High clustering.</li>
+<li>Parts of the Bronx shows the Low-Low clustering, where census tracts
+that are low in walkability are surrounded by census tracts with low
+walkability index.</li>
+<li>The Low-Low clustering in Brooklyn, on the other hand, might be due
+to the location of the JFK airport.</li>
+</ul>
+<p>This suggests that, the High-High neighborhoods are doing a good job
+in building a walkable environment and the Low-Low areas will benefit a
+lot by improving built environment infrastructure to make the community
+more walkable for all. <br> </br></p>
+</div>
+</div>
+<div id="dashboard" class="section level2">
+<h2><a href="dashboard.html">Dashboard</a></h2>
+<p>To get a better understanding of the walkability, demographics and
+health outcomes, we created a dashboard looking at our variables of
+interest within counties of New York State.</p>
+<p>Here are some highlights:</p>
+<ul>
+<li>All health outcomes (poor physical health, poor mental health, no
+leisure physical activity, high cholesterol and high blood pressure) are
+rather equally distributed across New York State counties,and are not
+related to walkability index.</li>
+<li>Counties with median household income exceeding $100,000 have higher
+walkability indices.
+<ul>
+<li>One expalanation is that it could indicate that more walkable
+counties are more desirable, leading to higher property prices, thus
+only those with higher incomes can afford to live there.</li>
+</ul></li>
+</ul>
+<p><br> </br></p>
+<div
+id="you-can-learn-more-about-the-detailed-process-of-doing-this-project-on-the-project-report-page."
+class="section level4">
+<h4>You can learn more about the detailed process of doing this project
+on the <a href="report.html">Project Report page</a>.</h4>
+</div>
+</div>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -393,6 +597,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

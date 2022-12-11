@@ -29,6 +29,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -221,6 +224,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -228,6 +294,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -268,7 +344,7 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Testing.html">Data Cleaning</a>
+      <a href="cleaning.html">Data Cleaning</a>
     </li>
     <li>
       <a href="explore.html">Exploratory Analysis</a>
@@ -323,7 +399,7 @@ $(document).ready(function () {
   </a>
 </li>
 <li>
-  <a href="fun.html">
+  <a href="Fun.html">
     <span class="fa fa-smile-o"></span>
      
     Fun Facts
@@ -377,7 +453,7 @@ original names. Save all .csv files in an RProject folder called “data”
 in order to run the code.</strong></h5>
 </div>
 </div>
-<p><br></p>
+<p><br> </br></p>
 <div id="exposure-walkability" class="section level3">
 <h3>Exposure: Walkability</h3>
 <ul>
@@ -429,7 +505,7 @@ can use to see how they are changing across the years.</li>
 </ul>
 </div>
 <div id="outcome-health-outcomes" class="section level3">
-<h3>Outcome: Health outcomes</h3>
+<h3>Outcome: Health Outcomes</h3>
 <ul>
 <li>Data: <a
 href="https://chronicdata.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh/data">Behavioral
@@ -458,23 +534,49 @@ world.</li>
 diagnosis, while physical health, physical inactivity and mental health
 are based on self-report</em></li>
 </ul>
-<p><br></p>
+<p><br> </br></p>
 </div>
 <div id="considerations" class="section level3">
 <h3>Considerations</h3>
 <div id="spatial-units" class="section level4">
-<h4>Spatial units</h4>
+<h4>Spatial Units</h4>
+<p>For all of our variables of interest, we selected datasets that
+contained spatial (geographic) information. To better visualize the
+relationship between different spatial units, here is a image showing
+the hierarchy:</p>
+<center>
+<img src="images/geo_level.png" id="id" class="class"
+style="width:60.0%;height:60.0%" />
+</center>
+<p>For each dataset we used, the original spatial unit is:</p>
 <ul>
-<li>For all of our variables of interest, we selected datasets that
-contained spatial (geographic) information</li>
-<li>All variables were analyzed at the <strong>census tract</strong>
-level
+<li>National Walkability Index by EPA: on census block group</li>
+<li>Demographic data from American Community Survey: on census tract
+level</li>
+<li>Health outcome prevalence data from Behavioral Risk Factor
+Surveillance System (BRFSS): on census tract level</li>
+<li>Notes:
 <ul>
-<li>Since walkability data was provided at a census block level (which
-is narrower than the census tract level), we took the average
-walkability indices of census blocks within a census tract for analysis
-for consistency with geographic data for other variables.</li>
+<li>The FIPS code on the census block group level is 12-digits</li>
+<li>The FIPS code on the census tract level is 11-digits</li>
+<li>We used the FIPS code on the census tract level to merge different
+datasets</li>
 </ul></li>
+</ul>
+<p>Based on the availability of data and ensuring the comprehensibility
+of the visual deliverables, we selected different spatial units for each
+component of the project.</p>
+<p>Here are the spatial units for each component of this project:</p>
+<ul>
+<li>Exploratory Data Analysis: included analysis on the US, state, and
+county level data</li>
+<li>Statistical Analysis: beta regression was ran on the US level</li>
+<li>Interactive Walkability Map: walkability index and health outcome
+were analyzed on the county level</li>
+<li>Cluster Analysis: clusters were analyzed on the census tract level
+in the 5 counties of NYC</li>
+<li>Dashboard: numbers reflected the walkability, health outcomes, and
+demographic data of counties in NY State</li>
 </ul>
 </div>
 <div id="timing" class="section level4">
@@ -485,12 +587,13 @@ datasets are from 2020</li>
 <li>We assumed that walkability in 2021 is the same as in 2020, since
 the last time the walkability index was updated was in 2014</li>
 </ul>
-<p></br></p>
 </div>
 </div>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -523,6 +626,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
