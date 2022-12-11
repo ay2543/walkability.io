@@ -29,6 +29,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -221,6 +224,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -228,6 +294,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -368,9 +444,9 @@ locally in its original name. And save all .csv file in a new folder
 called “Data” in order to run the code.</strong></h5>
 </div>
 </div>
-<p><br></p>
-<div id="walkability" class="section level5">
-<h5>Walkability</h5>
+<p><br> </br></p>
+<div id="walkability" class="section level2">
+<h2>Walkability</h2>
 <ul>
 <li>Data: <a
 href="http://edg.epa.gov/metadata/catalog/search/resource/details.page?uuid=%7B251AFDD9-23A7-4068-9B27-A3048A7E6012%7D">Environmental
@@ -418,8 +494,8 @@ walkability_clean = walkability_new %&gt;%
 </details>
 <p><br></p>
 </div>
-<div id="demographics" class="section level5">
-<h5>Demographics</h5>
+<div id="demographics" class="section level2">
+<h2>Demographics</h2>
 <ul>
 <li>Data: <a
 href="https://data.census.gov/table?tid=ACSDP1Y2021.DP05">US Census
@@ -486,8 +562,8 @@ demo_clean = demo_raw %&gt;%
 </details>
 <p><br></p>
 </div>
-<div id="health-outcomes" class="section level5">
-<h5>Health outcomes</h5>
+<div id="health-outcomes" class="section level2">
+<h2>Health outcomes</h2>
 <ul>
 <li>Data: <a
 href="https://chronicdata.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh/data">Behavioral
@@ -513,11 +589,11 @@ Click to show code
 <p>Health Outcome Data - BRFSS</p>
 <pre class="r"><code># raw data with all health outcomes
 health_df = read_csv(&quot;./data/PLACES__Local_Data_for_Better_Health__Census_Tract_Data_2022_release.csv&quot;)</code></pre>
-<pre><code>## Rows: 2161543 Columns: 23
+<pre><code>## Rows: 1048575 Columns: 23
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
-## chr (16): StateAbbr, StateDesc, CountyName, CountyFIPS, LocationName, DataSo...
-## dbl  (4): Year, Data_Value, Low_Confidence_Limit, High_Confidence_Limit
+## chr (13): StateAbbr, StateDesc, CountyName, DataSource, Category, Measure, D...
+## dbl  (7): Year, CountyFIPS, LocationName, Data_Value, Low_Confidence_Limit, ...
 ## num  (1): TotalPopulation
 ## lgl  (2): Data_Value_Footnote_Symbol, Data_Value_Footnote
 ## 
@@ -535,13 +611,11 @@ health_df = read_csv(&quot;./data/PLACES__Local_Data_for_Better_Health__Census_T
 health_clean = health_new %&gt;% 
   filter(measure_id == c(&quot;BPHIGH&quot;, &quot;PHLTH&quot;, &quot;LPA&quot;, &quot;MHLTH&quot;, &quot;HIGHCHOL&quot;)) %&gt;% 
   select(location_name, lat, long, measure, data_value, data_value_type, data_value_unit, measure_id)</code></pre>
-<pre><code>## Warning in measure_id == c(&quot;BPHIGH&quot;, &quot;PHLTH&quot;, &quot;LPA&quot;, &quot;MHLTH&quot;, &quot;HIGHCHOL&quot;):
-## longer object length is not a multiple of shorter object length</code></pre>
 </details>
 <p><br></p>
 </div>
-<div id="cleaned-dataset-for-analysis-use" class="section level5">
-<h5>Cleaned Dataset for Analysis Use</h5>
+<div id="cleaned-dataset-for-analysis-use" class="section level2">
+<h2>Cleaned Dataset for Analysis Use</h2>
 <p>After cleaning all three data sources, we merged the dataset by
 geographical locations.</p>
 <details>
@@ -584,6 +658,8 @@ write_csv(merge_final, &quot;./data/merge_final.csv&quot;)</code></pre>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -616,6 +692,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

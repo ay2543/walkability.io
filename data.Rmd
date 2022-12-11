@@ -1,6 +1,9 @@
 ---
 title: "Data Sources"
-output: html_document
+output: 
+  html_document:
+    toc: true
+    toc_float: true
 ---
 
 <style>
@@ -19,6 +22,7 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 </div>
 
 <br>
+</br>
 
 ### Exposure: Walkability
 
@@ -38,7 +42,7 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
   * Race/ethnicity
   * Median household income
   
-### Outcome: Health outcomes
+### Outcome: Health Outcomes
 * Data: [Behavioral Risk Factor Surveillance System (BRFSS), 2020](https://chronicdata.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh/data)
   * The Behavioral Risk Factor Surveillance System (BRFSS) is an annual, nationwide system of health-related telephone surveys conducted by the Centers for Disease Control and Prevention (CDC) which collects information about U.S. residents regarding their health-related risk behaviors, chronic health conditions, and use of preventive services. Established in 1984 with 15 states, BRFSS now collects data in all 50 states as well as the District of Columbia and three U.S. territories. BRFSS completes more than 400,000 adult interviews each year, making it the largest continuously conducted health survey system in the world.
 * Variables of interest:
@@ -51,20 +55,42 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
   *Note: Cholesterol and blood pressure status is based on physician diagnosis, while physical health, physical inactivity and mental health are based on self-report*
 
 <br>
+</br>
 
 ### Considerations
 
-#### Spatial units
-* For all of our variables of interest, we selected datasets that contained spatial (geographic) information
-* All variables were analyzed at the **census tract** level
-  * Since walkability data was provided at a census block level (which is narrower than the census tract level), we took the average walkability indices of census blocks within a census tract for analysis for consistency with geographic data for other variables.
+#### Spatial Units
+For all of our variables of interest, we selected datasets that contained spatial (geographic) information. To better visualize the relationship between different spatial units, here is a image showing the hierarchy: 
+
+<center>
+![](images/geo_level.png){#id .class width=60% height=60%}
+</center>
+
+
+
+For each dataset we used, the original spatial unit is:
+
+* National Walkability Index by EPA: on census block group
+* Demographic data from American Community Survey: on census tract level
+* Health outcome prevalence data from Behavioral Risk Factor Surveillance System (BRFSS): on census tract level
+* Notes:
+  * The FIPS code on the census block group level is 12-digits
+  * The FIPS code on the census tract level is 11-digits
+  * We used the FIPS code on the census tract level to merge different datasets
+
+
+
+Based on the availability of data and ensuring the comprehensibility of the visual deliverables, we selected different spatial units for each component of the project.  
+
+Here are the spatial units for each component of this project:
+
+* Exploratory Data Analysis: included analysis on the US, state, and county level data
+* Statistical Analysis: beta regression was ran on the US level
+* Interactive Walkability Map: walkability index and health outcome were analyzed on the county level
+* Cluster Analysis: clusters were analyzed on the census tract level in the 5 counties of NYC
+* Dashboard: numbers reflected the walkability, health outcomes, and demographic data of counties in NY State 
+
   
 #### Timing
 * Walkability dataset is from 2021, Demographic and health outcome datasets are from 2020
 * We assumed that walkability in 2021 is the same as in 2020, since the last time the walkability index was updated was in 2014
-
-</br>
-
-
-
-  
