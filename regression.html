@@ -29,6 +29,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
@@ -225,6 +228,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -232,6 +298,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -367,9 +443,9 @@ $(document).ready(function () {
 div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 </style>
 <div
-id="on-this-page-we-explored-how-walkability-is-correlated-with-health-outcomes-at-the-national-level."
+id="on-this-page-we-explore-how-walkability-is-correlated-with-health-outcomes-at-the-national-level."
 class="section level5 blue">
-<h5>On this page, we explored how walkability is correlated with health
+<h5>On this page, we explore how walkability is correlated with health
 outcomes at the national level.</h5>
 </div>
 <p><br></p>
@@ -380,20 +456,20 @@ according to <a
 href="https://www.epa.gov/sites/default/files/2021-06/documents/national_walkability_index_methodology_and_user_guide_june2021.pdf">cutoff
 values</a> provided by EPA, where values above 10.5 are classified as
 “More Walkable”, and those below as “Less Walkable”.</p>
-<details>
-<summary>
-Click to show code
-</summary>
-<pre class="r"><code>dataset = read_csv(&quot;./data/merge_final.csv&quot;)</code></pre>
-<pre><code>## Rows: 1877910 Columns: 24
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## chr (19): fips, statefp, countyfp, tractce, csa_name, location_name, measure...
-## dbl  (5): blkgrpce, nat_walk_ind, lat, long, data_value
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>regress_df = dataset %&gt;% 
+<pre class="r"><code>knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(plotly)
+library(modelr)
+library(betareg)
+library(mgcv)
+library(purrr)
+library(broom)
+library(mfx)
+
+# Read in dataset and conduct regression
+dataset = read_csv(&quot;./data/merge_final.csv&quot;)
+
+regress_df = dataset %&gt;% 
   pivot_wider(names_from = &quot;race&quot;,
                values_from = &quot;percent_race&quot;) %&gt;% 
   pivot_wider(names_from = &quot;measure_id&quot;,
@@ -439,63 +515,15 @@ Click to show code
   dplyr::select(!c(&quot;lat&quot;, &quot;long&quot;)) %&gt;% 
   mutate(walkable = ifelse(nat_walk_tract&lt;10.5, &quot;Less Walkable&quot;, &quot;More Walkable&quot;)) %&gt;% 
   unique()</code></pre>
-<pre><code>## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;tractce&#39;. You can override using the
-## `.groups` argument.</code></pre>
-<pre class="r"><code># mod &lt;- gam(highchol ~ nat_walk_tract + sex_male + age_18plus + black + median_income + s(lat, long, bs=&quot;gp&quot;, m=2),
-#            family = betar(link=&#39;logit&#39;),
-#            data = regress_df)
-# 
-# summary(mod)
-# 
-# residual1_plot =
-#     regress_df %&gt;%
-#     add_predictions(mod) %&gt;%
-#     add_residuals(mod) %&gt;%
-#     ggplot(aes(x = nat_walk_tract, y = resid)) +
-#     geom_point(alpha = 0.3, size = 0.3) +
-#     geom_smooth(se = FALSE, method = &quot;lm&quot;)
-# 
-# residual1_plot
-
-# mod_beta = betareg(mhlth ~ nat_walk_tract + sex_male + age_18plus + black, data = test)
-# 
-# summary(mod_beta)
-# 
-# residual_plot =
-#     test %&gt;%
-#     add_predictions(mod_beta) %&gt;%
-#     add_residuals(mod_beta) %&gt;%
-#     ggplot(aes(x = nat_walk_tract, y = resid)) +
-#     geom_point(alpha = 0.3) +
-#     geom_smooth(se = FALSE, method = &quot;lm&quot;)
-# 
-# residual_plot</code></pre>
-</details>
 <p><br></p>
 </div>
 <div id="regression-model" class="section level3 tabset">
 <h3 class="tabset">Regression Model</h3>
-<p>We utilized beta regression to model the relationship between health
-outcomes with the dichotomized walkability variable, controlling for
-sociodemographic variables of prevalence of age 18+, males, Black folks,
-and median income.</p>
+<p>We utilized beta regression – an extension of the generalized linear
+model (GLM) using a beta distribution – to model the relationship
+between health outcomes with the dichotomized walkability variable,
+controlling for sociodemographic variables of prevalence of age 18+,
+males, Black folks, and median income.</p>
 <p>We chose this regression method as the outcome variable is in
 proportions, and thus takes the form of a continuous value bounded
 between 0 and 1. The R package <code>betareg</code> was used to
@@ -503,8 +531,11 @@ implement this method, while the <code>betamfx</code> command under the
 <code>mfx</code> package was used to obtain the changes in marginal
 probabilities on the outcome resulting from changes in the predictor. We
 will report both numbers, however, we will be interpreting the marginal
-probabilities for its more direct relevance to the real world.</p>
-<pre class="r"><code># Beta regression model
+probabilities for its more direct relevance to the real world. We
+checked the residual plot of each model and the residuals look alright –
+centered around zero, with no noticeable clustering or fanning.</p>
+<pre class="r"><code>library(dplyr)
+# Beta regression model
 chol = betareg(highchol ~ walkable + sex_male + age_18plus + black + median_income, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
 mental = betareg(mhlth ~ walkable + sex_male + age_18plus + black + median_income, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
 lpa = betareg(lpa ~ walkable + sex_male + age_18plus + black + median_income, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
@@ -1010,12 +1041,7 @@ spaces.</p>
 <p>Below, we create a forest plot to more visually display the
 difference in prevalence for our various health outcomes compared to
 less walkable places:</p>
-<pre class="r"><code>devtools::install_github(&quot;rdboyes/forester&quot;)
-
-library(grid)
-library(forester)
-
-forestplot_df = 
+<pre class="r"><code>forestplot_df = 
   chol_margin %&gt;% 
   filter(grepl(&#39;walk&#39;, term)) %&gt;% 
   rbind(mental_margin[1,]) %&gt;% 
@@ -1062,6 +1088,8 @@ forest_plot = forestplot_df %&gt;%
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -1099,6 +1127,35 @@ $(document).ready(function () {
 });
 </script>
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
