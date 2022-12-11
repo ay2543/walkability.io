@@ -8,6 +8,7 @@ output:
 
 ---
 
+
 <style>
 div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 </style>
@@ -565,6 +566,10 @@ health_df_county_race = explore_df %>% select(race, percent_race, county, state,
   summarise_each(funs(mean(., na.rm = TRUE))) %>% 
   pivot_wider(names_from = "race",
               values_from = "percent_race")
+=======
+## Motivation
+Provide an overview of the project goals and motivation.
+>>>>>>> 22d097a82240b0a6460df73016c6b1e514243654
 
 #Delete rows without health outcome data and combine county/state/health outcome as one variable
 health_df_county_race = health_df_county_race[!is.na(health_df_county_race$measure),]

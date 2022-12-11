@@ -29,9 +29,6 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -224,69 +221,6 @@ $(document).ready(function () {
 
 
 
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
-
-
 
 </head>
 
@@ -294,16 +228,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -344,7 +268,7 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Testing.html">Data Cleaning</a>
+      <a href="cleaning.html">Data Cleaning</a>
     </li>
     <li>
       <a href="explore.html">Exploratory Analysis</a>
@@ -399,7 +323,7 @@ div.tocify {
   </a>
 </li>
 <li>
-  <a href="fun.html">
+  <a href="Fun.html">
     <span class="fa fa-smile-o"></span>
      
     Fun Facts
@@ -482,21 +406,21 @@ Click to show code
     ) %&gt;%
   group_by(tractce) %&gt;% 
   summarize(
-    nat_walk_tract = mean(nat_walk_ind),
-    sex_male = mean(sex_male),
-    age_18plus = mean(age_18plus),
-    white = mean(white),
-    black = mean(black),
-    aian = mean(aian),
-    asian = mean(asian), 
-    x2_plus = mean(x2_plus), 
-    hispanic = mean(hispanic), 
-    highchol = mean(highchol), 
-    mhlth = mean(mhlth), 
-    lpa = mean(lpa), 
-    phlth = mean(phlth), 
-    bphigh = mean(bphigh),
-    median_income = mean(median_income),
+    nat_walk_tract = nat_walk_ind,
+    sex_male = sex_male,
+    age_18plus = age_18plus,
+    white = white,
+    black = black,
+    aian = aian,
+    asian = asian, 
+    x2_plus = x2_plus, 
+    hispanic = hispanic, 
+    highchol = highchol, 
+    mhlth = mhlth, 
+    lpa = lpa, 
+    phlth = phlth, 
+    bphigh = bphigh,
+    median_income = median_income,
     lat = lat,
     long = long
     ) %&gt;% 
@@ -557,33 +481,34 @@ Click to show code
 <div id="regression-model" class="section level3 tabset">
 <h3 class="tabset">Regression Model</h3>
 <p>We utilized beta regression to model the relationship between health
-outcomes with the dichotomzied walkability variable, controlling for
-sociodemographic variables. We chose this regression method as the
-outcome variable is in proportions, and thus takes the form of a
-continous value bounded between 0 and 1. The R package
-<code>betareg</code> was used to implement this method, while the
-<code>betamfx</code> command under the <code>mfx</code> package was used
-to obtain the changes in marginal probabilities on the outcome resulting
-from changes in the predictor. We will report both numbers, however, we
-will be interpreting the marginal probabilities for its more direct
-relevance to the real world.</p>
+outcomes with the dichotomized walkability variable, controlling for
+sociodemographic variables of prevalence of age 18+, males, Black folks,
+and median income.</p>
+<p>We chose this regression method as the outcome variable is in
+proportions, and thus takes the form of a continuous value bounded
+between 0 and 1. The R package <code>betareg</code> was used to
+implement this method, while the <code>betamfx</code> command under the
+<code>mfx</code> package was used to obtain the changes in marginal
+probabilities on the outcome resulting from changes in the predictor. We
+will report both numbers, however, we will be interpreting the marginal
+probabilities for its more direct relevance to the real world.</p>
 <details>
 <summary>
 Click to show code
 </summary>
 <pre class="r"><code># Beta regression model
-chol = betareg(highchol ~ walkable + sex_male + age_18plus + black, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
-mental = betareg(mhlth ~ walkable + sex_male + age_18plus + black, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
-lpa = betareg(lpa ~ walkable + sex_male + age_18plus + black, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
-physical = betareg(phlth ~ walkable + sex_male + age_18plus + black, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
-bloodpres = betareg(bphigh ~ walkable + sex_male + age_18plus + black, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
+chol = betareg(highchol ~ walkable + sex_male + age_18plus + black + median_income, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
+mental = betareg(mhlth ~ walkable + sex_male + age_18plus + black + median_income, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
+lpa = betareg(lpa ~ walkable + sex_male + age_18plus + black + median_income, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
+physical = betareg(phlth ~ walkable + sex_male + age_18plus + black + median_income, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
+bloodpres = betareg(bphigh ~ walkable + sex_male + age_18plus + black + median_income, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
 
 # Margins
-chol_margin = betamfx(highchol ~ walkable + sex_male + age_18plus + black, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
-mental_margin = betamfx(mhlth ~ walkable + sex_male + age_18plus + black, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
-lpa_margin = betamfx(lpa ~ walkable + sex_male + age_18plus + black, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
-physical_margin = betamfx(phlth ~ walkable + sex_male + age_18plus + black, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
-bloodpres_margin = betamfx(bphigh ~ walkable + sex_male + age_18plus + black, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
+chol_margin = betamfx(highchol ~ walkable + sex_male + age_18plus + black + median_income, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
+mental_margin = betamfx(mhlth ~ walkable + sex_male + age_18plus + black + median_income, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
+lpa_margin = betamfx(lpa ~ walkable + sex_male + age_18plus + black + median_income, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
+physical_margin = betamfx(phlth ~ walkable + sex_male + age_18plus + black + median_income, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
+bloodpres_margin = betamfx(bphigh ~ walkable + sex_male + age_18plus + black + median_income, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
 
 # Collate estimates into one data frame
 modeldata = 
@@ -620,64 +545,6 @@ marginsdata =
   arrange(desc(pct)) %&gt;% 
   knitr::kable(digits = 3, col.names = c(&#39;Outcome&#39;, &#39;% change&#39;, &#39;CI (lower)&#39;, &#39;CI (upper)&#39;, &#39;p-value&#39;))</code></pre>
 </details>
-<div id="physical-activity" class="section level4">
-<h4>Physical activity</h4>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Term</th>
-<th align="right">Coefficient</th>
-<th align="right">p-value</th>
-<th align="right">CI (lower)</th>
-<th align="right">CI (high)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">(Intercept)</td>
-<td align="right">-0.928</td>
-<td align="right">0.000</td>
-<td align="right">-1.274</td>
-<td align="right">-0.583</td>
-</tr>
-<tr class="even">
-<td align="left">walkableMore Walkable</td>
-<td align="right">0.099</td>
-<td align="right">0.000</td>
-<td align="right">0.059</td>
-<td align="right">0.138</td>
-</tr>
-<tr class="odd">
-<td align="left">sex_male</td>
-<td align="right">0.567</td>
-<td align="right">0.027</td>
-<td align="right">0.066</td>
-<td align="right">1.067</td>
-</tr>
-<tr class="even">
-<td align="left">age_18plus</td>
-<td align="right">-0.961</td>
-<td align="right">0.000</td>
-<td align="right">-1.270</td>
-<td align="right">-0.651</td>
-</tr>
-<tr class="odd">
-<td align="left">black</td>
-<td align="right">0.658</td>
-<td align="right">0.000</td>
-<td align="right">0.563</td>
-<td align="right">0.754</td>
-</tr>
-<tr class="even">
-<td align="left">(phi)</td>
-<td align="right">53.218</td>
-<td align="right">0.000</td>
-<td align="right">48.692</td>
-<td align="right">57.745</td>
-</tr>
-</tbody>
-</table>
-</div>
 <div id="mental-health" class="section level4">
 <h4>Mental health</h4>
 <table>
@@ -693,45 +560,52 @@ marginsdata =
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">-1.330</td>
+<td align="right">-1.058</td>
 <td align="right">0</td>
-<td align="right">-1.515</td>
-<td align="right">-1.144</td>
+<td align="right">-1.084</td>
+<td align="right">-1.033</td>
 </tr>
 <tr class="even">
 <td align="left">walkableMore Walkable</td>
-<td align="right">0.046</td>
+<td align="right">0.010</td>
 <td align="right">0</td>
-<td align="right">0.022</td>
-<td align="right">0.070</td>
+<td align="right">0.007</td>
+<td align="right">0.013</td>
 </tr>
 <tr class="odd">
 <td align="left">sex_male</td>
-<td align="right">0.477</td>
+<td align="right">0.354</td>
 <td align="right">0</td>
-<td align="right">0.226</td>
-<td align="right">0.729</td>
+<td align="right">0.317</td>
+<td align="right">0.391</td>
 </tr>
 <tr class="even">
 <td align="left">age_18plus</td>
-<td align="right">-0.978</td>
+<td align="right">-0.740</td>
 <td align="right">0</td>
-<td align="right">-1.159</td>
-<td align="right">-0.798</td>
+<td align="right">-0.764</td>
+<td align="right">-0.716</td>
 </tr>
 <tr class="odd">
 <td align="left">black</td>
-<td align="right">0.347</td>
+<td align="right">0.115</td>
 <td align="right">0</td>
-<td align="right">0.288</td>
-<td align="right">0.406</td>
+<td align="right">0.108</td>
+<td align="right">0.123</td>
 </tr>
 <tr class="even">
-<td align="left">(phi)</td>
-<td align="right">198.422</td>
+<td align="left">median_income</td>
+<td align="right">0.000</td>
 <td align="right">0</td>
-<td align="right">181.963</td>
-<td align="right">214.882</td>
+<td align="right">0.000</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="odd">
+<td align="left">(phi)</td>
+<td align="right">372.799</td>
+<td align="right">0</td>
+<td align="right">367.211</td>
+<td align="right">378.387</td>
 </tr>
 </tbody>
 </table>
@@ -751,45 +625,117 @@ marginsdata =
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">-2.245</td>
+<td align="right">-0.895</td>
 <td align="right">0.000</td>
-<td align="right">-2.558</td>
-<td align="right">-1.932</td>
+<td align="right">-0.929</td>
+<td align="right">-0.861</td>
 </tr>
 <tr class="even">
 <td align="left">walkableMore Walkable</td>
-<td align="right">0.045</td>
-<td align="right">0.010</td>
-<td align="right">0.011</td>
-<td align="right">0.080</td>
+<td align="right">-0.067</td>
+<td align="right">0.000</td>
+<td align="right">-0.071</td>
+<td align="right">-0.062</td>
 </tr>
 <tr class="odd">
 <td align="left">sex_male</td>
-<td align="right">0.365</td>
-<td align="right">0.081</td>
-<td align="right">-0.046</td>
-<td align="right">0.776</td>
+<td align="right">0.070</td>
+<td align="right">0.004</td>
+<td align="right">0.023</td>
+<td align="right">0.118</td>
 </tr>
 <tr class="even">
 <td align="left">age_18plus</td>
-<td align="right">-0.293</td>
-<td align="right">0.034</td>
-<td align="right">-0.564</td>
-<td align="right">-0.023</td>
+<td align="right">-0.941</td>
+<td align="right">0.000</td>
+<td align="right">-0.973</td>
+<td align="right">-0.909</td>
 </tr>
 <tr class="odd">
 <td align="left">black</td>
-<td align="right">0.290</td>
+<td align="right">0.119</td>
 <td align="right">0.000</td>
-<td align="right">0.202</td>
-<td align="right">0.377</td>
+<td align="right">0.110</td>
+<td align="right">0.129</td>
 </tr>
 <tr class="even">
-<td align="left">(phi)</td>
-<td align="right">135.763</td>
+<td align="left">median_income</td>
 <td align="right">0.000</td>
-<td align="right">124.293</td>
-<td align="right">147.233</td>
+<td align="right">0.000</td>
+<td align="right">0.000</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="odd">
+<td align="left">(phi)</td>
+<td align="right">273.871</td>
+<td align="right">0.000</td>
+<td align="right">269.731</td>
+<td align="right">278.012</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="physical-activity" class="section level4">
+<h4>Physical activity</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Term</th>
+<th align="right">Coefficient</th>
+<th align="right">p-value</th>
+<th align="right">CI (lower)</th>
+<th align="right">CI (high)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">0.262</td>
+<td align="right">0</td>
+<td align="right">0.221</td>
+<td align="right">0.303</td>
+</tr>
+<tr class="even">
+<td align="left">walkableMore Walkable</td>
+<td align="right">-0.011</td>
+<td align="right">0</td>
+<td align="right">-0.016</td>
+<td align="right">-0.006</td>
+</tr>
+<tr class="odd">
+<td align="left">sex_male</td>
+<td align="right">0.375</td>
+<td align="right">0</td>
+<td align="right">0.317</td>
+<td align="right">0.434</td>
+</tr>
+<tr class="even">
+<td align="left">age_18plus</td>
+<td align="right">-1.301</td>
+<td align="right">0</td>
+<td align="right">-1.340</td>
+<td align="right">-1.263</td>
+</tr>
+<tr class="odd">
+<td align="left">black</td>
+<td align="right">0.383</td>
+<td align="right">0</td>
+<td align="right">0.372</td>
+<td align="right">0.395</td>
+</tr>
+<tr class="even">
+<td align="left">median_income</td>
+<td align="right">0.000</td>
+<td align="right">0</td>
+<td align="right">0.000</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="odd">
+<td align="left">(phi)</td>
+<td align="right">97.786</td>
+<td align="right">0</td>
+<td align="right">96.317</td>
+<td align="right">99.254</td>
 </tr>
 </tbody>
 </table>
@@ -809,45 +755,52 @@ marginsdata =
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">-0.853</td>
+<td align="right">-0.356</td>
 <td align="right">0.000</td>
-<td align="right">-1.052</td>
-<td align="right">-0.654</td>
+<td align="right">-0.392</td>
+<td align="right">-0.320</td>
 </tr>
 <tr class="even">
 <td align="left">walkableMore Walkable</td>
-<td align="right">-0.100</td>
+<td align="right">-0.149</td>
 <td align="right">0.000</td>
-<td align="right">-0.123</td>
-<td align="right">-0.076</td>
+<td align="right">-0.153</td>
+<td align="right">-0.144</td>
 </tr>
 <tr class="odd">
 <td align="left">sex_male</td>
-<td align="right">-0.462</td>
-<td align="right">0.001</td>
-<td align="right">-0.734</td>
-<td align="right">-0.189</td>
+<td align="right">-0.632</td>
+<td align="right">0.000</td>
+<td align="right">-0.682</td>
+<td align="right">-0.582</td>
 </tr>
 <tr class="even">
 <td align="left">age_18plus</td>
-<td align="right">0.445</td>
-<td align="right">0.000</td>
-<td align="right">0.257</td>
-<td align="right">0.632</td>
+<td align="right">0.050</td>
+<td align="right">0.003</td>
+<td align="right">0.017</td>
+<td align="right">0.083</td>
 </tr>
 <tr class="odd">
 <td align="left">black</td>
-<td align="right">-0.113</td>
+<td align="right">-0.073</td>
 <td align="right">0.000</td>
-<td align="right">-0.170</td>
-<td align="right">-0.055</td>
+<td align="right">-0.084</td>
+<td align="right">-0.063</td>
 </tr>
 <tr class="even">
-<td align="left">(phi)</td>
-<td align="right">124.189</td>
+<td align="left">median_income</td>
 <td align="right">0.000</td>
-<td align="right">113.496</td>
-<td align="right">134.882</td>
+<td align="right">0.000</td>
+<td align="right">0.000</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="odd">
+<td align="left">(phi)</td>
+<td align="right">123.725</td>
+<td align="right">0.000</td>
+<td align="right">121.832</td>
+<td align="right">125.617</td>
 </tr>
 </tbody>
 </table>
@@ -867,45 +820,52 @@ marginsdata =
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">-0.493</td>
-<td align="right">0.001</td>
-<td align="right">-0.788</td>
-<td align="right">-0.197</td>
+<td align="right">-0.188</td>
+<td align="right">0.000</td>
+<td align="right">-0.232</td>
+<td align="right">-0.145</td>
 </tr>
 <tr class="even">
 <td align="left">walkableMore Walkable</td>
-<td align="right">-0.113</td>
+<td align="right">-0.199</td>
 <td align="right">0.000</td>
-<td align="right">-0.144</td>
-<td align="right">-0.081</td>
+<td align="right">-0.205</td>
+<td align="right">-0.194</td>
 </tr>
 <tr class="odd">
 <td align="left">sex_male</td>
-<td align="right">-1.344</td>
+<td align="right">-0.522</td>
 <td align="right">0.000</td>
-<td align="right">-1.757</td>
-<td align="right">-0.932</td>
+<td align="right">-0.584</td>
+<td align="right">-0.459</td>
 </tr>
 <tr class="even">
 <td align="left">age_18plus</td>
-<td align="right">0.356</td>
-<td align="right">0.005</td>
-<td align="right">0.107</td>
-<td align="right">0.606</td>
+<td align="right">-0.015</td>
+<td align="right">0.466</td>
+<td align="right">-0.056</td>
+<td align="right">0.026</td>
 </tr>
 <tr class="odd">
 <td align="left">black</td>
-<td align="right">0.600</td>
+<td align="right">0.574</td>
 <td align="right">0.000</td>
-<td align="right">0.519</td>
-<td align="right">0.681</td>
+<td align="right">0.561</td>
+<td align="right">0.586</td>
 </tr>
 <tr class="even">
-<td align="left">(phi)</td>
-<td align="right">73.025</td>
+<td align="left">median_income</td>
 <td align="right">0.000</td>
-<td align="right">66.743</td>
-<td align="right">79.308</td>
+<td align="right">0.000</td>
+<td align="right">0.000</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="odd">
+<td align="left">(phi)</td>
+<td align="right">77.959</td>
+<td align="right">0.000</td>
+<td align="right">76.773</td>
+<td align="right">79.145</td>
 </tr>
 </tbody>
 </table>
@@ -934,39 +894,39 @@ Show
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Physical Activity</td>
-<td align="right">1.104</td>
-<td align="right">1.061</td>
-<td align="right">1.148</td>
-<td align="right">0.00</td>
+<td align="left">Mental Health</td>
+<td align="right">1.010</td>
+<td align="right">1.007</td>
+<td align="right">1.013</td>
+<td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="left">Mental Health</td>
-<td align="right">1.047</td>
-<td align="right">1.023</td>
-<td align="right">1.073</td>
-<td align="right">0.00</td>
+<td align="left">Physical Activity</td>
+<td align="right">0.989</td>
+<td align="right">0.984</td>
+<td align="right">0.994</td>
+<td align="right">0</td>
 </tr>
 <tr class="odd">
 <td align="left">Physical Health</td>
-<td align="right">1.046</td>
-<td align="right">1.011</td>
-<td align="right">1.083</td>
-<td align="right">0.01</td>
+<td align="right">0.936</td>
+<td align="right">0.932</td>
+<td align="right">0.940</td>
+<td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">High Cholesterol</td>
-<td align="right">0.905</td>
-<td align="right">0.884</td>
-<td align="right">0.927</td>
-<td align="right">0.00</td>
+<td align="right">0.862</td>
+<td align="right">0.858</td>
+<td align="right">0.866</td>
+<td align="right">0</td>
 </tr>
 <tr class="odd">
 <td align="left">High Blood Pressure</td>
-<td align="right">0.893</td>
-<td align="right">0.865</td>
-<td align="right">0.922</td>
-<td align="right">0.00</td>
+<td align="right">0.819</td>
+<td align="right">0.815</td>
+<td align="right">0.824</td>
+<td align="right">0</td>
 </tr>
 </tbody>
 </table>
@@ -986,58 +946,113 @@ marginal probabilities of the outcome variable:</p>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Physical Activity</td>
-<td align="right">1.690</td>
-<td align="right">1.010</td>
-<td align="right">2.371</td>
-<td align="right">0.00</td>
+<td align="left">Mental Health</td>
+<td align="right">0.127</td>
+<td align="right">0.087</td>
+<td align="right">0.167</td>
+<td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="left">Mental Health</td>
-<td align="right">0.568</td>
-<td align="right">0.274</td>
-<td align="right">0.862</td>
-<td align="right">0.00</td>
+<td align="left">Physical Activity</td>
+<td align="right">-0.206</td>
+<td align="right">-0.300</td>
+<td align="right">-0.112</td>
+<td align="right">0</td>
 </tr>
 <tr class="odd">
 <td align="left">Physical Health</td>
-<td align="right">0.396</td>
-<td align="right">0.095</td>
-<td align="right">0.696</td>
-<td align="right">0.01</td>
+<td align="right">-0.627</td>
+<td align="right">-0.667</td>
+<td align="right">-0.587</td>
+<td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">High Cholesterol</td>
-<td align="right">-2.133</td>
-<td align="right">-2.642</td>
-<td align="right">-1.624</td>
-<td align="right">0.00</td>
+<td align="right">-3.226</td>
+<td align="right">-3.319</td>
+<td align="right">-3.134</td>
+<td align="right">0</td>
 </tr>
 <tr class="odd">
 <td align="left">High Blood Pressure</td>
-<td align="right">-2.359</td>
-<td align="right">-3.023</td>
-<td align="right">-1.696</td>
-<td align="right">0.00</td>
+<td align="right">-4.367</td>
+<td align="right">-4.484</td>
+<td align="right">-4.250</td>
+<td align="right">0</td>
 </tr>
 </tbody>
 </table>
-<p>Here, we see that more walkable places have the following difference
-in prevalence for a particular health outcome compared to less walkable
-places:</p>
+<p>Here, we see that more walkable places have the following change in
+prevalence for a health outcome compared to less walkable places:</p>
 <ul>
-<li>1.690% increase in physical activity</li>
-<li>0.568% increase in good mental health</li>
-<li>0.396% increase in good physical health</li>
-<li>2.133% decrease in high cholesterol</li>
-<li>2.359% decrease in high blood pressure</li>
+<li>0.127% increase in poor mental health</li>
+<li>0.206% decrease in no physical activity</li>
+<li>0.627% decrease in poor physical health</li>
+<li>3.226% decrease in poor cholesterol</li>
+<li>4.367% decrease in poor blood pressure</li>
 </ul>
+<p>Therefore, increase in walkability is associated with decreased
+prevalence of poor health outcomes, which is expected. However, an
+increase in walkability is associated with an increase for prevalence of
+poor mental health, but this could be due to unaccounted for confounding
+from density of space and urbanicity that comes with more walkable
+spaces.</p>
+</div>
+<div id="forest-plot" class="section level3">
+<h3>Forest Plot</h3>
+<p>Below, we create a forest plot to more visually display the
+difference in prevalence for our various health outcomes compared to
+less walkable places:</p>
+<pre class="r"><code>devtools::install_github(&quot;rdboyes/forester&quot;)</code></pre>
+<pre><code>## Skipping install of &#39;forester&#39; from a github remote, the SHA1 (a9ad7c45) has not changed since last install.
+##   Use `force = TRUE` to force installation</code></pre>
+<pre class="r"><code>library(grid)
+library(forester)</code></pre>
+<pre class="r"><code>forestplot_df = 
+  chol_margin %&gt;% 
+  filter(grepl(&#39;walk&#39;, term)) %&gt;% 
+  rbind(mental_margin[1,]) %&gt;% 
+  rbind(lpa_margin[1,]) %&gt;% 
+  rbind(physical_margin[1,]) %&gt;% 
+  rbind(bloodpres_margin[1,]) %&gt;% 
+  mutate(
+    outcome = c(&quot;High Cholesterol&quot;, &quot;Mental Health&quot;, &quot;Physical Activity&quot;, &quot;Physical Health&quot;, &quot;High Blood Pressure&quot;),
+    pct = estimate*100,
+    pct.conf.low = conf.low*100,
+    pct.conf.high = conf.high*100
+  ) %&gt;% 
+  dplyr::select(outcome, pct, pct.conf.low, pct.conf.high, p.value) %&gt;% 
+  arrange(desc(pct)) %&gt;%
+  janitor::clean_names() %&gt;%
+  rename(&quot;Health Outcome&quot; = outcome )
+
+forestplot_df</code></pre>
+<pre><code>## # A tibble: 5 × 5
+##   `Health Outcome`       pct pct_conf_low pct_conf_high   p_value
+##   &lt;chr&gt;                &lt;dbl&gt;        &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;
+## 1 Mental Health        0.127       0.0869         0.167 4.66e- 10
+## 2 Physical Activity   -0.206      -0.300         -0.112 1.75e-  5
+## 3 Physical Health     -0.627      -0.667         -0.587 6.51e-209
+## 4 High Cholesterol    -3.23       -3.32          -3.13  0        
+## 5 High Blood Pressure -4.37       -4.48          -4.25  0</code></pre>
+<pre class="r"><code>forest_plot =
+  forester(left_side_data = forestplot_df[&quot;Health Outcome&quot;],
+           estimate = forestplot_df$pct,
+           ci_low = forestplot_df$pct_conf_low,
+           ci_high = forestplot_df$pct_conf_high,
+           xlim = c(-5, 5),
+           estimate_col_name = &quot;Estimated % change (95% CI)&quot;,
+           font_family = &quot;sans&quot;,
+           display = FALSE,
+           null_line_at = 0,
+           xbreaks = c(-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5),
+           file_path = here::here(&quot;./images/forest_plot.png&quot;))</code></pre>
+<p><br></p>
+<p><img src="images/forest_plot.png" /></p>
 </div>
 
 
 
-</div>
-</div>
 
 </div>
 
@@ -1070,35 +1085,6 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
-<script>
-$(document).ready(function ()  {
-
-    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
-    $('.unlisted.unnumbered').addClass('toc-ignore')
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
