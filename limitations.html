@@ -33,6 +33,7 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
@@ -221,6 +222,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -420,6 +424,14 @@ div.tocify {
 
 <div id="header">
 
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
 
 
 <h1 class="title toc-ignore">Strengths and Limitations</h1>
@@ -431,14 +443,14 @@ div.tocify {
 div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 </style>
 <div
-id="this-is-a-description-on-the-strengths-and-limitations-of-our-project."
+id="this-is-a-description-of-the-strengths-and-limitations-of-our-project."
 class="section level5 blue">
-<h5>This is a description on the strengths and limitations of our
+<h5>This is a description of the strengths and limitations of our
 project.</h5>
 </div>
 <p><br></p>
-<div id="strenghts" class="section level3">
-<h3>Strenghts</h3>
+<div id="strengths" class="section level3">
+<h3>Strengths</h3>
 <div id="reliable-and-updated-data-sources" class="section level4">
 <h4>1. Reliable and updated data sources</h4>
 <p>The data sources were downloaded from reliable sources, such as
@@ -478,21 +490,20 @@ physical and mental health that are addressed with walkability.</p>
 <p><br> <br></p>
 </div>
 </div>
-<div id="limitaiotns" class="section level3">
-<h3>Limitaiotns</h3>
+<div id="limitations" class="section level3">
+<h3>Limitations</h3>
 <p>As detailed as our analyses are, they are not without
 limitations.</p>
 <div id="temporality" class="section level4">
 <h4>1. Temporality</h4>
 <p>We used the latest National Walkability Index data from 2021 (our
-exposure dataset), and ACS demographics and BRFSS health outcomes
-(outcome) datasets from 2020. Though our outcome data precede our
+exposure dataset), and ACS demographics and BRFSS health prevalences
+(outcome) datasets from 2020. Thus, our outcome data precede our
 exposure data – meaning we are not able to infer temporality and hence
 causality – we believe that this is acceptable given the specific
 circumstances surrounding our data:</p>
 <ul>
-<li>The EPA National Walkability Index is updated infrequently
-<ul>
+<li>The EPA National Walkability Index is updated infrequently</li>
 <li>the last major update before 2021 was <a
 href="https://www.epa.gov/sites/default/files/2021-06/documents/epa_sld_3.0_technicaldocumentationuserguide_may2021.pdf">in
 2014</a></li>
@@ -502,14 +513,11 @@ a span of many years – we argue that walkability data from 2021 will
 better capture the physical walking conditions of neighborhoods in 2020
 compared to using an older 2014 version of the walkability index
 dataset</li>
-</ul></li>
 <li>Additionally, some may argue that since employment is a factor in
 obtaining the walkability index, the pandemic may have restructured the
-employment, so the walkability index cannot be considered the same
-<ul>
+employment, so the walkability index cannot be considered the same</li>
 <li>To address this, we can wait for the most recent 2022 BRFSS survey
 report to be released and update our analyses accordingly</li>
-</ul></li>
 </ul>
 </div>
 <div id="missing-data" class="section level4">
@@ -528,24 +536,6 @@ seem right bc of the way health outcomes were pivoted; need to check
 again)</li>
 <li>This means that we lost 47.3% of our walkability entries</li>
 </ul>
-<details>
-<summary>
-Click to show code
-</summary>
-<pre class="r"><code># merge_final = read_csv(&quot;./data/merge_final.csv&quot;)
-# merge_final %&gt;% 
-#   separate(name, c(&quot;census_tract&quot;, &quot;county&quot;, &quot;state&quot;), sep = &quot;, &quot;) %&gt;% 
-#   drop_na(state) %&gt;% 
-#   select(fips, nat_walk_ind,sex_male, sex_female, age_18plus, median_income, percent_race, measure_id, data_value, county) %&gt;% 
-#   group_by(county) %&gt;% 
-#   drop_na(measure_id) %&gt;% 
-#   summarize(n = length(unique(measure_id))) %&gt;% 
-#   filter(n&gt;=5)
-#   drop_na() %&gt;% 
-#   View()
-#   distinct(county)</code></pre>
-</details>
-<p><br></p>
 </div>
 <div id="lack-of-city-specific-analyses" class="section level4">
 <h4>3. Lack of city-specific analyses</h4>
@@ -553,8 +543,8 @@ Click to show code
 various health outcomes at a New York City census-tract level, and to
 compare the geographic clustering of health outcomes to that of
 walkability scores. However, we found that there was a lack of BRFSS
-health outcomes data for New York City and were unable to conduct this
-additional spatial clustering analyses.</p>
+health outcomes data for New York City (alongside other urban areas) and
+were unable to conduct this additional spatial clustering analyses.</p>
 </div>
 </div>
 
@@ -593,6 +583,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 <script>
 $(document).ready(function ()  {
