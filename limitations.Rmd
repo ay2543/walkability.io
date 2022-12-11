@@ -2,7 +2,6 @@
 title: "Strengths and Limitations"
 output: 
   html_document:
-    code_folding: hide
     toc: true
     toc_float: true
 ---
@@ -59,10 +58,11 @@ There was also quite a large percentage of missing data in the Walkability Index
 * The raw walkability data had 220,740 entries
 * The health outcome data (filtered for our variables of interest) had 71,335 entries (in the long format)
 * There were 85,395 entries on age, sex, race and income
-* In the final merged dataframe, there are 116,311 distinct FIPS codes containing at least 1 health outcome variable of interest (* is there a way to see how many entries with all outcomes of interest? this doesn't seem right bc of the way health outcomes were pivoted; need to check again)
-* This means that we lost 47.3% of our walkability entries
+* We lost over 100,000 entries due to insufficient data on health outcomes and demographics
+
 
 
 #### 3. Lack of city-specific analyses
 
-We had initially hoped to look at the spatial clustering of our various health outcomes at a New York City census-tract level, and to compare the geographic clustering of health outcomes to that of walkability scores. However, we found that there was a lack of BRFSS health outcomes data for New York City (alongside other urban areas) and were unable to conduct this additional spatial clustering analyses.
+* We had initially hoped to look at the spatial clustering of our various health outcomes at a New York City census-tract level, and to compare the geographic clustering of health outcomes to that of walkability scores. 
+* However, we found that there was a lack of BRFSS health outcomes data for New York City (alongside other urban areas) and were unable to conduct this additional spatial clustering analyses.
