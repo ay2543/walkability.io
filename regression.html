@@ -492,10 +492,6 @@ implement this method, while the <code>betamfx</code> command under the
 probabilities on the outcome resulting from changes in the predictor. We
 will report both numbers, however, we will be interpreting the marginal
 probabilities for its more direct relevance to the real world.</p>
-<details>
-<summary>
-Click to show code
-</summary>
 <pre class="r"><code># Beta regression model
 chol = betareg(highchol ~ walkable + sex_male + age_18plus + black + median_income, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
 mental = betareg(mhlth ~ walkable + sex_male + age_18plus + black + median_income, data = regress_df) %&gt;% broom::tidy(conf.int=TRUE)
@@ -544,7 +540,6 @@ marginsdata =
   dplyr::select(outcome, pct, pct.conf.low, pct.conf.high, p.value) %&gt;% 
   arrange(desc(pct)) %&gt;% 
   knitr::kable(digits = 3, col.names = c(&#39;Outcome&#39;, &#39;% change&#39;, &#39;CI (lower)&#39;, &#39;CI (upper)&#39;, &#39;p-value&#39;))</code></pre>
-</details>
 <div id="mental-health" class="section level4">
 <h4>Mental health</h4>
 <table>
@@ -1023,32 +1018,44 @@ library(forester)</code></pre>
   ) %&gt;% 
   dplyr::select(outcome, pct, pct.conf.low, pct.conf.high, p.value) %&gt;% 
   arrange(desc(pct)) %&gt;%
-  janitor::clean_names() %&gt;%
-  rename(&quot;Health Outcome&quot; = outcome )
+  janitor::clean_names()
 
 forestplot_df</code></pre>
 <pre><code>## # A tibble: 5 × 5
-##   `Health Outcome`       pct pct_conf_low pct_conf_high   p_value
+##   outcome                pct pct_conf_low pct_conf_high   p_value
 ##   &lt;chr&gt;                &lt;dbl&gt;        &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;
 ## 1 Mental Health        0.127       0.0869         0.167 4.66e- 10
 ## 2 Physical Activity   -0.206      -0.300         -0.112 1.75e-  5
 ## 3 Physical Health     -0.627      -0.667         -0.587 6.51e-209
 ## 4 High Cholesterol    -3.23       -3.32          -3.13  0        
 ## 5 High Blood Pressure -4.37       -4.48          -4.25  0</code></pre>
-<pre class="r"><code>forest_plot =
-  forester(left_side_data = forestplot_df[&quot;Health Outcome&quot;],
-           estimate = forestplot_df$pct,
-           ci_low = forestplot_df$pct_conf_low,
-           ci_high = forestplot_df$pct_conf_high,
-           xlim = c(-5, 5),
-           estimate_col_name = &quot;Estimated % change (95% CI)&quot;,
-           font_family = &quot;sans&quot;,
-           display = FALSE,
-           null_line_at = 0,
-           xbreaks = c(-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5),
-           file_path = here::here(&quot;./images/forest_plot.png&quot;))</code></pre>
-<p><br></p>
-<p><img src="images/forest_plot.png" /></p>
+<pre class="r"><code>forest_plot = forestplot_df %&gt;%
+  ggplot(aes(y = fct_rev(outcome))) + 
+  theme_classic() +
+  geom_point(aes(x = pct),
+             size = 1) +
+  geom_errorbarh(aes(y = outcome,
+                     xmin = pct_conf_low,
+                     xmax = pct_conf_high,
+                     height = 0.1)) +
+  geom_vline(xintercept = 0,
+             linetype = &quot;dashed&quot;) +
+  labs(title = &quot;Forest Plot&quot;,
+       subtitle = &quot;Estimated % Change in Health Outcomes&quot;,
+       x = &quot;% Change in Prevalence (with 95% CI)&quot;,
+       y = &quot;Health Outcomes&quot;) +
+  theme(plot.title = element_text(size = 13, hjust = 0.5),
+        plot.subtitle = element_text(size = 11, hjust = 0.5),
+        axis.text = element_text(size = 10),
+        axis.title = element_text(size = 10),
+        legend.position = &quot;none&quot;) +
+  xlim(-5, 2) +
+  annotate(&quot;text&quot;, x = -1, y = 5, label = &quot;Decrease&quot;, size = 3) +
+  annotate(&quot;text&quot;, x = 1, y = 5, label = &quot;Increase&quot;, size = 3) +
+  coord_cartesian(xlim = c(-4.5, 1.5))
+
+forest_plot</code></pre>
+<p><img src="regression_files/figure-html/plot-1.png" width="672" /></p>
 </div>
 
 

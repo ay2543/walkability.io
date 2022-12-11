@@ -125,9 +125,6 @@ regress_df = dataset %>%
 We utilized beta regression to model the relationship between health outcomes with the dichotomized walkability variable, controlling for sociodemographic variables of prevalence of age 18+, males, Black folks, and median income. 
 
 We chose this regression method as the outcome variable is in proportions, and thus takes the form of a continuous value bounded between 0 and 1. The R package `betareg` was used to implement this method, while the `betamfx` command under the `mfx` package was used to obtain the changes in marginal probabilities on the outcome resulting from changes in the predictor. We will report both numbers, however, we will be interpreting the marginal probabilities for its more direct relevance to the real world.
-
-<details>
-  <summary>Click to show code</summary>
   
 ``` {r regress, cache=TRUE}
 # Beta regression model
@@ -179,14 +176,14 @@ marginsdata =
   arrange(desc(pct)) %>% 
   knitr::kable(digits = 3, col.names = c('Outcome', '% change', 'CI (lower)', 'CI (upper)', 'p-value'))
 ```
-</details>
+
 
 #### Mental health
 
 ```{r, echo=FALSE}
 mental %>% 
   dplyr::select(!c("component", "statistic", "std.error")) %>% 
-  knitr::kable(digits=3, col.names = c("Term", "Coefficient", "p-value", "CI (lower)", "CI (high)"))
+  knitr::kable(digits = 3, col.names = c("Term", "Coefficient", "p-value", "CI (lower)", "CI (high)"))
 ```
 
 #### Physical health
@@ -194,7 +191,7 @@ mental %>%
 ```{r, echo=FALSE}
 physical %>% 
   dplyr::select(!c("component", "statistic", "std.error")) %>% 
-  knitr::kable(digits=3, col.names = c("Term", "Coefficient", "p-value", "CI (lower)", "CI (high)"))
+  knitr::kable(digits = 3, col.names = c("Term", "Coefficient", "p-value", "CI (lower)", "CI (high)"))
 ```
 
 #### Physical activity
@@ -202,7 +199,7 @@ physical %>%
 ```{r, echo=FALSE}
 lpa %>% 
   dplyr::select(!c("component", "statistic", "std.error")) %>% 
-  knitr::kable(digits=3, col.names = c("Term", "Coefficient", "p-value", "CI (lower)", "CI (high)"))
+  knitr::kable(digits = 3, col.names = c("Term", "Coefficient", "p-value", "CI (lower)", "CI (high)"))
 ```
 
 #### High cholesterol
@@ -210,7 +207,7 @@ lpa %>%
 ```{r, echo=FALSE}
 chol %>% 
   dplyr::select(!c("component", "statistic", "std.error")) %>% 
-  knitr::kable(digits=3, col.names = c("Term", "Coefficient", "p-value", "CI (lower)", "CI (high)"))
+  knitr::kable(digits = 3, col.names = c("Term", "Coefficient", "p-value", "CI (lower)", "CI (high)"))
 ```
 
 #### High blood pressure
@@ -218,7 +215,7 @@ chol %>%
 ```{r, echo=FALSE}
 bloodpres %>% 
   dplyr::select(!c("component", "statistic", "std.error")) %>% 
-  knitr::kable(digits=3, col.names = c("Term", "Coefficient", "p-value", "CI (lower)", "CI (high)"))
+  knitr::kable(digits = 3, col.names = c("Term", "Coefficient", "p-value", "CI (lower)", "CI (high)"))
 ```
 
 ### Interpretation
@@ -273,29 +270,40 @@ forestplot_df =
   ) %>% 
   dplyr::select(outcome, pct, pct.conf.low, pct.conf.high, p.value) %>% 
   arrange(desc(pct)) %>%
-  janitor::clean_names() %>%
-  rename("Health Outcome" = outcome )
+  janitor::clean_names()
 
 forestplot_df
 ```
 
-```{r forest-plot-test, fig.width = 10,fig.height=15}
-forest_plot =
-  forester(left_side_data = forestplot_df["Health Outcome"],
-           estimate = forestplot_df$pct,
-           ci_low = forestplot_df$pct_conf_low,
-           ci_high = forestplot_df$pct_conf_high,
-           xlim = c(-5, 5),
-           estimate_col_name = "Estimated % change (95% CI)",
-           font_family = "sans",
-           display = FALSE,
-           null_line_at = 0,
-           xbreaks = c(-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5),
-           file_path = here::here("./images/forest_plot.png"))
+
+```{r plot}
+forest_plot = forestplot_df %>%
+  ggplot(aes(y = fct_rev(outcome))) + 
+  theme_classic() +
+  geom_point(aes(x = pct),
+             size = 1) +
+  geom_errorbarh(aes(y = outcome,
+                     xmin = pct_conf_low,
+                     xmax = pct_conf_high,
+                     height = 0.1)) +
+  geom_vline(xintercept = 0,
+             linetype = "dashed") +
+  labs(title = "Forest Plot",
+       subtitle = "Estimated % Change in Health Outcomes",
+       x = "% Change in Prevalence (with 95% CI)",
+       y = "Health Outcomes") +
+  theme(plot.title = element_text(size = 13, hjust = 0.5),
+        plot.subtitle = element_text(size = 11, hjust = 0.5),
+        axis.text = element_text(size = 10),
+        axis.title = element_text(size = 10),
+        legend.position = "none") +
+  xlim(-5, 2) +
+  annotate("text", x = -1, y = 5, label = "Decrease", size = 3) +
+  annotate("text", x = 1, y = 5, label = "Increase", size = 3) +
+  coord_cartesian(xlim = c(-4.5, 1.5))
+
+forest_plot
 ```
 
-<br>
-
-![](./images/forest_plot.png)
 
 
