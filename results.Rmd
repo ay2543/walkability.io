@@ -49,6 +49,14 @@ Therefore, we concluded that:
 
 * Increase in walkability is associated with decreased prevalence of poor health outcomes, which is expected. 
 * However, an increase in walkability is associated with an increase for prevalence of poor mental health, but this could be due to unaccounted for confounding from density of space and urbanicity that comes with more walkable spaces.
+
+Here is a forest plot to more visually display the difference in prevalence for our various health outcomes compared to less walkable places:
+
+<center>
+![](./regression_files/figure-html/unnamed-chunk-6-1.png){#id .class width=70% height=70%}
+</center>
+
+
 <br>
 </br>
 
