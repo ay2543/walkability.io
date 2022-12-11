@@ -13,7 +13,7 @@
 
 <title>Strengths and Limitations</title>
 
-<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
@@ -33,7 +33,6 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
@@ -184,8 +183,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "\e259";
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -193,9 +192,16 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "\e258";
-  font-family: 'Glyphicons Halflings';
+  content: "&#xe258;";
   border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -222,9 +228,6 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
 
 
 
@@ -424,14 +427,6 @@ div.tocify {
 
 <div id="header">
 
-<div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
-</ul>
-</div>
-
 
 
 <h1 class="title toc-ignore">Strengths and Limitations</h1>
@@ -529,22 +524,21 @@ Walkability Index dataset we used.</p>
 <li>The health outcome data (filtered for our variables of interest) had
 71,335 entries (in the long format)</li>
 <li>There were 85,395 entries on age, sex, race and income</li>
-<li>In the final merged dataframe, there are 116,311 distinct FIPS codes
-containing at least 1 health outcome variable of interest (* is there a
-way to see how many entries with all outcomes of interest? this doesn’t
-seem right bc of the way health outcomes were pivoted; need to check
-again)</li>
-<li>This means that we lost 47.3% of our walkability entries</li>
+<li>We lost over 100,000 entries due to insufficient data on health
+outcomes and demographics</li>
 </ul>
 </div>
 <div id="lack-of-city-specific-analyses" class="section level4">
 <h4>3. Lack of city-specific analyses</h4>
-<p>We had initially hoped to look at the spatial clustering of our
+<ul>
+<li>We had initially hoped to look at the spatial clustering of our
 various health outcomes at a New York City census-tract level, and to
 compare the geographic clustering of health outcomes to that of
-walkability scores. However, we found that there was a lack of BRFSS
-health outcomes data for New York City (alongside other urban areas) and
-were unable to conduct this additional spatial clustering analyses.</p>
+walkability scores.</li>
+<li>However, we found that there was a lack of BRFSS health outcomes
+data for New York City (alongside other urban areas) and were unable to
+conduct this additional spatial clustering analyses.</li>
+</ul>
 </div>
 </div>
 
@@ -583,11 +577,6 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-<script>
-$(document).ready(function () {
-  window.initializeCodeFolding("hide" === "show");
-});
-</script>
 
 <script>
 $(document).ready(function ()  {
