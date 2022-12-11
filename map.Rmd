@@ -1,7 +1,8 @@
 ---
 title: "Walkability Maps"
-output: 
+output:
   html_document:
+    code_folding: hide
     toc: true
     toc_float: true
 ---
@@ -11,7 +12,7 @@ div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
 </style>
 <div class = "blue">
 
-##### On this page, we explore the National Walkability Index at the county-level across the United States. Also, we will take a closer look at the walkability in New York City and conduct exploratory spatial data analysis. 
+##### On this page, we explore the National Walkability Index at the county-level across the United States. We also take a closer look at the walkability of New York City and conduct exploratory spatial data analysis. 
 </div>
 <br>
 
@@ -24,11 +25,11 @@ For the National Walkability Index, we wanted to go beyond the [EPA’s current 
 
 Our health outcomes of interest are:
 
-* High Cholesterol: High cholesterol among adults aged >=18 years who have been screened in the past 5 years
-* Physical Inactivity: No leisure-time physical activity among adults aged >=18 years
-* Mental Health: Mental health not good for >=14 days among adults aged >=18 years
-* Physical Health: Physical health not good for >=14 days among adults aged >=18 years
-* High Blood Pressure: High blood pressure among adults aged >=18 years
+* `High Cholesterol`: High cholesterol among adults aged >=18 years who have been screened in the past 5 years
+* `Physical Inactivity`: No leisure-time physical activity among adults aged >=18 years
+* `Mental Health`: Mental health not good for >=14 days among adults aged >=18 years
+* `Physical Health`: Physical health not good for >=14 days among adults aged >=18 years
+* `High Blood Pressure`: High blood pressure among adults aged >=18 years
 
 According to the [EPA Methodology and User Guide](https://www.epa.gov/sites/default/files/2021-06/documents/national_walkability_index_methodology_and_user_guide_june2021.pdf), National Walkability Index scores on a scale of 1 to 20 are categorized as follows: 
 
@@ -40,10 +41,8 @@ National Walkability Index            Level
   10.51 - 15.25                         Above average walkable 
   15.26 - 20                            Most walkable 
 
-<details>
-  <summary>Click to show code</summary>
   
-```{r message=FALSE, warning=FALSE, fig.show='hide', results='hide'}
+```{r message=FALSE, warning=FALSE}
 library(rjson)
 library(leaflet)
 library(tidyverse)
@@ -112,11 +111,7 @@ choropleth_map = choropleth_map %>%
 
 choropleth_map
 ```
-</details>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-choropleth_map
-```
 
 <style>
 div.blue { background-color:aliceblue; border-radius: 5px; padding: 20px;}
@@ -164,10 +159,8 @@ The first step is to get a general understanding of the walkability index in the
 
 ### Descriptive Choropleth Map for Walkability
 
-<details>
-  <summary>Click to show code</summary>
   
-```{r message=FALSE, warning=FALSE, fig.show='hide', results='hide'}
+```{r message=FALSE, warning=FALSE}
 library(sf)
 library(tmap)
 library(tidyverse)
@@ -199,25 +192,7 @@ tm_basemap("CartoDB.Positron") +
               n = 5,
               title = "National Walkability Index",
               palette = ("Greens"))
-
 ```
-</details>
-
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-# Time to map
-tmap_mode("view")
-
-tm_basemap("CartoDB.Positron") +
-  tm_shape(choropleth_NYC) +
-  tm_polygons(col = "nat_walk_i", 
-              style = "fisher",
-              n = 5,
-              title = "National Walkability Index",
-              palette = ("YlGn"))
-
-#get different color palette: tmaptools::palette_explorer()
-```
-
 
 From this choropleth map, we can see that New York City is walkable overall. However, we want to further identify census tracts that are statistically significant hot spots, cold spots, and spatial outliers using clustering analysis. 
 <br>
@@ -271,10 +246,8 @@ Clearly defining contiguity is needed to conduct cluster analysis since we want 
 By having a basic understanding, we can plot the clustering map of walkability in NYC using Queen's first order contiguity and local Moran's I. 
 
 
-<details>
-  <summary>Click to show code</summary>
-  
-```{r message=FALSE, warning=FALSE, fig.show='hide', results='hide'}
+
+```{r message=FALSE, warning=FALSE}
 library(rgeoda)
 library(sf)
 library(tmap)
@@ -314,8 +287,14 @@ lisa <- local_moran(queen_w, cluster_map_walkability["nat_walk_i"],
 
 # Get cluster column and join it to shp
 cluster_map_walkability$cluster <- as.factor(lisa$GetClusterIndicators())
-str(cluster_map_walkability)
+```
 
+
+```{r message=FALSE, warning=FALSE, results='hide'}
+str(cluster_map_walkability)
+```
+
+```{r message=FALSE, warning=FALSE}
 # Add labels to clusters
 levels(cluster_map_walkability$cluster) <- lisa$GetLabels()
 
@@ -344,27 +323,6 @@ tm_basemap("CartoDB.Positron") +
               border.col = "black",
               border.alpha = .9) 
 ```
-</details>
-
-
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-# Map the clusters with a basemap
-tmap_mode("view")
-
-tm_basemap("CartoDB.Positron") +
-  tm_shape(cluster_map_walkability) +
-  tm_polygons(col = "cluster", 
-              palette =  c("#eeeeee", 
-                      "#FF0000",
-                      "#0000FF",
-                      "#a7adf9",
-                      "#f4ada8"),
-              alpha = .8,
-              title = "Clusters",
-              border.col = "black",
-              border.alpha = .9) 
-```
-
 
 #### Highlights & Importance
 
@@ -383,5 +341,3 @@ Reflecting back to the primary goal of the project, which is to highlight the co
 You can get more information about local Moran's I [here](http://ceadserv1.nku.edu/longa/geomed/ppa/doc/LocalI/LocalI.htm#:~:text=Local%20Moran's%20I%20is%20a,spatial%20association%20or%20LISA%20statistic.), and read about [R package for analyzing spatial data](https://onlinelibrary.wiley.com/doi/10.1111/gean.12319).
 
 We referenced [this page](https://rpubs.com/corey_sparks/105700) when defining Queen's first order. 
-
-</br>
